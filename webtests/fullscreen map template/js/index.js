@@ -1,7 +1,7 @@
 jQuery(document).ready(function($){
-	var latitude = -6.565067,
-		longitude = 106.805026,
-		map_zoom = 17;
+	var latitude = 51.215989,
+		longitude = 4.400953, // 51.215989, 4.400953
+		map_zoom = 15;
 	var is_internetExplorer11= navigator.userAgent.toLowerCase().indexOf('trident') > -1;
 	var marker_url = ( is_internetExplorer11 ) ? 'http://gdurl.com/Uibp' : 'http://gdurl.com/kVn2';
 	var	main_color = '#0085a1',
