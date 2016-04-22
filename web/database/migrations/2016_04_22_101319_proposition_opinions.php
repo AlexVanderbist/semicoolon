@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOpinionsTable extends Migration
+class PropositionOpinions extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,18 @@ class CreateOpinionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('opinions', function (Blueprint $table) {
+        Schema::create('proposition_opinions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('type');
+            $table->integer('value');
             $table->integer('user_id')->unsigned();
-            $table->integer('project_id')->unsigned();
-            $table->integer('anon_user_id')->unsigned();
-            $table->string('opinion');
+            $table->integer('proposition_id')->unsigned();
             $table->timestamps();
 
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('anon_user_id')->references('id')->on('anonymous_user')->onDelete('cascade');
+            $table->foreign('proposition_id')->references('id')->on('propositions')->onDelete('cascade');
+            
         });
     }
 
@@ -33,6 +34,6 @@ class CreateOpinionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('opinions');
+        Schema::drop('proposition_opinions');
     }
 }
