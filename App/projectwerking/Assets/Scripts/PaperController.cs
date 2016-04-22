@@ -5,66 +5,84 @@ using LitJson;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Experimental.Networking;
+using UnityEngine.SceneManagement;
 
-public class PaperController : MonoBehaviour {
+public class PaperController : MonoBehaviour
+{
 
-  public RectTransform paper;
-  public Text paperText;
+  public RectTransform paperPrefab;
+  public Text paperTextbox;
+  public Text titleTextbox;
   public Transform startposition, focusposition, endposition;
   public float speed = 0.5f;
 
   RectTransform currentPaper;
   int currentQuestionNr = 0;
-  string[] paperTextArray;
-  string url = "http://jsonplaceholder.typicode.com/posts";
+  string url = "http://semicolon.multimediatechnology.be/projecten";
+  string testurl = "http://jsonplaceholder.typicode.com/posts";
 
-  string allText;
+  string titleText = "Vraag: ";
+  string questionValue = "body";
+
   static WWW www;
   WWWForm wwwAnswer;
   JsonData textData;
 
 
-  IEnumerator Start()
+  IEnumerator setText()
   {
-    
-    www = new WWW(url);
+    currentQuestionNr++;
+    www = new WWW(testurl);
     yield return www;
     if (www.error == null)
     {
-      //allText = JSON.Parse(www.text);
       textData = JsonMapper.ToObject(www.text);
-      Debug.Log(textData[1]["title"]);
+      paperTextbox.text = textData[currentQuestionNr][questionValue].ToString();
+      titleTextbox.text = titleText + currentQuestionNr.ToString();
     }
     else
     {
       Debug.Log("ERROR: " + www.error);
     }
+    
+
   }
-	
-	// Update is called once per frame
-	void Update () {
+
+  // Update is called once per frame
+  void Update()
+  {
     //instantiatePaper();
   }
 
-  void instantiatePaper() {
-    Instantiate(paper, focusposition.position, transform.rotation);
+  public void SwipeNext()
+  {
+    RectTransform newPaper;
+    if (currentPaper = null) {
+      newPaper = (RectTransform)Instantiate(paperPrefab, startposition.position, transform.rotation);
+      setText();
+      newPaper.transform.position = Vector3.Lerp(startposition.position, focusposition.position, speed);
+      currentPaper = newPaper;
+    }
+    else
+    {
+      /*
+      newPaper = (RectTransform)Instantiate(paperPrefab, startposition.position, transform.rotation);
+      currentPaper.transform.position = Vector3.Lerp(focusposition.position, endposition.position, speed);
+
+      setText();
+      newPaper.transform.position = Vector3.Lerp(startposition.position, focusposition.position, speed);
+      Destroy(currentPaper);
+      currentPaper = newPaper;
+      */
+    }
+
+
   }
 
-  void setNextPaperText() {
-    currentQuestionNr++;
-    paperText.text = paperTextArray[currentQuestionNr];
-  }
-
-  void setPreviousPaperText() {
-    currentQuestionNr--;
-    paperText.text = paperTextArray[currentQuestionNr];
-  }
-
-  public void SwipeNext() {
-    currentPaper.transform.position = Vector3.Lerp(startposition.position, focusposition.position, speed);
-  }
-
+  /*
   public void SwipePrevious() {
+    currentQuestionNr--;
     currentPaper.transform.position = Vector3.Lerp(focusposition.position, endposition.position, speed);
-  }
+  }*/
 }
+

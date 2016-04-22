@@ -17,6 +17,11 @@ public class MobileInput : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+    if (Input.GetButtonDown("Jump")) {
+      pController.SwipeNext();
+      Debug.Log("Spawn");
+    }
+
     if (Input.touchCount > 0)
     {
       Touch touch = Input.touches[0];
@@ -63,7 +68,7 @@ public class MobileInput : MonoBehaviour {
 
             else if (swipeHValue < 0)//left swipe
             {
-              pController.SwipePrevious();
+              
 
             }
           }
