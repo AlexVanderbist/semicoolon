@@ -29,8 +29,7 @@ public class MobileInput : MonoBehaviour {
           startPos = touch.position;
           break;
 
-        case TouchPhase.Ended:
-
+          case TouchPhase.Ended:
           /*
           float swipeDistVertical = (new Vector3(0, touch.position.y, 0) - new Vector3(0, startPos.y, 0)).magnitude;
 
