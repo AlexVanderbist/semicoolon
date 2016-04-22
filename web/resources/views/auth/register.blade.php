@@ -7,8 +7,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Registreer</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
-                        {!! csrf_field() !!}
+
+                    {!! Form::open(['url' => '/register','method'=>'post', 'class'=>'form-horizontal', 'role'=>'form']) !!}
 
 
                         <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
@@ -34,6 +34,55 @@
                                 @if ($errors->has('lastname'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('lastname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Gemeente</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="city" value="{{ old('city') }}">
+
+                                @if ($errors->has('city'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('birthyear') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Geboortejaar</label>
+
+                            <div class="col-md-6">
+                                <input type="number" min="1900" max="2010" class="form-control" name="birthyear" value="{{ old('birthyear') }}">
+
+                                @if ($errors->has('birthyear'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('birthyear') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('sex') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">sex</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="sex" value="{{ old('sex') }}">
+
+                                <select>
+                                  <option value="volvo">Volvo</option>
+                                  <option value="saab">Saab</option>
+                                  <option value="mercedes">Mercedes</option>
+                                  <option value="audi">Audi</option>
+                                </select>
+
+                                @if ($errors->has('sex'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('sex') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -89,7 +138,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
