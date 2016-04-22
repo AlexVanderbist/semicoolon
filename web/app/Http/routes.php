@@ -20,4 +20,10 @@ Route::group(['middleware' => 'web'], function () {
 	Route::get('/', function () {
 	    return view('welcome');
 	});
+
+	/* BACKEND */
+	Route::get('/backend', [
+		'as' => 'backend.dashboard',
+		'uses' => 'Backend\DashboardController@index'
+	]);
 });
