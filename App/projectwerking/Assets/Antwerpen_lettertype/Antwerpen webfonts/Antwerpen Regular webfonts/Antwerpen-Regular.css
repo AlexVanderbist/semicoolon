@@ -1,0 +1,12 @@
+/* Webfont: Antwerpen-Regular */@font-face {
+    font-family: 'Antwerpen';
+    src: url('Antwerpen-Regular.eot'); /* IE9 Compat Modes */
+    src: url('Antwerpen-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Antwerpen-Regular.woff') format('woff'), /* Modern Browsers */
+         url('Antwerpen-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('Antwerpen-Regular.svg#Antwerpen-Regular') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
