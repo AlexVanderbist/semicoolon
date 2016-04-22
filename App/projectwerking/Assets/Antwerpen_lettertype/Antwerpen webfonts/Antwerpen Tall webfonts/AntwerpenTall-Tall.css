@@ -1,0 +1,12 @@
+/* Webfont: AntwerpenTall-Tall */@font-face {
+    font-family: 'AntwerpenTallTall';
+    src: url('AntwerpenTall-Tall.eot'); /* IE9 Compat Modes */
+    src: url('AntwerpenTall-Tall.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('AntwerpenTall-Tall.woff') format('woff'), /* Modern Browsers */
+         url('AntwerpenTall-Tall.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('AntwerpenTall-Tall.svg#AntwerpenTall-Tall') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
