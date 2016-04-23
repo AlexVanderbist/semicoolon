@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using SimpleJSON;
+using System.Collections.Generic;
 using LitJson;
 using System;
 using UnityEngine.UI;
-using UnityEngine.Experimental.Networking;
-using UnityEngine.SceneManagement;
 
 public class PaperController : MonoBehaviour
 {
@@ -18,18 +16,20 @@ public class PaperController : MonoBehaviour
 
   RectTransform currentPaper;
   int currentQuestionNr = 0;
-  string url = "http://semicolon.multimediatechnology.be/projecten";
+  //string url = "http://semicolon.multimediatechnology.be/projecten";
   string testurl = "http://jsonplaceholder.typicode.com/posts";
 
   string titleText = "Vraag: ";
   string questionValue = "body";
+  string currentQuestionString;
+  List<string> QuestionList = new List<string>();
 
+  int numberOfQuestions = 0;
   static WWW www;
-  WWWForm wwwAnswer;
   JsonData textData;
 
 
-  IEnumerator setText()
+  IEnumerator Start()
   {
     currentQuestionNr++;
     www = new WWW(testurl);
@@ -37,43 +37,51 @@ public class PaperController : MonoBehaviour
     if (www.error == null)
     {
       textData = JsonMapper.ToObject(www.text);
-      paperTextbox.text = textData[currentQuestionNr][questionValue].ToString();
-      titleTextbox.text = titleText + currentQuestionNr.ToString();
+
+      numberOfQuestions = textData.Count;
+      for (int i = 0; i < numberOfQuestions; i++)
+      {
+        QuestionList.Add(textData[i][questionValue].ToString());
+      }
+      Debug.Log(QuestionList.Count);
     }
     else
     {
       Debug.Log("ERROR: " + www.error);
     }
-    
 
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-    //instantiatePaper();
+  public void setText() {
+    paperTextbox.text = QuestionList[currentQuestionNr];
+    titleTextbox.text = titleText + currentQuestionNr.ToString();
+    currentQuestionNr++;
+    Debug.Log(currentQuestionNr);
+  }
+
+  public void setFirstPaper() {
+    RectTransform newPaper;
+    if (currentPaper == null)
+    {
+      setText();
+      newPaper = (RectTransform)Instantiate(paperPrefab, focusposition.position, transform.rotation);
+
+      currentPaper = newPaper;
+
+    }
   }
 
   public void SwipeNext()
   {
     RectTransform newPaper;
-    if (currentPaper = null) {
       newPaper = (RectTransform)Instantiate(paperPrefab, startposition.position, transform.rotation);
-      setText();
-      newPaper.transform.position = Vector3.Lerp(startposition.position, focusposition.position, speed);
-      currentPaper = newPaper;
-    }
-    else
-    {
-      /*
-      newPaper = (RectTransform)Instantiate(paperPrefab, startposition.position, transform.rotation);
-      currentPaper.transform.position = Vector3.Lerp(focusposition.position, endposition.position, speed);
+      newPaper.transform.localPosition = Vector3.Lerp(focusposition.position, endposition.position, speed);
 
       setText();
-      newPaper.transform.position = Vector3.Lerp(startposition.position, focusposition.position, speed);
+      currentPaper.transform.localPosition = Vector3.Lerp(startposition.position, focusposition.position, speed);
       Destroy(currentPaper);
       currentPaper = newPaper;
-      */
+      
     }
 
 
@@ -84,5 +92,5 @@ public class PaperController : MonoBehaviour
     currentQuestionNr--;
     currentPaper.transform.position = Vector3.Lerp(focusposition.position, endposition.position, speed);
   }*/
-}
+
 

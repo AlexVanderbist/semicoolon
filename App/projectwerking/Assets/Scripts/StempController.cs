@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StempelController : MonoBehaviour {
-
-  public GameObject stemp;
+public class StempController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

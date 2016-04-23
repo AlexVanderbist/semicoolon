@@ -13,6 +13,7 @@ public class MobileInput : MonoBehaviour {
   // Use this for initialization
   void Start () {
 	  pController = GetComponent<PaperController>();
+    pController.setFirstPaper();
 	}
 	
 	// Update is called once per frame
