@@ -39,7 +39,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/backend') }}">
                     {!! config('cms.sitename') !!} backend
                 </a>
             </div>
@@ -49,7 +49,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{-- route('leidingslokaal.projects.confirm') --}}">Projecten</a></li>
                     <li><a href="{{-- route('leidingslokaal.projects.confirm') --}}">Thema's</a></li>
-                    <li><a href="{{-- route('leidingslokaal.projects.confirm') --}}">Gebruikers</a></li>
+                    <li><a href="{{ route('backend.users.index') }}">Gebruikers</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -61,7 +61,7 @@
                     @else-->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->firstname }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -74,7 +74,27 @@
         </div>
     </nav>
 
-    @yield('content')
+    <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>@yield('title')</h3>
+
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Er is iets mis gegaan!</strong>
+
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    @yield('content')
+                </div>
+            </div>
+        </div>
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>

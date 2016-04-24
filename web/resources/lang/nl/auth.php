@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'De gegevens komen niet voor in onze database.',
+    'failed' => 'Je e-mailadres of paswoord klopt niet.',
     'throttle' => 'Te veel inlogpogingen. Probeer nog eens binnen :seconds seconden.',
 
 ];

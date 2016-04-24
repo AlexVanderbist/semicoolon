@@ -68,16 +68,12 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('sex') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">sex</label>
+                            <label class="col-md-4 control-label">Geslacht</label>
 
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="sex" value="{{ old('sex') }}">
-
-                                <select>
-                                  <option value="volvo">Volvo</option>
-                                  <option value="saab">Saab</option>
-                                  <option value="mercedes">Mercedes</option>
-                                  <option value="audi">Audi</option>
+                                <select class="form-control" name="sex" value="{{ old('sex') }}">
+                                  <option value="0">Vrouw</option>
+                                  <option value="1">Man</option>
                                 </select>
 
                                 @if ($errors->has('sex'))
