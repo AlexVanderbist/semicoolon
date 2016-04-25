@@ -6,77 +6,111 @@ public class MobileInput : MonoBehaviour {
 
   public float minSwipeDistY;
   public float minSwipeDistX;
+  public float speed = 0.5f;
 
   private Vector2 startPos;
   private PaperController pController;
+  private bool moveObjects = false;
+  private bool firstObject = false;
+  private bool firstObjectCreated = false;
+  private bool receiveInput = false;
+  private float step = 0f;
 
   // Use this for initialization
   void Start () {
-	  pController = GetComponent<PaperController>();
-    pController.setFirstPaper();
+    pController = GetComponent<PaperController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-    if (Input.GetButtonDown("Jump")) {
-      pController.SwipeNext();
-      Debug.Log("Spawn");
+    if (pController.ListIsReady)
+    {
+      if (!firstObjectCreated)
+      {
+        pController.SetBeginValues();
+        pController.createNewPaper();
+        firstObjectCreated = true;
+        firstObject = true;
+      }
+      if (firstObject)
+      {
+        step += speed * Time.deltaTime;
+        pController.moveNewPaper(step);
+        pController.setCurrentPaper();
+
+        if (step >= 1f)
+        {
+          firstObject = false;
+          step = 0f;
+          receiveInput = true;
+        }
+      }
+
+      if (receiveInput)
+      {
+        if (Input.GetButtonDown("Jump"))
+        {
+          pController.createNewPaper();
+          moveObjects = true;
+          receiveInput = false;
+        }
+      }
+
+      if (moveObjects)
+        {
+          step += speed * Time.deltaTime;
+          pController.moveNewPaper(step);
+          pController.moveFocusPaper(step);
+          if (step >= 1)
+          {
+            moveObjects = false;
+            step = 0;
+            pController.DestroyCurrentPaper();
+            pController.setCurrentPaper();
+            receiveInput = true;
+          }
+        }
     }
 
-    if (Input.touchCount > 0)
+    if (receiveInput)
     {
-      Touch touch = Input.touches[0];
-
-      switch (touch.phase)
+      if (Input.touchCount > 0)
       {
+        Touch touch = Input.touches[0];
 
-        case TouchPhase.Began:
+        switch (touch.phase)
+        {
 
-          startPos = touch.position;
-          break;
+          case TouchPhase.Began:
 
-          case TouchPhase.Ended:
-          /*
-          float swipeDistVertical = (new Vector3(0, touch.position.y, 0) - new Vector3(0, startPos.y, 0)).magnitude;
+            startPos = touch.position;
+            break;
 
-          if (swipeDistVertical > minSwipeDistY)
-          {
+            case TouchPhase.Ended:
 
-            float swipeVertValue = Mathf.Sign(touch.position.y - startPos.y);
+            float swipeDistHorizontal = (new Vector3(touch.position.x, 0, 0) - new Vector3(startPos.x, 0, 0)).magnitude;
 
-            if (swipeVertValue > 0)//Up SWIPE
+            if (swipeDistHorizontal > minSwipeDistX)
             {
-              
+
+              float swipeHValue = Mathf.Sign(touch.position.x - startPos.x);
+
+              if (swipeHValue > 0)//right swipe
+              {
+                pController.createNewPaper();
+                moveObjects = true;
+                receiveInput = false;
+              }
+
+              else if (swipeHValue < 0)//left swipe
+              {
+              //
+
+              }
             }
-            else if (swipeVertValue < 0)//down swipe
-            {
-              
-            }
-          }*/
-
-          float swipeDistHorizontal = (new Vector3(touch.position.x, 0, 0) - new Vector3(startPos.x, 0, 0)).magnitude;
-
-          if (swipeDistHorizontal > minSwipeDistX)
-          {
-
-            float swipeHValue = Mathf.Sign(touch.position.x - startPos.x);
-
-            if (swipeHValue > 0)//right swipe
-            {
-              pController.SwipeNext();
-
-            }
-
-            else if (swipeHValue < 0)//left swipe
-            {
-              
-
-            }
-          }
-          break;
+            break;
+        }
       }
     }
   }
-
-
 }

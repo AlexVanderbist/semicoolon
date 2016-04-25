@@ -34,6 +34,7 @@ public class TestScript : MonoBehaviour {
         moveObjects = false;
         step = 0;
         Destroy(currentCube);
+
       }
     }
 	}
