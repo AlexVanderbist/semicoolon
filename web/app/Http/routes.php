@@ -32,4 +32,10 @@ Route::group(['middleware' => 'web'], function () {
 		'as' => 'backend.users.confirm',
 		'uses' => 'Backend\UsersController@confirm'
 	]);
+
+	Route::resource('backend/themes', 'Backend\ThemesController', ['except' => ['show']]);
+	Route::get('backend/themes/{themes}/confirm', [
+		'as' => 'backend.themes.confirm',
+		'uses' => 'Backend\ThemesController@confirm'
+	]);
 });
