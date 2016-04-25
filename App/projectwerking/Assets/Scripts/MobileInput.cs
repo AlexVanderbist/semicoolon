@@ -2,6 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(PaperController))]
+[RequireComponent(typeof(StampController))]
 public class MobileInput : MonoBehaviour {
 
   public float minSwipeDistY;
@@ -10,15 +11,18 @@ public class MobileInput : MonoBehaviour {
 
   private Vector2 startPos;
   private PaperController pController;
+  private StampController sController;
   private bool moveObjects = false;
   private bool firstObject = false;
   private bool firstObjectCreated = false;
   private bool receiveInput = false;
+  private bool readyToCheckStamps = false;
   private float step = 0f;
 
   // Use this for initialization
   void Start () {
     pController = GetComponent<PaperController>();
+    sController = GetComponent<StampController>();
 	}
 	
 	// Update is called once per frame
@@ -65,9 +69,29 @@ public class MobileInput : MonoBehaviour {
           {
             moveObjects = false;
             step = 0;
+            readyToCheckStamps = true;
+          }
+        }
+
+      if (readyToCheckStamps)
+      {
+        bool readyChecking = false;
+        if (Input.touchCount > 0)
+        {
+          RaycastHit hit;
+          Vector3 vec = new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 0f);
+          Ray ray = Camera.main.ScreenPointToRay(vec);
+          if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+          {
+            readyChecking = sController.CheckHit(hit.rigidbody.gameObject.name);
+          }
+          if (readyChecking) {
             pController.DestroyCurrentPaper();
             pController.setCurrentPaper();
             receiveInput = true;
+            readyToCheckStamps = false;
+          }
+
           }
         }
     }
