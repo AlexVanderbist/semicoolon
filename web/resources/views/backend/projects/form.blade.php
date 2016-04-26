@@ -38,7 +38,7 @@
 
     <div class="form-group">
         {!! Form::label('Gemaakt door') !!}
-        {!! Form::text('project_creator', Auth::user()->firstname, ['class' => 'form-control', 'readonly']) !!}
+        {!! Form::text('project_creator', Auth::user()->id, ['class' => 'form-control', 'readonly']) !!}
     </div>
 
     {!! Form::submit($project->exists ? 'Project opslaan' : 'Nieuw project maken', ['class' => 'btn btn-primary']) !!}
