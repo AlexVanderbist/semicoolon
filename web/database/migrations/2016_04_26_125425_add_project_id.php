@@ -27,6 +27,7 @@ class AddProjectId extends Migration
     public function down()
     {
         Schema::table('stages', function (Blueprint $table) {
+            $table->dropForeign('stages_project_id_foreign');
             $table->dropColumn('project_id');
         });
     }

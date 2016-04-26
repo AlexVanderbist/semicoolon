@@ -16,7 +16,6 @@ class Project extends Model
         'lat',
         'lng', 
         'locationText',
-        'stage_id',
         'thema_id'
     ];
 

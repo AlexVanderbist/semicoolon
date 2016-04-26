@@ -16,8 +16,8 @@ class CreateStagesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->integer('startdate');
-            $table->integer('enddate');
+            $table->timestamp('startdate');
+            $table->timestamp('enddate');
             $table->boolean('allow_input');
             $table->timestamps();
         });
