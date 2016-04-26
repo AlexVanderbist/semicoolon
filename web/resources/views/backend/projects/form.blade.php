@@ -37,7 +37,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('Gemaakt door') !!}
+        {!! Form::label('Gemaakt_door') !!}
         {!! Form::text('project_creator', Auth::user()->firstname, ['class' => 'form-control', 'readonly']) !!}
     </div>
 
