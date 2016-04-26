@@ -14,6 +14,7 @@ class RemoveStageIdFromProjects extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             
+            $table->dropForeign('projects_stage_id_foreign');
             $table->dropColumn('stage_id');
         });
     }
