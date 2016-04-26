@@ -21,6 +21,12 @@ Route::group(['middleware' => 'web'], function () {
 	    return view('welcome');
 	});
 
+	Route::resource('frontend/projects', 'Frontend\ProjectsController', ['except' => ['show']]);
+	Route::get('frontend/projects/{projects}/confirm', [
+		'as' => 'frontend.projects.confirm',
+		'uses' => 'Frontend\ProjectsController@confirm'
+	]);
+
 	/* BACKEND */
 	Route::get('/backend', [
 		'as' => 'backend.dashboard',
