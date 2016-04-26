@@ -22,7 +22,7 @@ class Project extends Model
 
     public function creator()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'project_creator');
     }
 
     public function stages()
