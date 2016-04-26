@@ -15,4 +15,9 @@ class Stage extends Model
     ];
 
     protected $dates = ['startdate', 'enddate'];
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }
