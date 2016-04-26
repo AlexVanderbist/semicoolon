@@ -16,7 +16,8 @@ class Project extends Model
         'lat',
         'lng', 
         'locationText',
-        'thema_id'
+        'thema_id',
+        'project_creator'
     ];
 
     public function creator()

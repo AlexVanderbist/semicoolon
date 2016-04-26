@@ -50,7 +50,7 @@ class ProjectsController extends Controller
      */
     public function store(Requests\StoreProjectRequest $request)
     {
-        $this->projects->create($request->only('name', 'lat','lng', 'locationText','stage_id','thema_id','project_creator'));
+        $this->projects->create($request->only('name', 'lat','lng', 'locationText','stage_id','thema_id', 'project_creator'));
 
         return redirect(route('backend.projects.index'))->with('stats', 'Het project is gemaakt!');
     }

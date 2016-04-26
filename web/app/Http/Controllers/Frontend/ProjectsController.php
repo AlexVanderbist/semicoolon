@@ -13,6 +13,7 @@ class ProjectsController extends Controller
     protected $themes;
 
 	public function __construct(Project $projects, Theme $themes) {
+
 		$this->projects = $projects;
         $this->themes = $themes;
 
@@ -31,9 +32,9 @@ class ProjectsController extends Controller
         return view('frontend.projects.index', compact('projects'));
     }
 
-    public function info($id)
+    public function info(Project $project)
     {
-        $project = $this->projects->findOrFail($id);
+        //$project = $this->projects->findOrFail($id);
         $getThemes = $this->themes->orderBy('id','asc')->get();
 
         return view('frontend.projects.info', compact('project', 'getThemes'));
