@@ -59,7 +59,7 @@ class ThemesController extends Controller
      */
     public function edit($id)
     {
-        $themes = $this->themes->findOrFail($id);
+        $theme = $this->themes->findOrFail($id);
 
         return view('backend.themes.form', compact('theme'));
     }
