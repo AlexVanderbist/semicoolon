@@ -28,7 +28,7 @@ class ProjectsController extends Controller
     {
         $projects = $this->projects->paginate(10);
 
-        return view('app.projects.index', compact('projects'));
+        return view('frontend.projects.index', compact('projects'));
     }
 
 }
