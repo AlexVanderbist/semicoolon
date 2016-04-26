@@ -46,7 +46,7 @@ public class MobileInput : MonoBehaviour {
         {
           firstObject = false;
           step = 0f;
-          receiveInput = true;
+          readyToCheckStamps = true;
         }
       }
 
@@ -76,21 +76,27 @@ public class MobileInput : MonoBehaviour {
       if (readyToCheckStamps)
       {
         bool readyChecking = false;
+        RaycastHit hitInfo = new RaycastHit();
+        bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+        readyChecking = sController.CheckHit(hitInfo.collider.gameObject.name);
+        Debug.Log(hitInfo.collider.gameObject.name);
         if (Input.touchCount > 0)
         {
-          RaycastHit hit;
-          Vector3 vec = new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 0f);
-          Ray ray = Camera.main.ScreenPointToRay(vec);
-          if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+          Touch touch = Input.touches[0];
+          
+          //bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out hitInfo);
+          if (hit)
           {
-            readyChecking = sController.CheckHit(hit.rigidbody.gameObject.name);
+              readyChecking = sController.CheckHit(hitInfo.collider.gameObject.name);
+            if (readyChecking)
+            {
+              pController.DestroyCurrentPaper();
+              pController.setCurrentPaper();
+              receiveInput = true;
+              readyToCheckStamps = false;
+            }
           }
-          if (readyChecking) {
-            pController.DestroyCurrentPaper();
-            pController.setCurrentPaper();
-            receiveInput = true;
-            readyToCheckStamps = false;
-          }
+         
 
           }
         }

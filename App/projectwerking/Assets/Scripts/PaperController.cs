@@ -10,10 +10,12 @@ public class PaperController : MonoBehaviour
   public GameObject tMeshPrefab, tMeshTitlePrefab;
   public Transform startposition, focusposition, endposition;
   public bool ListIsReady = false;
-
+  public Text testTextBox;
+  
   TextMesh tMeshText, tMeshTitle;
   GameObject currentPaper, newPaper;
   int currentQuestionNr = 0;
+  int counter = 0;
   //string url = "http://semicolon.multimediatechnology.be/projecten";
   string testurl = "http://jsonplaceholder.typicode.com/posts";
 
@@ -47,6 +49,7 @@ public class PaperController : MonoBehaviour
       numberOfQuestions = textData.Count;
       for (int i = 0; i < numberOfQuestions; i++)
       {
+        testTextBox.text = "Proccesed: " + (i+1) + "/" + numberOfQuestions;
         QuestionList.Add(textData[i][questionValue].ToString());
       }
       Debug.Log(QuestionList.Count);
@@ -54,7 +57,13 @@ public class PaperController : MonoBehaviour
     }
     else
     {
-      Debug.Log("ERROR: " + www.error);
+      if(counter < 5)
+      {
+        testTextBox.text = "error, zet internet aan";
+        counter++;
+        Debug.Log("ERROR: " + www.error);
+        Start();
+      }
     }
   }
 
