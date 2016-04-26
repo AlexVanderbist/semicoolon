@@ -47,7 +47,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{-- route('leidingslokaal.projects.confirm') --}}">Projecten</a></li>
+                    <li><a href="{{ route('backend.projects.index') }}">Projecten</a></li>
                     <li><a href="{{ route('backend.themes.index') }}">Thema's</a></li>
                     <li><a href="{{ route('backend.users.index') }}">Gebruikers</a></li>
                 </ul>
