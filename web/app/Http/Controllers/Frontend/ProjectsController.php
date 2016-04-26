@@ -31,4 +31,12 @@ class ProjectsController extends Controller
         return view('frontend.projects.index', compact('projects'));
     }
 
+    public function info($id)
+    {
+        $project = $this->projects->findOrFail($id);
+        $getThemes = $this->themes->orderBy('id','asc')->get();
+
+        return view('frontend.projects.info', compact('project', 'getThemes'));
+    }
+
 }

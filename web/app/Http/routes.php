@@ -46,8 +46,4 @@ Route::group(['middleware' => 'web'], function () {
 	]);
 
 	Route::resource('backend/projects', 'Backend\ProjectsController', ['except' => ['show']]);
-	Route::get('backend/projects/{projects}/confirm', [
-		'as' => 'backend.projects.confirm',
-		'uses' => 'Backend\ProjectsController@confirm'
-	]);
 });
