@@ -57,7 +57,7 @@
                             <label class="col-md-4 control-label">Geboortejaar</label>
 
                             <div class="col-md-6">
-                                <input type="number" min="1900" max="2010" class="form-control" name="birthyear" value="{{ old('birthyear') }}">
+                                <input type="number" min="1900" max="2010" class="form-control" name="birthyear" value="1990">
 
                                 @if ($errors->has('birthyear'))
                                     <span class="help-block">
@@ -100,7 +100,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">paswoord</label>
+                            <label class="col-md-4 control-label">Wachtwoord</label>
 
                             <div class="col-md-6">
                                 <input type="password" class="form-control" name="password">
@@ -114,7 +114,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">paswoord bevestigen</label>
+                            <label class="col-md-4 control-label">Wachtwoord bevestigen</label>
 
                             <div class="col-md-6">
                                 <input type="password" class="form-control" name="password_confirmation">
