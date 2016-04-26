@@ -15,8 +15,8 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->float('lat');
-            $table->float('lng');
+            $table->double('lat', 15, 13);
+            $table->double('lng', 15, 13);
             $table->string('locationText');
             $table->integer('stage_id')->unsigned();
             $table->integer('thema_id')->unsigned();

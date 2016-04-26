@@ -11,19 +11,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
+
+    <!-- JavaScripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src='http://maps.google.com/maps/api/js?key=AIzaSyDhTfQGWyjyP7vj3t_GFtOrF7-mbGsVLAY&libraries=places'></script>
+    <script src="{!! asset('js/locationpicker.jquery.min.js') !!}"></script>
+
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{{ asset('/css/style.css') }}}" rel="stylesheet">
+    <link href="{!! asset('/css/style.css') !!}" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Lato';
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default">
@@ -75,31 +73,25 @@
     </nav>
 
     <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>@yield('title')</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>@yield('title')</h3>
 
-                    @if($errors->any())
-                        <div class="alert alert-danger">
-                            <strong>Er is iets mis gegaan!</strong>
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Er is iets mis gegaan!</strong>
 
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-                    @yield('content')
-                </div>
+                @yield('content')
             </div>
         </div>
-
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
-    <script src="js/locationpicker.jquery.min.js"></script>
+    </div>
 </body>
 </html>

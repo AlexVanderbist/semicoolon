@@ -16,7 +16,7 @@ class Project extends Model
         'lat',
         'lng', 
         'locationText',
-        'thema_id',
+        'theme_id',
         'project_creator'
     ];
 
