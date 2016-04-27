@@ -29,6 +29,7 @@ public class MobileInput : MonoBehaviour {
 	void Update () {
     if (pController.ListIsReady)
     {
+      //Spawn First Object
       if (!firstObjectCreated)
       {
         pController.SetBeginValues();
@@ -36,6 +37,8 @@ public class MobileInput : MonoBehaviour {
         firstObjectCreated = true;
         firstObject = true;
       }
+
+      //Move First Object
       if (firstObject)
       {
         step += speed * Time.deltaTime;
@@ -70,7 +73,9 @@ public class MobileInput : MonoBehaviour {
             moveObjects = false;
             step = 0;
             readyToCheckStamps = true;
-          }
+          pController.DestroyCurrentPaper();
+          pController.setCurrentPaper();
+        }
         }
 
       if (readyToCheckStamps)
@@ -88,18 +93,16 @@ public class MobileInput : MonoBehaviour {
           if (hit)
           {
               readyChecking = sController.CheckHit(hitInfo.collider.gameObject.name);
-            if (readyChecking)
-            {
-              pController.DestroyCurrentPaper();
-              pController.setCurrentPaper();
-              receiveInput = true;
-              readyToCheckStamps = false;
-            }
           }
          
 
-          }
+       }
+        if (readyChecking)
+        {
+          receiveInput = true;
+          readyToCheckStamps = false;
         }
+      }
     }
 
     if (receiveInput)

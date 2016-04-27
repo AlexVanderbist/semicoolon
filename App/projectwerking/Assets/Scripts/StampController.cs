@@ -5,8 +5,12 @@ public class StampController : MonoBehaviour {
 
   public GameObject redStamp, greenStamp;
   Vector3 restStateRedStamp, restStateGreenStamp;
-	// Use this for initialization
-	void Start () {
+  string[] antwoorden;
+  int currentQuestionNumber = 0;
+  private string antwoordUrl = "http://semicolon.multimediatechnology.be/Project1/Stelling1";
+
+  // Use this for initialization
+  void Start () {
     restStateRedStamp = redStamp.transform.position;
     restStateGreenStamp = greenStamp.transform.position;
 	}
@@ -33,4 +37,23 @@ public class StampController : MonoBehaviour {
       }
     return readyChecking;
   }
+
+  IEnumerator SendAnswer() {
+    WWWForm Form = new WWWForm();
+
+    Form.AddField("Antwoord", antwoorden[currentQuestionNumber]);
+    Form.AddField("VraagNummer", currentQuestionNumber);
+
+    WWW antwoordWWW = new WWW(antwoordUrl, Form);
+
+    yield return antwoordWWW;
+
+    if (antwoordWWW.error != null)
+    {
+      Debug.LogError("Cannot connect to Login");
+    }
+    else
+    {
+    }
+    }
 }

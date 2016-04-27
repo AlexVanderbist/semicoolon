@@ -67,6 +67,8 @@ public class PaperController : MonoBehaviour
     }
   }
 
+
+
  private string ResolveTextSize(string input, int lineLength)
   {
 
