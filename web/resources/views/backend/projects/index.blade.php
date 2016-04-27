@@ -10,7 +10,6 @@
             <tr>
                 <th>Project</th>
                 <th>Locatie</th>
-                <th>Stage</th>
                 <th>Thema</th>
                 <th>Gemaakt door</th>
                 <th>Edit</th>

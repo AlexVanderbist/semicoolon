@@ -64,6 +64,7 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Log uit</a></li>
+                                <li><a href="{{ url('/') }}">Frontend</a></li>
                             </ul>
                         </li>
                     <!--@endif-->

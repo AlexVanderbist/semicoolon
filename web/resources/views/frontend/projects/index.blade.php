@@ -8,9 +8,7 @@
         <thead>
             <tr>
                 <th>Project</th>
-                <th>Map</th>
                 <th>Locatie</th>
-                <th>Stage</th>
                 <th>Thema</th>
             </tr>
         </thead>
@@ -18,7 +16,6 @@
             @foreach($projects as $project)
                 <tr>
                     <td><a href="{{ route('frontend.projects.info', $project->id) }}">{{$project->name}}</a></td>
-                    <td></td>
                     <td>{{$project->locationText}}</td>
                     <td>{{$project->stage_id}}</td>
                     <td>{{$project->theme->name}}</td>
