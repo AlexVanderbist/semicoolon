@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Project;
-use App\Theme;
 use App\Http\Requests;
 
 class ProjectsController extends Controller
@@ -12,10 +11,9 @@ class ProjectsController extends Controller
 	protected $projects;
     protected $themes;
 
-	public function __construct(Project $projects, Theme $themes) {
+	public function __construct(Project $projects) {
 
 		$this->projects = $projects;
-        $this->themes = $themes;
 
 		parent::__construct();
 	}
@@ -34,10 +32,8 @@ class ProjectsController extends Controller
 
     public function info(Project $project)
     {
-        //$project = $this->projects->findOrFail($id);
-        $getThemes = $this->themes->orderBy('id','asc')->get();
 
-        return view('frontend.projects.info', compact('project', 'getThemes'));
+        return view('frontend.projects.info', compact('project'));
     }
 
 }
