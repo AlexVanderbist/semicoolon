@@ -13,9 +13,6 @@ class DeleteProjectRequest extends Request
      */
     public function authorize()
     {
-        if($this->route('projects') == auth()->theme()->id) {
-            return false;
-        }
 
         return true;
     }

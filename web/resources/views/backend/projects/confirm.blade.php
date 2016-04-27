@@ -3,7 +3,7 @@
 @section('title', 'Delete '.$project->name)
 
 @section('content')
-    {!! Form::open(['method' => 'delete', 'route' => ['backend.projects.destroy', $projects->id]]) !!}
+    {!! Form::open(['method' => 'delete', 'route' => ['backend.projects.destroy', $project->id]]) !!}
         <div class="alert alert-danger">
             <strong>Opgepast!</strong> Je gaat dit project verwijderen. Deze actie kan niet ongedaan worden. Ben je zeker dat je wil verder gaan?
         </div>

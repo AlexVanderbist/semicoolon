@@ -21,7 +21,7 @@
                     <td></td>
                     <td>{{$project->locationText}}</td>
                     <td>{{$project->stage_id}}</td>
-                    <td>{{$project->thema_id}}</td>
+                    <td>{{$project->theme->name}}</td>
                 </tr>
             @endforeach
         </tbody>

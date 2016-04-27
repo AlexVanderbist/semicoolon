@@ -13,9 +13,6 @@ class DeleteThemeRequest extends Request
      */
     public function authorize()
     {
-        if($this->route('themes') == auth()->theme()->id) {
-            return false;
-        }
 
         return true;
     }

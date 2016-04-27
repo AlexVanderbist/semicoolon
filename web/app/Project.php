@@ -25,8 +25,15 @@ class Project extends Model
         return $this->belongsTo(User::class, 'project_creator');
     }
 
+    public function theme()
+    {
+        return $this->belongsTo(Theme::class);
+    }
+
     public function stages()
     {
         return $this->hasMany(Stage::class);
     }
+
+
 }
