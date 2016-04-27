@@ -17,7 +17,6 @@
                 <tr>
                     <td><a href="{{ route('frontend.projects.info', $project->id) }}">{{$project->name}}</a></td>
                     <td>{{$project->locationText}}</td>
-                    <td>{{$project->stage_id}}</td>
                     <td>{{$project->theme->name}}</td>
                 </tr>
             @endforeach
