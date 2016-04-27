@@ -13,6 +13,7 @@ body {
 	background-color: #333333 !important;
 	color: white !important;
 	border: none;
+	border-radius: 0px;
 }
 
 .navbar-nav a {
