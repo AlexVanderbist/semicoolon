@@ -28,7 +28,7 @@ class ProjectsController extends Controller
     {
         $projects = $this->projects->paginate(10);
 
-        return view('backend.projects.index', compact('projects'));
+        return view('backend.projects.index', compact('projects', 'getThemes'));
     }
 
     /**
@@ -39,7 +39,8 @@ class ProjectsController extends Controller
     public function create(Project $project)
     {
         $getThemes = $this->themes->orderBy('id','asc')->get();
-        return view('backend.projects.form', compact('project', 'getThemes'));
+        $themes = $getThemes->lists('name', 'id')->toArray();
+        return view('backend.projects.form', compact('project', 'themes'));
     }
 
     /**
@@ -65,8 +66,9 @@ class ProjectsController extends Controller
     {
         $project = $this->projects->findOrFail($id);
         $getThemes = $this->themes->orderBy('id','asc')->get();
+        $themes = $getThemes->lists('name', 'id')->toArray();
 
-        return view('backend.projects.form', compact('project', 'getThemes'));
+        return view('backend.projects.form', compact('project', 'themes'));
     }
 
     /**

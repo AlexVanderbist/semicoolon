@@ -9,9 +9,7 @@
         <thead>
             <tr>
                 <th>Project</th>
-                <th>Map</th>
                 <th>Locatie</th>
-                <th>Stage</th>
                 <th>Thema</th>
                 <th>Gemaakt door</th>
                 <th>Edit</th>
@@ -22,11 +20,9 @@
             @foreach($projects as $project)
                 <tr>
                     <td>{{$project->name}}</td>
-                    <td></td>
                     <td>{{$project->locationText}}</td>
-                    <td>{{$project->stage_id}}</td>
-                    <td>{{$project->thema_id}}</td>
-                    <td>{{$project->city}}</td>
+                    <td>{{$project->theme->name}}</td>
+                    <td>{{$project->creator->firstname}}</td>
                     <td>
                         <a href="{{ route('backend.projects.edit', $project->id) }}">
                             <span class="glyphicon glyphicon-edit"></span>

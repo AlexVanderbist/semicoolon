@@ -45,7 +45,7 @@
         {!! Form::label('theme_id','Thema') !!}
         {!! Form::select('theme_id', [
                 '' => ''
-            ] + $getThemes->lists('name', 'id')->toArray(), null, ['class' => 'form-control']) !!}
+            ] + $themes, null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">

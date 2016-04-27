@@ -47,7 +47,6 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
                     <li><a href="{{ route('frontend.projects.index') }}">Projecten</a></li>
                 </ul>
 
@@ -65,6 +64,7 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Log uit</a></li>
+                                <li><a href="{{ route('backend.dashboard') }}">Backend</a></li>
                             </ul>
                         </li>
                     @endif
