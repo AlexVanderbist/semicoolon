@@ -21,7 +21,6 @@
                 <tr>
                     <td>{{$project->name}}</td>
                     <td>{{$project->locationText}}</td>
-                    <td>{{$project->stage_id}}</td>
                     <td>{{$project->theme->name}}</td>
                     <td>{{$project->creator->full_name}}</td>
                     <td>
