@@ -13,8 +13,11 @@
 
 Route::group(['middleware' => 'web'], function () {
     
+    /* AUTH */
     Route::auth();
 
+
+    /* FRONTEND */
     Route::get('/', 'HomeController@index');
 
 	Route::get('projecten', [
@@ -51,4 +54,7 @@ Route::group(['middleware' => 'web'], function () {
 		'as' => 'backend.projects.confirm',
 		'uses' => 'Backend\ProjectsController@confirm'
 	]);
+
+
+	/* API */
 });
