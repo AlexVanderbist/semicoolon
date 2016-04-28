@@ -11,6 +11,13 @@
 |
 */
 
+/* API */
+Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
+{
+	Route::resource('authenticate', 'API\AuthenticateController', ['only' => ['index']]);
+	Route::post('authenticate', 'API\AuthenticateController@authenticate');
+});
+
 Route::group(['middleware' => 'web'], function () {
     
     /* AUTH */

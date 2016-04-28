@@ -125,6 +125,7 @@ return [
 
         // Custom providers
         Collective\Html\HtmlServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...
@@ -175,8 +176,10 @@ return [
     'aliases' => [
 
         // Custom
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
+        'Form'       => Collective\Html\FormFacade::class,
+        'Html'       => Collective\Html\HtmlFacade::class,
+        'JWTAuth'    => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 
         'App'       => Illuminate\Support\Facades\App::class,
         'Artisan'   => Illuminate\Support\Facades\Artisan::class,
