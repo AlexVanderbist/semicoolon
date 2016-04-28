@@ -6,8 +6,6 @@ public class StampController : MonoBehaviour {
   public GameObject redStamp, greenStamp, paper;
   Vector3 restStateRedStamp, restStateGreenStamp;
 
-  private float fixedRotation = 2.58f;
-  private float rotationSpeed = 1.5f;
   int currentQuestionNumber = 0;
   string selectedStamp = "";
   string answer = "";
@@ -75,7 +73,7 @@ public class StampController : MonoBehaviour {
     {
       hitInfo = hit;
       stampIsReady = true;
-      SendAnswer();
+      //SendAnswer();
     }
     else if(hit.transform.name != "Paper")
     {
