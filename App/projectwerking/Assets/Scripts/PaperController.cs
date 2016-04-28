@@ -33,7 +33,6 @@ public class PaperController : MonoBehaviour
   }
 
   public void SetBeginValues() {
-    //currentQuestionNr = 0;
     tMeshText.text = ResolveTextSize(QuestionList[currentQuestionNr], 24);
     tMeshTitle.text = titleText + (currentQuestionNr + 1).ToString();
   }
@@ -59,10 +58,10 @@ public class PaperController : MonoBehaviour
     {
       if(counter < 5)
       {
-        testTextBox.text = "error, zet internet aan";
+        testTextBox.text = "error, kijk internetverbinding na";
         counter++;
         Debug.Log("ERROR: " + www.error);
-        Start();
+        StartCoroutine(Start());
       }
     }
   }
