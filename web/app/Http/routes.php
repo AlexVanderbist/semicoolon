@@ -36,7 +36,11 @@ Route::group(['middleware' => 'web'], function () {
 
 
     /* FRONTEND */
-    Route::get('/', 'HomeController@index');
+
+	Route::get('/', [
+		'as' => 'frontend.projects.map',
+		'uses' => 'Frontend\ProjectsController@map'
+	]);
 
 	Route::get('projecten', [
 		'as' => 'frontend.projects.index',
