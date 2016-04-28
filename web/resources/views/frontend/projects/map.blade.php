@@ -35,13 +35,14 @@
 	    var infoWindow = new google.maps.InfoWindow();
 	    var map = new google.maps.Map(document.getElementById('map'), map_options);
 
-	    function infoWindowText(title, description) {
+	    function infoWindowText(project) {
 	    	return '<div id="content">'+
 				'<div id="siteNotice">'+
 				'</div>'+
-				'<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+				'<h1 id="firstHeading" class="firstHeading">'+project.name+'</h1>'+
 				'<div id="bodyContent">'+
-				'<p>'+description+'</p>'+
+				'<p>'+project.locationText+'</p>'+
+				'<p><a href="/projecten/'+project.id+'">Bekijk project</a></p>'+
 				'</div>'+
 				'</div>';
 	    }
@@ -63,7 +64,7 @@
 		    });
 
 		    marker.addListener('click', function() {
-		    	infoWindow.setContent(infoWindowText(project.name, project.locationText));
+		    	infoWindow.setContent(infoWindowText(project));
                 infoWindow.open(map, marker);
 			});
 
