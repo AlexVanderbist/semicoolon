@@ -8,7 +8,7 @@ Naamloos project voor Antwerpen.
 Base URL van de API is altijd `http://semicolon.multimediatechnology.be/api/v1/`
 
 ### Login
-* `POST /authenticate` (email, password) - Generate a token for a user.
+* #### `POST /authenticate` (email, password) - Generate a token for a user.
   ```
   {
     "token": "TOKENHERE"
@@ -21,7 +21,7 @@ Base URL van de API is altijd `http://semicolon.multimediatechnology.be/api/v1/`
   }
   ```
 
-* `GET /authenticate/user` (token) - Returns the logged in user.
+* #### `GET /authenticate/user` (token) - Returns the logged in user.
   ```
   {
     "user": {
@@ -45,7 +45,7 @@ Base URL van de API is altijd `http://semicolon.multimediatechnology.be/api/v1/`
   ```
   
 ### Projects
-* `GET /projects` returns all projects:
+* #### `GET /projects` returns all projects:
   ```
 
   ```
