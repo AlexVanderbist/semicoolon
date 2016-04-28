@@ -24,6 +24,7 @@ public class MobileInput : MonoBehaviour {
   private bool readyWithStampToPaper = false;
   private bool stampSelected = false;
 
+  //MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
   private float step = 0f;
 
   // Use this for initialization
@@ -34,6 +35,7 @@ public class MobileInput : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+    //Wait till questions are loaded
     if (pController.ListIsReady)
     {
       //Spawn First Object
@@ -87,6 +89,7 @@ public class MobileInput : MonoBehaviour {
           }
       }
 
+      //Move selected stamp when paper has been hit
       if (readyToMoveStampToPaper) {
         if (!readyWithStampToPaper)
         {
@@ -137,12 +140,11 @@ public class MobileInput : MonoBehaviour {
             readyToCheckStamps = false;
             stampSelected = false;
           }
-         
         }
-        Debug.Log(hitInfo.collider.gameObject.name);
       }
     }
 
+    //RightSwipe when stampController is ready
     if (receiveInput)
     {
       if (Input.touchCount > 0)

@@ -2,92 +2,102 @@
 using System.Collections;
 using LitJson;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(GameInfo))]
 public class Login : MonoBehaviour {
 
-    public static string Email = "";
-    public static string Password = "";
-    public string CurrentMenu = "Login";
+    string email = "";
+    string password = "";
+    public Text errorMessage;
+    public string sceneToLoad = "ProjectsScene";
+    public string CreateAccountUrl = "http://semicolon.multimediatechnology.be";
+    public string LoginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
 
-    public float X, Y, Width, Height;
-
-    private string CreateAccountUrl = "http://www.EigenWebiste.be";
-    private string LoginUrl = "http://semicolon.multimediatechnology.be/Login";
-    private string antwoord = "";
+    private string invalidString = "invalid_credentials";
 
     JsonData textdata;
+    GameInfo GI;
 
 	// Use this for initialization
 	void Start () {
-	
+    GI = GetComponent<GameInfo>();
+    errorMessage.enabled = false;
 	}
 
 
-    void OnGUI() {
+  public void GoToCreateAccount(bool createAccount) {
+    if (createAccount)
+    {
+      LinkToCreateAccountURL();
+    }
+  }
 
-        if (CurrentMenu == "Login")
-        {
-            LoginGUI();
-        }
-        else if (CurrentMenu == "CreateAccount")
-        {
-            LinkToCreateAccountURL();
-        }
+  public void SetEmail(string initEmail)
+  {
+    email = initEmail;
+  }
 
+  public void SetPassword(string initPassword)
+  {
+    password = initPassword;
+  }
+
+  public void LoginOnClick(bool initLogin)
+  {
+    if (initLogin && email != "" && password != "")
+    {
+      StartCoroutine(LoginAccount());
+      errorMessage.enabled = false;
+    }
+    else
+    {
+      errorMessage.text = "Vul beide velden in";
+      errorMessage.enabled = true;
     }
 
-    void LoginGUI() {
+  }
 
-        GUI.Box(new Rect(33,75,210,300), "Login"); 
-
-        if (GUI.Button(new Rect(85,325,105,30), "Create Account"))
-        {
-            CurrentMenu = "CreateAccount";
-        }
-        if (GUI.Button(new Rect(85,285,105,30), "Login"))
-        {
-            StartCoroutine("LoginAccount");
-        }
-        GUI.Label(new Rect(50, 120, 180, 35), "Email:");
-        Email = GUI.TextField(new Rect(47, 140, 180, 35), Email);
-
-        GUI.Label(new Rect(50, 190, 180, 35), "Wachtwoord:");
-        Password = GUI.TextField(new Rect(47, 210, 180, 35), Password);
-    
-    }
-
-    IEnumerator LoginAccount() {
+  IEnumerator LoginAccount() {
 
         WWWForm Form = new WWWForm();
 
-        Form.AddField("Email", Email);
-        Form.AddField("Password", Password);
+        Form.AddField("email", email);
+        Form.AddField("password", password);
 
         WWW LoginAccountWWW = new WWW(LoginUrl, Form);
 
         yield return LoginAccountWWW;
 
-        if (LoginAccountWWW.error != null)
-        {
-            Debug.LogError("Cannot connect to Login");
-        }
-        else
-        {
-            textdata = JsonMapper.ToObject(LoginAccountWWW.text);
-            if (textdata[1][antwoord].ToString() == "Juist")
-            {
-                SceneManager.LoadScene("MainScene");
-            }
-            else if (textdata[1][antwoord].ToString() == "Fout")
-            {
-                Debug.Log("Foutieve info gegeven!");
-            }
-        }
+    if (LoginAccountWWW.error == null)
+    {
+      textdata = JsonMapper.ToObject(LoginAccountWWW.text);
+
+      //SAVE TOKEN
+      if (textdata["token"].ToString() != "")
+      {
+        errorMessage.enabled = false;
+        GI.Token = textdata["token"].ToString();
+        SceneManager.LoadScene(sceneToLoad);
+      }
+      //CHECK ERROR STRING
+      else if(textdata[0]["error"].ToString() == invalidString)
+      {
+        errorMessage.text = "Verkeerde email of passwoord";
+        errorMessage.enabled = true;
+      }
+    }
+    //ERROR! CANT LOGIN
+    else
+    {
+      errorMessage.text = "Verkeerde email of passwoord";
+      errorMessage.enabled = true;
+      Debug.LogError("Cannot connect to Login");
+      Debug.Log(LoginAccountWWW.error.ToString());
+    }
     }
 
     void LinkToCreateAccountURL() {
-
         Application.OpenURL(CreateAccountUrl);
-        CurrentMenu = "Login";
     }
 }
