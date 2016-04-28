@@ -14,8 +14,19 @@
 /* API */
 Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 {
+	// Authenticate
 	Route::post('authenticate', 'API\AuthenticateController@authenticate');
-    Route::get('authenticate/user', 'API\AuthenticateController@getAuthenticatedUser');
+
+	// Authenticated users only
+	Route::group(['middleware' => 'jwt.auth'], function() {
+
+		// GET user
+	    Route::get('authenticate/user', 'API\AuthenticateController@getAuthenticatedUser');
+
+	    // GET Projects
+	    Route::get('projects', 'API\ProjectsController@index');
+
+	});
 });
 
 Route::group(['middleware' => 'web'], function () {
