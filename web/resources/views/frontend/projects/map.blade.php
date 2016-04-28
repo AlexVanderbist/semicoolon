@@ -13,7 +13,7 @@
 		var defaultMap = JSON.parse('{!! json_encode(config('cms.defaultmap')) !!}');
 
 		var markers = [];
-		var map;
+
 		var mapStyle = [{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"labels.text","stylers":[{"visibility":"off"}]}];
 
 		var map_options = {
@@ -32,12 +32,21 @@
 			}
 	    }
 
-		function initMap(defaultMap) {
-		  map = new google.maps.Map(document.getElementById('map'), map_options);
-		}
+	    var infoWindow = new google.maps.InfoWindow();
+	    var map = new google.maps.Map(document.getElementById('map'), map_options);
 
-		function drop() {
-		  clearMarkers();
+	    function infoWindowText(title, description) {
+	    	return '<div id="content">'+
+				'<div id="siteNotice">'+
+				'</div>'+
+				'<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+				'<div id="bodyContent">'+
+				'<p>'+description+'</p>'+
+				'</div>'+
+				'</div>';
+	    }
+
+		function addMarkers() {
 		  for (var i = 0; i < projects.length; i++) {
 		    addMarkerWithTimeout(projects[i], i * 200);
 		  }
@@ -45,23 +54,27 @@
 
 		function addMarkerWithTimeout(project, timeout) {
 		  window.setTimeout(function() {
-		    markers.push(new google.maps.Marker({
+
+		  	var marker = new google.maps.Marker({
 		      position: {lat: parseFloat(project.lat), lng: parseFloat(project.lng)},
 		      map: map,
-		      animation: google.maps.Animation.DROP
-		    }));
+		      animation: google.maps.Animation.DROP,
+		      title: project.name
+		    });
+
+		    marker.addListener('click', function() {
+		    	infoWindow.setContent(infoWindowText(project.name, project.locationText));
+                infoWindow.open(map, marker);
+			});
+
+		  	infoWindows.push(infowindow)
+		    markers.push(marker);
+
+
 		  }, timeout);
 		}
 
-		function clearMarkers() {
-		  for (var i = 0; i < markers.length; i++) {
-		    markers[i].setMap(null);
-		  }
-		  markers = [];
-		}
-
-		initMap(defaultMap);
-		drop();
+		addMarkers();
 	});
 </script>
 
