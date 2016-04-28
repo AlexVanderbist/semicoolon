@@ -17,18 +17,4 @@ public class GameInfo : MonoBehaviour {
     get { return token; }
     set { token = value; }
   }
-
-
-  // Use this for initialization
-  void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-
-
 }
