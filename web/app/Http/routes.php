@@ -14,8 +14,8 @@
 /* API */
 Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 {
-	Route::resource('authenticate', 'API\AuthenticateController', ['only' => ['index']]);
 	Route::post('authenticate', 'API\AuthenticateController@authenticate');
+    Route::get('authenticate/user', 'API\AuthenticateController@getAuthenticatedUser');
 });
 
 Route::group(['middleware' => 'web'], function () {
@@ -61,7 +61,4 @@ Route::group(['middleware' => 'web'], function () {
 		'as' => 'backend.projects.confirm',
 		'uses' => 'Backend\ProjectsController@confirm'
 	]);
-
-
-	/* API */
 });

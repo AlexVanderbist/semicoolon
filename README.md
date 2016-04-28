@@ -8,18 +8,39 @@ Naamloos project voor Antwerpen.
 Base URL van de API is altijd `http://semicolon.multimediatechnology.be/api/v1/`
 
 ### Login
-* `POST /authenticate` (email, password)
-
+* `POST /authenticate` (email, password) - Generate a token for a user.
+  ```
+  {
+    "token": "TOKENHERE"
+  }
+  ```
   **When incorrect:**
   ```
   {
     "error": "invalid_credentials"
   }
   ```
-  **When logged in:**
+
+* `GET /authenticate/user` (token) - Returns the logged in user.
   ```
   {
-    "token": "TOKENHERE"
+    "user": {
+      "id": 1,
+      "firstname": "Admin",
+      "lastname": "Root",
+      "email": "test@host.local",
+      "created_at": null,
+      "updated_at": null,
+      "city": "",
+      "birthyear": 0,
+      "sex": 0
+    }
+  }
+  ```
+  **When incorrect:**
+  ```
+  {
+    "error": "token_invalid" // or token_expired or token_absent
   }
   ```
   
