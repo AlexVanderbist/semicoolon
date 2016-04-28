@@ -8,15 +8,22 @@ public class MobileInput : MonoBehaviour {
   public float minSwipeDistY;
   public float minSwipeDistX;
   public float speed = 0.5f;
+  public float stampSpeed = 0.7f;
 
   private Vector2 startPos;
   private PaperController pController;
   private StampController sController;
+
+  //ALL BOOLEANS THAT CONTROL THE INPUT AND MOVEMENT OF OBJECTS
   private bool moveObjects = false;
   private bool firstObject = false;
   private bool firstObjectCreated = false;
   private bool receiveInput = false;
   private bool readyToCheckStamps = false;
+  private bool readyToMoveStampToPaper = false;
+  private bool readyWithStampToPaper = false;
+  private bool stampSelected = false;
+
   private float step = 0f;
 
   // Use this for initialization
@@ -53,6 +60,7 @@ public class MobileInput : MonoBehaviour {
         }
       }
 
+      //PC Input, After first object is created
       if (receiveInput)
       {
         if (Input.GetButtonDown("Jump"))
@@ -63,8 +71,9 @@ public class MobileInput : MonoBehaviour {
         }
       }
 
+      //Move New and Focused Paper
       if (moveObjects)
-        {
+      {
           step += speed * Time.deltaTime;
           pController.moveNewPaper(step);
           pController.moveFocusPaper(step);
@@ -72,36 +81,65 @@ public class MobileInput : MonoBehaviour {
           {
             moveObjects = false;
             step = 0;
+            pController.DestroyCurrentPaper();
+            pController.setCurrentPaper();
             readyToCheckStamps = true;
-          pController.DestroyCurrentPaper();
-          pController.setCurrentPaper();
-        }
-        }
+          }
+      }
 
+      if (readyToMoveStampToPaper) {
+        if (!readyWithStampToPaper)
+        {
+          step += stampSpeed * Time.deltaTime;
+          sController.MoveStampToPaper(step);
+          if (step >= 1)
+          {
+            step = 0;
+            readyWithStampToPaper = true;
+          }
+        }
+        else
+        {
+          step += stampSpeed * Time.deltaTime;
+          sController.MoveStampBackToRestPosition(step);
+          if (step >= 1)
+          {
+            step = 0;
+            receiveInput = true;
+            readyToMoveStampToPaper = false;
+            readyWithStampToPaper = false;
+          }
+        }
+      }
+
+      //Evrything that checks and handles the stamps
       if (readyToCheckStamps)
       {
-        bool readyChecking = false;
         RaycastHit hitInfo = new RaycastHit();
         bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-        readyChecking = sController.CheckHit(hitInfo.collider.gameObject.name);
-        Debug.Log(hitInfo.collider.gameObject.name);
         if (Input.touchCount > 0)
         {
-          Touch touch = Input.touches[0];
-          
-          //bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(touch.position), out hitInfo);
-          if (hit)
+          if (stampSelected)
           {
-              readyChecking = sController.CheckHit(hitInfo.collider.gameObject.name);
+            if (hitInfo.collider.gameObject.name == "Paper")
+            {
+              readyToMoveStampToPaper = sController.CheckPaper(hitInfo.collider.gameObject);
+            }
+          }
+
+          if (hit && !readyToMoveStampToPaper)
+          {
+            stampSelected = sController.CheckStamp(hitInfo.collider.gameObject.name);
+          }
+
+          if (readyToMoveStampToPaper)
+          {
+            readyToCheckStamps = false;
+            stampSelected = false;
           }
          
-
-       }
-        if (readyChecking)
-        {
-          receiveInput = true;
-          readyToCheckStamps = false;
         }
+        Debug.Log(hitInfo.collider.gameObject.name);
       }
     }
 
