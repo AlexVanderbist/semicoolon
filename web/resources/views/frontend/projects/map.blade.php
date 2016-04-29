@@ -8,7 +8,7 @@
 
 		var projects = JSON.parse('{!! json_encode($projects) !!}');
 
-		//console.log(projects);
+		console.log(projects);
 
 		var defaultMap = JSON.parse('{!! json_encode(config('cms.defaultmap')) !!}');
 
