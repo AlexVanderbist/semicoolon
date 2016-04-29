@@ -3,8 +3,11 @@ using System.Collections;
 
 public class StampController : MonoBehaviour {
 
-  public GameObject redStamp, greenStamp, paper;
+  public GameObject redStamp, greenStamp;
+  public int maxScaleToAdd = 30;
   Vector3 restStateRedStamp, restStateGreenStamp;
+  Vector3 maxScaleRedStamp, maxScaleGreenStamp;
+  Vector3 greenScaleRestState, redScaleRestState;
 
   int currentQuestionNumber = 0;
   string selectedStamp = "";
@@ -17,6 +20,10 @@ public class StampController : MonoBehaviour {
   void Start () {
     restStateRedStamp = redStamp.transform.position;
     restStateGreenStamp = greenStamp.transform.position;
+    maxScaleRedStamp = new Vector3(redStamp.transform.localScale.x + maxScaleToAdd, redStamp.transform.localScale.y + maxScaleToAdd, redStamp.transform.localScale.z + maxScaleToAdd);
+    maxScaleGreenStamp = new Vector3(greenStamp.transform.localScale.x + maxScaleToAdd, greenStamp.transform.localScale.y + maxScaleToAdd, greenStamp.transform.localScale.z + maxScaleToAdd);
+    greenScaleRestState = greenStamp.transform.localScale;
+    redScaleRestState = redStamp.transform.localScale;
     GI = GetComponent<GameInfo>();
 	}
 
@@ -45,11 +52,13 @@ public class StampController : MonoBehaviour {
     if (selectedStamp == "green") {
       greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, hitInfo.transform.position, step);
       greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, -70), step);
+      greenStamp.transform.localScale = Vector3.Lerp(greenStamp.transform.localScale, maxScaleGreenStamp,step);
     }
     else if (selectedStamp == "red")
     {
       redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, hitInfo.transform.position, step);
       redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, -70), step);
+      redStamp.transform.localScale = Vector3.Lerp(redStamp.transform.localScale, maxScaleRedStamp, step);
     }
   }
 
@@ -59,11 +68,13 @@ public class StampController : MonoBehaviour {
     {
       greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, restStateGreenStamp, step);
       greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, 2.58f), step);
+      greenStamp.transform.localScale = Vector3.Lerp(greenStamp.transform.localScale, greenScaleRestState, step);
     }
     else if (selectedStamp == "red")
     {
       redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, restStateRedStamp, step);
       redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, 2.58f), step);
+      redStamp.transform.localScale = Vector3.Lerp(redStamp.transform.localScale, redScaleRestState, step);
     }
   }
 
