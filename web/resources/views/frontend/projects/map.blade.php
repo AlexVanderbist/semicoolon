@@ -6,7 +6,7 @@
 <script>
 	$(document).ready(function($){
 
-		var projects = JSON.parse('{!! json_encode($projects) !!}');
+		var projects = JSON.parse('{!! json_encode($projects, JSON_HEX_APOS) !!}');
 
 		console.log(projects);
 
@@ -72,7 +72,7 @@
 		      map: map,
 		      animation: google.maps.Animation.DROP,
 		      title: project.name,
-		      icon: pinSymbol("project.theme.hex_color")
+		      icon: pinSymbol(project.theme.hex_color)
 		    });
 
 		    marker.addListener('click', function() {
