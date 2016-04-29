@@ -59,8 +59,8 @@
                 </a>
 
                 <ul class="dropdown-menu" role="menu">
+                  <li><a href="{{ route('backend.dashboard') }}"><i class="fa fa-btn fa-gear"></i>Backend</a></li>
                   <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Log uit</a></li>
-                  <li><a href="{{ route('backend.dashboard') }}">Backend</a></li>
                 </ul>
               </li>
             @endif

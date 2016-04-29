@@ -8,7 +8,7 @@
 
 		var projects = JSON.parse('{!! json_encode($projects) !!}');
 
-		console.log(projects);
+		//console.log(projects);
 
 		var defaultMap = JSON.parse('{!! json_encode(config('cms.defaultmap')) !!}');
 
@@ -49,7 +49,7 @@
 
 		function addMarkers() {
 		  for (var i = 0; i < projects.length; i++) {
-		    addMarkerWithTimeout(projects[i], i * 200);
+		    addMarkerWithTimeout(projects[i], i * 500);
 		  }
 		}
 
@@ -68,7 +68,6 @@
                 infoWindow.open(map, marker);
 			});
 
-		  	infoWindows.push(infowindow)
 		    markers.push(marker);
 
 
