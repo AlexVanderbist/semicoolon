@@ -36,9 +36,10 @@ class ProjectsController extends Controller
         return view('frontend.projects.map', compact('projects'));
     }
 
-    public function info(Project $project)
+    public function info($id)
     {
-
+        $project = $this->projects->with('theme', 'creator')->findOrFail($id);
+        
         return view('frontend.projects.info', compact('project'));
     }
 
