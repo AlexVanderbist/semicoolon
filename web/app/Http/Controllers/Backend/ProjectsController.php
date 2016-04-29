@@ -51,7 +51,7 @@ class ProjectsController extends Controller
      */
     public function store(Requests\StoreProjectRequest $request)
     {
-        $this->projects->create($request->only('name', 'lat','lng', 'locationText','theme_id', 'project_creator'));
+        $this->projects->create($request->all());
 
         return redirect(route('backend.projects.index'))->with('stats', 'Het project is gemaakt!');
     }
@@ -82,7 +82,7 @@ class ProjectsController extends Controller
     {
         $project = $this->projects->findOrFail($id);
 
-        $project->fill($request->only('name', 'lat','lng', 'locationText','theme_id','project_creator'))->save();
+        $project->fill($request->all())->save();
 
         return redirect(route('backend.projects.edit', $project->id))->with('status', 'Het project is geupdate!');
     }
