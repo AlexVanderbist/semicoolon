@@ -41,7 +41,8 @@
 				'</div>'+
 				'<h1 id="firstHeading" class="firstHeading">'+project.name+'</h1>'+
 				'<div id="bodyContent">'+
-				'<p>'+project.locationText+'</p>'+
+				'<p><strong>'+project.locationText+'</strong></p>'+
+				'<p>'+project.description+'</p>'+
 				'<p><a href="/projecten/'+project.id+'">Bekijk project</a></p>'+
 				'</div>'+
 				'</div>';
