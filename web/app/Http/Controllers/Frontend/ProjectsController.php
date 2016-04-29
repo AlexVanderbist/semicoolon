@@ -30,6 +30,12 @@ class ProjectsController extends Controller
         return view('frontend.projects.index', compact('projects'));
     }
 
+    public function map() {
+        $projects = $this->projects->get();
+
+        return view('frontend.projects.map', compact('projects'));
+    }
+
     public function info(Project $project)
     {
 

@@ -11,6 +11,24 @@
 |
 */
 
+/* API */
+Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
+{
+	// Authenticate
+	Route::post('authenticate', 'API\AuthenticateController@authenticate');
+
+	// Authenticated users only
+	Route::group(['middleware' => 'jwt.auth'], function() {
+
+		// GET user
+	    Route::get('authenticate/user', 'API\AuthenticateController@getAuthenticatedUser');
+
+	    // GET Projects
+	    Route::get('projects', 'API\ProjectsController@index');
+
+	});
+});
+
 Route::group(['middleware' => 'web'], function () {
     
     /* AUTH */
@@ -18,7 +36,11 @@ Route::group(['middleware' => 'web'], function () {
 
 
     /* FRONTEND */
-    Route::get('/', 'HomeController@index');
+
+	Route::get('/', [
+		'as' => 'frontend.projects.map',
+		'uses' => 'Frontend\ProjectsController@map'
+	]);
 
 	Route::get('projecten', [
 		'as' => 'frontend.projects.index',
@@ -54,7 +76,4 @@ Route::group(['middleware' => 'web'], function () {
 		'as' => 'backend.projects.confirm',
 		'uses' => 'Backend\ProjectsController@confirm'
 	]);
-
-
-	/* API */
 });

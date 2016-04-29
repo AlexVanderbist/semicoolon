@@ -1,6 +1,16 @@
 
-body {
+body, html {
     font-family: 'Lato';
+    height: 100%;
+    width: 100%;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    position: relative;
+    top: 0;
 }
 
 .fa-btn {
