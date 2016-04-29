@@ -33,7 +33,16 @@
 	    }
 
 	    var infoWindow = new google.maps.InfoWindow();
+
+		google.maps.event.addListener(infoWindow, 'closeclick', function () {
+			radiusCircle.setRadius(null);
+		});
+
 	    var map = new google.maps.Map(document.getElementById('map'), map_options);
+
+		var radiusCircle = new google.maps.Circle();
+
+		//circle.setMap(null);
 
 	    function infoWindowText(project) {
 	    	return '<div id="content">'+
@@ -79,6 +88,19 @@
 		    marker.addListener('click', function() {
 		    	infoWindow.setContent(infoWindowText(project));
                 infoWindow.open(map, marker);
+
+                var options = {
+					strokeColor: '#000000',
+					strokeOpacity: 0.5,
+					strokeWeight: 1,
+					fillColor: project.theme.hex_color,
+					fillOpacity: 0.30,
+					map: map,
+					center: new google.maps.LatLng(project.lat, project.lng),
+					radius: project.radius
+				};
+
+				radiusCircle.setOptions(options);
 			});
 
 		    markers.push(marker);
