@@ -6,7 +6,7 @@
 <script>
 	$(document).ready(function($){
 
-		var projects = JSON.parse('{!! json_encode($projects, JSON_HEX_APOS) !!}');
+		var projects = {!! $projects !!};
 
 		console.log(projects);
 
