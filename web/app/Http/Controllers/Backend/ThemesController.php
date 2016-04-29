@@ -73,7 +73,7 @@ class ThemesController extends Controller
      */
     public function update(Requests\UpdateThemeRequest $request, $id)
     {
-        $themes = $this->themes->findOrFail($id);
+        $theme = $this->themes->findOrFail($id);
 
         $theme->fill($request->only('name', 'hex_color'))->save();
 

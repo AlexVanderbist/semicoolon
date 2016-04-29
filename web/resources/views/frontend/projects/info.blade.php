@@ -6,7 +6,74 @@
 
     <div class="container">
         <h1>{{$project->name}}</h1>
+        <hr>
         <h3>{{$project->locationText}}</h3>
-        <p>door {{$project->creator->full_name}} op {{$project->created_at}}</p>
+        <p><span>door {{$project->creator->full_name}} op {{$project->created_at}}</span></p>
+        <div id="smallmap"></div>
+        <p>{!! $project->description !!}</p>
     </div>
+
+<script>
+    $(document).ready(function($){
+
+        var projects = {!! $project !!};
+
+        console.log(projects);
+
+        var defaultMap = JSON.parse('{!! json_encode(config('cms.defaultmap')) !!}');
+
+        var markers = [];
+
+        var mapStyle = [{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"labels.text","stylers":[{"visibility":"off"}]}];
+
+        var map_options = {
+            center: new google.maps.LatLng(projects.lat, projects.lng),
+            zoom: parseInt(defaultMap.zoom)+2,
+            panControl: false,
+            zoomControl: true,
+            mapTypeControl: false,
+            streetViewControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            scrollwheel: false,
+            styles: mapStyle,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.SMALL,
+                position: google.maps.ControlPosition.BOTTOM_CENTER
+            }
+        }
+
+        var infoWindow = new google.maps.InfoWindow();
+        var map = new google.maps.Map(document.getElementById('smallmap'), map_options);
+
+        function pinSymbol(color) {
+            return {
+                path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+                fillColor: color,
+                fillOpacity: 1,
+                strokeColor: '#000',
+                strokeWeight: 2,
+                scale: 1,
+           };
+        }
+
+        function addMarkerWithTimeout(project, timeout) {
+          window.setTimeout(function() {
+
+            var marker = new google.maps.Marker({
+              position: {lat: parseFloat(project.lat), lng: parseFloat(project.lng)},
+              map: map,
+              animation: google.maps.Animation.DROP,
+              title: project.name,
+              icon: pinSymbol(project.theme.hex_color)
+            });
+
+            markers.push(marker);
+
+
+          }, timeout);
+        }
+
+        addMarkerWithTimeout(projects, 500);
+    });
+</script>
 @endsection

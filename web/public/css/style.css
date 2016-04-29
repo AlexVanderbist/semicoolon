@@ -1,20 +1,20 @@
 
+
+/*BODY*/
+
+.panel-heading, .btn-primary{
+	background-color: #219dc8 !important;
+	border-color: #219dc8 !important;
+	color: white !important;
+}
+.btn-link, a{
+	color: #219dc8 !important;
+}
+
 body, html {
     font-family: 'Lato';
     height: 100%;
     width: 100%;
-}
-
-#map {
-    height: 100%;
-    width: 100%;
-    left: 0;
-    position: relative;
-    top: 0;
-}
-
-.fa-btn {
-    margin-right: 6px;
 }
 
 /* NAV */
@@ -49,13 +49,23 @@ body, html {
 	background-color: #666666;
 }
 
-/*BODY*/
+/* HOME */ 
 
-.panel-heading, .btn-primary{
-	background-color: #219dc8 !important;
-	border-color: #219dc8 !important;
-	color: white !important;
+
+#map {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    position: relative;
+    top: 0;
 }
-.btn-link, a{
-	color: #219dc8 !important;
+
+.fa-btn {
+    margin-right: 6px;
+}
+
+/* INFO */
+
+#smallmap {
+	height: 300px;
 }

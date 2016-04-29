@@ -15,6 +15,11 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('description','Beschrijving') !!}
+        {!! Form::textarea('description', null, ['class' => 'form-control', 'id'=>'description']) !!}
+    </div>
+
+    <div class="form-group">
         {!! Form::label('Exacte locatie') !!}
 
         <div class="form-group">
@@ -59,9 +64,19 @@
     {!! Form::close() !!}
 
     <script>
+
+        // Editor ///////
+        $('#description').trumbowyg({
+            //
+        });
+
+        // Map //////////
+
+        var defaultMap = JSON.parse('{!! json_encode(config('cms.defaultmap')) !!}');
+
         $('#locationSelector').locationpicker({
-            location: {latitude: ($('#lat').val() || 51.218686), longitude: $('#lng').val() || 4.417458},
-            radius: 300,
+            location: {latitude: ($('#lat').val() || parseFloat(defaultMap.lat)), longitude: $('#lng').val() || parseFloat(defaultMap.lng)},
+            radius: $('#radius').val() || parseInt(defaultMap.radius),
             zoom: 13,
             scrollwheel: true,
             inputBinding: {

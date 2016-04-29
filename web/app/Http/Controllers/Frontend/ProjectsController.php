@@ -31,14 +31,15 @@ class ProjectsController extends Controller
     }
 
     public function map() {
-        $projects = $this->projects->get();
+        $projects = $this->projects->with('theme', 'creator')->get();
 
         return view('frontend.projects.map', compact('projects'));
     }
 
-    public function info(Project $project)
+    public function info($id)
     {
-
+        $project = $this->projects->with('theme', 'creator')->findOrFail($id);
+        
         return view('frontend.projects.info', compact('project'));
     }
 
