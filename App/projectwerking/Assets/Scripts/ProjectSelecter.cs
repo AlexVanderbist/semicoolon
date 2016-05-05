@@ -11,6 +11,7 @@ public class ProjectSelecter : MonoBehaviour
   public GameObject levelButtonPrefab;
   public GameObject levelButtonContainer;
   public string url = "http://semicolon.multimediatechnology.be/api/v1/projects?token=";
+  public string sceneToLoad = "MainScene";
 
   static int numberOfProjects = 0;
   int counter = 0;
@@ -25,32 +26,33 @@ public class ProjectSelecter : MonoBehaviour
 
   IEnumerator Start()
   {
+    ProjectNameList = new List<string>();
+    placeNameList = new List<string>();
     GI = GetComponent<GameInfo>();
-    url += GI.Token;
-    //StartCoroutine( GetProjects());
-    www = new WWW(url);
-    yield return www;
-    if (www.error == null)
-    {
-      textData = JsonMapper.ToObject(www.text);
+      url += GI.Token;
+      //StartCoroutine( GetProjects());
+      www = new WWW(url);
+      yield return www;
+      if (www.error == null)
+      {
+        textData = JsonMapper.ToObject(www.text);
 
-      numberOfProjects = textData.Count;
-      for (int i = 0; i <= numberOfProjects; i++)
-      {
-        ProjectNameList.Add(textData["projects"][i][projectNameString].ToString());
-        placeNameList.Add(textData["projects"][i][placeNameString].ToString());
+        numberOfProjects = textData["projects"].Count;
+        for (int i = 0; i < numberOfProjects; i++)
+        {
+          ProjectNameList.Add(textData["projects"][i][projectNameString].ToString());
+          placeNameList.Add(textData["projects"][i][placeNameString].ToString());
+        }
+        SpawnButtons();
       }
-      SpawnButtons();
-    }
-    else
-    {
-      if (counter < 5)
+      else
       {
-        counter++;
-        Debug.Log("ERROR: " + www.error);
+        if (counter < 5)
+        {
+          counter++;
+          Debug.Log("ERROR: " + www.error);
+        }
       }
-    }
-    //SpawnButtons();
   }
 
   private void SpawnButtons()
@@ -60,7 +62,7 @@ public class ProjectSelecter : MonoBehaviour
       GameObject container = Instantiate(levelButtonPrefab) as GameObject;
       container.GetComponentInChildren<Text>().text = ProjectNameList[i] + "\n" + placeNameList[i];
       container.transform.SetParent(levelButtonContainer.transform, false);
-      container.GetComponent<Button>().onClick.AddListener(() => LoadLevel("MainScene", i));
+      container.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, i));
     }
   }
 

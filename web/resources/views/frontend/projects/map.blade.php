@@ -35,7 +35,7 @@
 	    var infoWindow = new google.maps.InfoWindow();
 
 		google.maps.event.addListener(infoWindow, 'closeclick', function () {
-			radiusCircle.setRadius(null);
+			radiusCircle.setRadius(0);
 		});
 
 	    var map = new google.maps.Map(document.getElementById('map'), map_options);
@@ -97,7 +97,7 @@
 					fillOpacity: 0.30,
 					map: map,
 					center: new google.maps.LatLng(project.lat, project.lng),
-					radius: project.radius
+					radius: parseInt(project.radius)
 				};
 
 				radiusCircle.setOptions(options);

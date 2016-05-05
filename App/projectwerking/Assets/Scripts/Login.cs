@@ -13,7 +13,6 @@ public class Login : MonoBehaviour {
     public string sceneToLoad = "ProjectsScene";
     public string CreateAccountUrl = "http://semicolon.multimediatechnology.be";
     public string LoginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
-    public InputField passwordIF;
 
     private string invalidString = "invalid_credentials";
 

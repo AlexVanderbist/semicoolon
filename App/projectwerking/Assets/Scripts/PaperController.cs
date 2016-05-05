@@ -30,6 +30,7 @@ public class PaperController : MonoBehaviour
   void Awake() {
     tMeshText = tMeshPrefab.GetComponent<TextMesh>();
     tMeshTitle = tMeshTitlePrefab.GetComponent<TextMesh>();
+    testTextBox.enabled = false;
   }
 
   public void SetBeginValues() {
@@ -48,7 +49,6 @@ public class PaperController : MonoBehaviour
       numberOfQuestions = textData.Count;
       for (int i = 0; i < numberOfQuestions; i++)
       {
-        testTextBox.text = "Proccesed: " + (i+1) + "/" + numberOfQuestions;
         QuestionList.Add(textData[i][questionValue].ToString());
       }
       Debug.Log(QuestionList.Count);
@@ -59,6 +59,7 @@ public class PaperController : MonoBehaviour
       if(counter < 5)
       {
         testTextBox.text = "error, kijk internetverbinding na";
+        testTextBox.enabled = true;
         counter++;
         Debug.Log("ERROR: " + www.error);
         StartCoroutine(Start());
