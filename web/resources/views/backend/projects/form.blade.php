@@ -58,6 +58,19 @@
         {!! Form::text('project_creator', Auth::user()->id, ['class' => 'form-control', 'readonly']) !!}
     </div>
 
+    <div class="form-group">
+        {!! Form::label('youtube_url','Youtube video','Aangemaakt door') !!}
+        <p>Plak hier de youtubeURL</p>
+        {!! Form::text('youtube_url', null, ['class' => 'form-control']) !!}
+        @if ($project->youtube_url !== '')
+        <div class="col-md-6 col-md-offset-3">
+            <div class="ytpreview embed-responsive embed-responsive-16by9">
+                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{ $project->youtubeID($project->youtube_url)}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        @endif
+    </div>
+
     {!! Form::submit($project->exists ? 'Project opslaan' : 'Nieuw project maken', ['class' => 'btn btn-primary']) !!}
     <a href="{{ route('backend.projects.index') }}" class="">of ga terug naar alle projecten.</a>
 

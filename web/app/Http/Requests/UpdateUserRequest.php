@@ -28,10 +28,7 @@ class UpdateUserRequest extends Request
             'password' => ['required_with:password_confirmation', 'confirmed'],
             'firstname' => ['required'],
             'lastname' => ['required'],
-            'admin' => ['required'],
-            'sex' => ['required'],
-            'birthyear' => ['required'],
-            'city' => ['required']
+            'admin' => ['required']
         ];
     }
 }

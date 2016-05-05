@@ -28,10 +28,7 @@ class StoreUserRequest extends Request
             'lastname' => ['required'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'confirmed'],
-            'admin' => ['required'],
-            'sex' => ['required'],
-            'birthyear' => ['required'],
-            'city' => ['required']
+            'admin' => ['required']
         ];
     }
 }

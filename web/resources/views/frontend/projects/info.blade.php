@@ -11,6 +11,13 @@
         <p><span>door {{$project->creator->full_name}} op {{$project->created_at}}</span></p>
         <div id="smallmap"></div>
         <p>{!! $project->description !!}</p>
+        @if ($project->youtube_url !== '')
+        <div class="col-md-6 col-md-offset-3">
+            <div class="ytpreview embed-responsive embed-responsive-16by9">
+                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{ $project->youtubeID($project->youtube_url)}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        @endif
     </div>
 
 <script>

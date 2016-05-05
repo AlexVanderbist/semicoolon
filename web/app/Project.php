@@ -19,7 +19,8 @@ class Project extends Model
         'radius',
         'locationText',
         'theme_id',
-        'project_creator'
+        'project_creator',
+        'youtube_url'
     ];
 
     public function creator()
@@ -37,5 +38,9 @@ class Project extends Model
         return $this->hasMany(Stage::class);
     }
 
-
+    public function youtubeID($url)
+    {
+        parse_str( parse_url( $url, PHP_URL_QUERY ), $id );
+        return $id['v'];
+    }
 }
