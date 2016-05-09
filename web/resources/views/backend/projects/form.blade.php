@@ -61,14 +61,12 @@
     <div class="form-group">
         {!! Form::label('youtube_url','Youtube video','Aangemaakt door') !!}
         <p>Plak hier de youtubeURL</p>
-        {!! Form::text('youtube_url', null, ['class' => 'form-control']) !!}
-        @if ($project->youtube_url !== '')
-        <div class="col-md-6 col-md-offset-3">
+        {!! Form::text('youtube_url', null, ['class' => 'form-control', 'id' => 'yturl']) !!}
+        <div class="col-md-6 col-md-offset-3" id="yt">
             <div class="ytpreview embed-responsive embed-responsive-16by9">
-                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{ $project->youtubeID($project->youtube_url)}}" frameborder="0" allowfullscreen></iframe>
+                <iframe class="center-block" id="ytpreview" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
             </div>
-        </div>
-        @endif
+        </div>  
     </div>
 
     {!! Form::submit($project->exists ? 'Project opslaan' : 'Nieuw project maken', ['class' => 'btn btn-primary']) !!}
@@ -100,6 +98,29 @@
             },
             enableAutocomplete: true,
             enableReverseGeocode: true
+        });
+
+        function getID(url){
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            return (match&&match[7].length==11)? match[7] : false;
+        }
+
+        $( document ).ready(function() {
+            $('#ytpreview').attr("src","https://www.youtube.com/embed/" + getID($('#yturl').val()));
+            if($('#yturl').val() == '' || getID($('#yturl').val()) == false){         
+                $( '#yt' ).fadeOut(900);
+            }
+            else{$( '#yt' ).fadeIn(900);}
+        });
+
+        $('#yturl').bind('input', function() {
+            $('#ytpreview').attr("src","https://www.youtube.com/embed/" + getID($(this).val()));
+            if($('#yturl').val() == '' || getID($('#yturl').val()) == false){         
+                $( '#yt' ).fadeOut(900);
+            }
+            else{$( '#yt' ).fadeIn(900);}
+            console.log(getID($('#yturl').val()));
         });
     </script>
 
