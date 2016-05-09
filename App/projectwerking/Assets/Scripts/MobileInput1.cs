@@ -23,9 +23,11 @@ public class MobileInput1 : MonoBehaviour {
   private bool readyToMoveStampToPaper = false;
   private bool readyWithStampToPaper = false;
   private bool stampSelected = false;
+  private bool extraStampAnimationReady = false;
 
   //MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
   private float step = 0f;
+  private float extraStep = 0f;
 
   //DRAGING OBJECTS
   private float dist;
@@ -105,8 +107,8 @@ public class MobileInput1 : MonoBehaviour {
           sController.MoveStampToPaper(step);
           if (step >= 1)
           {
-            step = 0;
-            readyWithStampToPaper = true;
+                step = 0;
+                readyWithStampToPaper = true;
           }
         }
         else
@@ -194,8 +196,12 @@ public class MobileInput1 : MonoBehaviour {
           if (hitInfo.collider.gameObject.name == "Paper")
           {
             stampSelected = sController.CheckStamp(toDrag.name);
-            readyToMoveStampToPaper = sController.CheckPaper(hitInfo.collider.gameObject);
+            readyToMoveStampToPaper = sController.setRaycastHit(hitInfo);
             readyToCheckStamps = false;
+          }
+          else
+          {
+            sController.resetStamps();
           }
           dragging = false;
         }

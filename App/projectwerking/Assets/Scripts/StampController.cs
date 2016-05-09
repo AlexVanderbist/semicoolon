@@ -9,11 +9,13 @@ public class StampController : MonoBehaviour {
   Vector3 maxScaleRedStamp, maxScaleGreenStamp;
   Vector3 greenScaleRestState, redScaleRestState;
 
+  float rotationZ = 0;
+  Vector3 extraStampDest;
   int currentQuestionNumber = 0;
   string selectedStamp = "";
   string answer = "";
   public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
-  GameObject hitInfo;
+  RaycastHit hitInfo;
   GameInfo GI;
 
   // Use this for initialization
@@ -31,16 +33,14 @@ public class StampController : MonoBehaviour {
     bool readyChecking = false;
       if (hit == "RedStamp")
       {
-        redStamp.transform.position = new Vector3(redStamp.transform.position.x, restStateRedStamp.y + 20, redStamp.transform.position.z);
-        greenStamp.transform.position = restStateGreenStamp;
+        rotationZ = getRotation(redStamp);
         selectedStamp = "red";
         answer = "false";
         readyChecking = true;
       }
       else if (hit == "GreenStamp")
       {
-        greenStamp.transform.position = new Vector3(greenStamp.transform.position.x, restStateGreenStamp.y + 20, greenStamp.transform.position.z);
-        redStamp.transform.position = restStateRedStamp;
+        rotationZ = getRotation(greenStamp);
         selectedStamp = "green";
         answer = "true";
         readyChecking = true;
@@ -48,16 +48,48 @@ public class StampController : MonoBehaviour {
     return readyChecking;
   }
 
+  public void resetStamps() {
+    greenStamp.transform.position = restStateGreenStamp;
+    redStamp.transform.position = restStateRedStamp;
+  }
+
+  private float getRotation(GameObject stamp)
+  {
+    float height = stamp.transform.position.y;
+    float rotation = 0f;
+    if (height < -110f)
+    {
+      rotation = -70f;
+    }
+    else if (height >= -110f && height < -65f)
+    {
+      rotation = -75f;
+    }
+    else if (height >= -65f && height < 0)
+    {
+      rotation = -80f;
+    }
+    else if (height >= 0f && height < 50)
+    {
+      rotation = -85f;
+    }
+    else if (height >= 50f)
+    {
+      rotation = -90f;
+    }
+    return rotation;
+  }
+
   public void MoveStampToPaper(float step) {
     if (selectedStamp == "green") {
-      greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, new Vector3(0,0,hitInfo.transform.position.z), step);
-      greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, -70), step);
+      greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, hitInfo.point, step);
+      greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, rotationZ), step);
       greenStamp.transform.localScale = Vector3.Lerp(greenStamp.transform.localScale, maxScaleGreenStamp,step);
     }
     else if (selectedStamp == "red")
     {
-      redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, new Vector3(0, 0, hitInfo.transform.position.z), step);
-      redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, -70), step);
+      redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, hitInfo.point, step);
+      redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, rotationZ), step);
       redStamp.transform.localScale = Vector3.Lerp(redStamp.transform.localScale, maxScaleRedStamp, step);
     }
   }
@@ -78,7 +110,12 @@ public class StampController : MonoBehaviour {
     }
   }
 
-  public bool CheckPaper(GameObject hit) {
+  public bool setRaycastHit(RaycastHit hit) {
+    hitInfo = hit;
+    return true;
+  }
+
+  public bool CheckPaper(RaycastHit hit) {
     bool stampIsReady = false;
     if (hit.transform.name == "Paper")
     {
