@@ -15,9 +15,9 @@ public class MobileInput : MonoBehaviour {
   private StampController sController;
 
   //ALL BOOLEANS THAT CONTROL THE INPUT AND MOVEMENT OF OBJECTS
-  private bool moveObjects = false;
-  private bool firstObject = false;
-  private bool firstObjectCreated = false;
+  private bool movePapers = false;
+  private bool firstPaper = false;
+  private bool firstPaperCreated = false;
   private bool receiveInput = false;
   private bool readyToCheckStamps = false;
   private bool readyToMoveStampToPaper = false;
@@ -27,28 +27,35 @@ public class MobileInput : MonoBehaviour {
   //MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
   private float step = 0f;
 
+  //DRAGING OBJECTS
+  private float dist;
+  private bool dragging = false;
+  private Vector3 offset;
+  private Transform toDrag;
+
   // Use this for initialization
   void Start () {
     pController = GetComponent<PaperController>();
     sController = GetComponent<StampController>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+  // Update is called once per frame
+  void Update()
+  {
     //Wait till questions are loaded
     if (pController.ListIsReady)
     {
       //Spawn First Object
-      if (!firstObjectCreated)
+      if (!firstPaperCreated)
       {
         pController.SetBeginValues();
         pController.createNewPaper();
-        firstObjectCreated = true;
-        firstObject = true;
+        firstPaperCreated = true;
+        firstPaper = true;
       }
 
       //Move First Object
-      if (firstObject)
+      if (firstPaper)
       {
         step += speed * Time.deltaTime;
         pController.moveNewPaper(step);
@@ -56,7 +63,7 @@ public class MobileInput : MonoBehaviour {
 
         if (step >= 1f)
         {
-          firstObject = false;
+          firstPaper = false;
           step = 0f;
           readyToCheckStamps = true;
         }
@@ -68,29 +75,30 @@ public class MobileInput : MonoBehaviour {
         if (Input.GetButtonDown("Jump"))
         {
           pController.createNewPaper();
-          moveObjects = true;
+          movePapers = true;
           receiveInput = false;
         }
       }
 
       //Move New and Focused Paper
-      if (moveObjects)
+      if (movePapers)
       {
-          step += speed * Time.deltaTime;
-          pController.moveNewPaper(step);
-          pController.moveFocusPaper(step);
-          if (step >= 1)
-          {
-            moveObjects = false;
-            step = 0;
-            pController.DestroyCurrentPaper();
-            pController.setCurrentPaper();
-            readyToCheckStamps = true;
-          }
+        step += speed * Time.deltaTime;
+        pController.moveNewPaper(step);
+        pController.moveFocusPaper(step);
+        if (step >= 1)
+        {
+          movePapers = false;
+          step = 0;
+          pController.DestroyCurrentPaper();
+          pController.setCurrentPaper();
+          readyToCheckStamps = true;
+        }
       }
 
       //Move selected stamp when paper has been hit
-      if (readyToMoveStampToPaper) {
+      if (readyToMoveStampToPaper)
+      {
         if (!readyWithStampToPaper)
         {
           step += stampSpeed * Time.deltaTime;
@@ -115,31 +123,79 @@ public class MobileInput : MonoBehaviour {
         }
       }
 
-      //Evrything that checks and handles the stamps
+      //  //Evrything that checks and handles the stamps
+      //  if (readyToCheckStamps)
+      //  {
+      //    RaycastHit hitInfo = new RaycastHit();
+      //    bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+      //    if (Input.touchCount > 0)
+      //    {
+      //      if (stampSelected)
+      //      {
+      //        if (hitInfo.collider.gameObject.name == "Paper")
+      //        {
+      //          readyToMoveStampToPaper = sController.CheckPaper(hitInfo.collider.gameObject);
+      //        }
+      //      }
+
+      //      if (hit && !readyToMoveStampToPaper)
+      //      {
+      //        stampSelected = sController.CheckStamp(hitInfo.collider.gameObject.name);
+      //      }
+
+      //      if (readyToMoveStampToPaper)
+      //      {
+      //        readyToCheckStamps = false;
+      //        stampSelected = false;
+      //      }
+      //    }
+      //  }
+
+      //DRAG STAMPS
       if (readyToCheckStamps)
       {
-        RaycastHit hitInfo = new RaycastHit();
-        bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-        if (Input.touchCount > 0)
+        Vector3 v3;
+
+        if (Input.touchCount != 1)
         {
-          if (stampSelected)
-          {
-            if (hitInfo.collider.gameObject.name == "Paper")
-            {
-              readyToMoveStampToPaper = sController.CheckPaper(hitInfo.collider.gameObject);
-            }
-          }
+          dragging = false;
+          return;
+        }
 
-          if (hit && !readyToMoveStampToPaper)
-          {
-            stampSelected = sController.CheckStamp(hitInfo.collider.gameObject.name);
-          }
+        Touch touch = Input.touches[0];
+        Vector3 pos = touch.position;
 
-          if (readyToMoveStampToPaper)
+        if (touch.phase == TouchPhase.Began)
+        {
+          RaycastHit hit;
+          Ray ray = Camera.main.ScreenPointToRay(pos);
+          if (Physics.Raycast(ray, out hit) && (hit.collider.tag == "Stamp"))
           {
+            Debug.Log("Here");
+            toDrag = hit.transform;
+            dist = hit.transform.position.z - Camera.main.transform.position.z;
+            v3 = new Vector3(pos.x, pos.y, dist);
+            v3 = Camera.main.ScreenToWorldPoint(v3);
+            offset = toDrag.position - v3;
+            dragging = true;
+          }
+        }
+        if (dragging && touch.phase == TouchPhase.Moved)
+        {
+          v3 = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
+          v3 = Camera.main.ScreenToWorldPoint(v3);
+          toDrag.position = v3 + offset;
+        }
+        if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
+        {
+          RaycastHit hitInfo = new RaycastHit();
+          bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+          if (hitInfo.collider.gameObject.name == "Paper")
+          {
+            readyToMoveStampToPaper = sController.CheckPaper(hitInfo.collider.gameObject);
             readyToCheckStamps = false;
-            stampSelected = false;
           }
+          dragging = false;
         }
       }
     }
@@ -147,6 +203,7 @@ public class MobileInput : MonoBehaviour {
     //RightSwipe when stampController is ready
     if (receiveInput)
     {
+      //OLDCODE
       if (Input.touchCount > 0)
       {
         Touch touch = Input.touches[0];
@@ -159,7 +216,7 @@ public class MobileInput : MonoBehaviour {
             startPos = touch.position;
             break;
 
-            case TouchPhase.Ended:
+          case TouchPhase.Ended:
 
             float swipeDistHorizontal = (new Vector3(touch.position.x, 0, 0) - new Vector3(startPos.x, 0, 0)).magnitude;
 
@@ -171,13 +228,13 @@ public class MobileInput : MonoBehaviour {
               if (swipeHValue > 0)//right swipe
               {
                 pController.createNewPaper();
-                moveObjects = true;
+                movePapers = true;
                 receiveInput = false;
               }
 
               else if (swipeHValue < 0)//left swipe
               {
-              //
+                //
 
               }
             }
