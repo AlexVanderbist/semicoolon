@@ -50,13 +50,13 @@ public class StampController : MonoBehaviour {
 
   public void MoveStampToPaper(float step) {
     if (selectedStamp == "green") {
-      greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, hitInfo.transform.position, step);
+      greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, new Vector3(0,0,hitInfo.transform.position.z), step);
       greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, -70), step);
       greenStamp.transform.localScale = Vector3.Lerp(greenStamp.transform.localScale, maxScaleGreenStamp,step);
     }
     else if (selectedStamp == "red")
     {
-      redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, hitInfo.transform.position, step);
+      redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, new Vector3(0, 0, hitInfo.transform.position.z), step);
       redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, -70), step);
       redStamp.transform.localScale = Vector3.Lerp(redStamp.transform.localScale, maxScaleRedStamp, step);
     }
