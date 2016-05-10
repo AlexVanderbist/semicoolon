@@ -99,13 +99,13 @@ public class StampController : MonoBehaviour {
     if (selectedStamp == "green")
     {
       greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, restStateGreenStamp, step);
-      greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, 2.58f), step);
+      greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, 340f), step);
       greenStamp.transform.localScale = Vector3.Lerp(greenStamp.transform.localScale, greenScaleRestState, step);
     }
     else if (selectedStamp == "red")
     {
       redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, restStateRedStamp, step);
-      redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, 2.58f), step);
+      redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, 340f), step);
       redStamp.transform.localScale = Vector3.Lerp(redStamp.transform.localScale, redScaleRestState, step);
     }
   }
