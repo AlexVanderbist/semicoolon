@@ -19,13 +19,34 @@
         </div>
         @endif
     </div>
+    <div class="reactions container">
+        <h2>Reacties</h2>
+        <hr>
+
+        <div class="reactform">
+            {!! Form::model($opinion, [
+                'method' => 'post',
+                'route' => ['frontend.projects.opinionstore', $project->id],
+                'class' => 'form-horizontal'
+            ]) !!}
+
+            <div class="form-group">
+                {!! Form::label('opinion','Reactie') !!}
+                <p>Ingelogd als <strong>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</strong></p>
+                {!! Form::textarea('opinion', null, ['class' => 'form-control']) !!}
+            </div>
+
+            {!! Form::submit('Reageren', ['class' => 'btn btn-primary']) !!}
+            {!! Form::close() !!}
+        </div>
+    </div>
 
 <script>
     $(document).ready(function($){
 
         var projects = {!! $project !!};
 
-        console.log(projects);
+        /*console.log(projects);*/
 
         var defaultMap = JSON.parse('{!! json_encode(config('cms.defaultmap')) !!}');
 
