@@ -52,6 +52,12 @@ Route::group(['middleware' => 'web'], function () {
 		'uses' => 'Frontend\ProjectsController@info'
 	]);
 
+	Route::post('projecten/{project}/react', [
+		'as' => 'frontend.projects.opinionstore',
+		'uses' => 'Frontend\ProjectsController@opinionstore'
+	]);
+
+
 
 	/* BACKEND */
 	Route::get('/backend', [
