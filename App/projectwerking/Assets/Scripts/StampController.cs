@@ -12,7 +12,7 @@ public class StampController : MonoBehaviour {
   float rotationZ = 0;
   Vector3 extraStampDest;
   int currentQuestionNumber = 0;
-  string selectedStamp = "";
+  public string selectedStamp = "";
   string answer = "";
   public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
   RaycastHit hitInfo;
