@@ -38,6 +38,11 @@ class Project extends Model
         return $this->hasMany(Stage::class);
     }
 
+    public function proposals()
+    {
+        return $this->hasMany(Proposal::class);
+    }
+
     public function youtubeID($url)
     {
         parse_str( parse_url( $url, PHP_URL_QUERY ), $id );

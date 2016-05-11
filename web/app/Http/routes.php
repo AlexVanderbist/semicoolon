@@ -59,7 +59,7 @@ Route::group(['middleware' => 'web'], function () {
 
 
 
-	/* BACKEND */
+	/* BACKEND */ // add middleware around this instead of on the parent constructor?
 	Route::get('/backend', [
 		'as' => 'backend.dashboard',
 		'uses' => 'Backend\DashboardController@index'
@@ -82,4 +82,7 @@ Route::group(['middleware' => 'web'], function () {
 		'as' => 'backend.projects.confirm',
 		'uses' => 'Backend\ProjectsController@confirm'
 	]);
+
+	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show']]);
+
 });
