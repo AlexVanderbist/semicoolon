@@ -10,8 +10,13 @@ public class ProjectSelecter : MonoBehaviour
 {
   public GameObject levelButtonPrefab;
   public GameObject levelButtonContainer;
+  public RectTransform containerRecT;
+  public RectTransform buttonRecT;
   public string url = "http://semicolon.multimediatechnology.be/api/v1/projects?token=";
+  public string readMoreUrl = "http://semicolon.multimediatechnology.be/projecten/";
   public string sceneToLoad = "MainScene";
+
+  public Sprite[] tempImageStock;
 
   static int numberOfProjects = 0;
   int counter = 0;
@@ -42,6 +47,7 @@ public class ProjectSelecter : MonoBehaviour
         {
           ProjectNameList.Add(textData["projects"][i][projectNameString].ToString());
           placeNameList.Add(textData["projects"][i][placeNameString].ToString());
+          //SpawnButtons();
         }
         SpawnButtons();
       }
@@ -57,13 +63,30 @@ public class ProjectSelecter : MonoBehaviour
 
   private void SpawnButtons()
   {
+    
     for (int i = 0; i < ProjectNameList.Count; i++)
     {
+      int tempInt = i+1;
       GameObject container = Instantiate(levelButtonPrefab) as GameObject;
-      container.GetComponentInChildren<Text>().text = ProjectNameList[i] + "\n" + placeNameList[i];
+      container.transform.FindChild("Plaatsnaam").GetComponent<Text>().text = placeNameList[i];
+      container.transform.FindChild("Banner").GetComponent<Image>().sprite = tempImageStock[Random.Range(0,tempImageStock.Length)];
+      container.transform.FindChild("Title").GetComponent<Text>().text = ProjectNameList[i];
+      container.transform.FindChild("MeerLezen").GetComponent<Button>().onClick.AddListener(() => ReadMore(tempInt));
       container.transform.SetParent(levelButtonContainer.transform, false);
-      container.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, i));
+      if (i != ProjectNameList.Count - 1)
+      {
+        containerRecT.sizeDelta = new Vector2(containerRecT.rect.width, containerRecT.rect.height + 1000);
+      }
+      container.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
+      //container.GetComponent<Image>().CrossFadeAlpha(0.1f, 2.0f, false);
+      Debug.Log(i);
+      
     }
+  }
+
+  private void ReadMore(int projectNumber) {
+    Application.OpenURL(readMoreUrl + projectNumber.ToString());
+    Debug.Log(projectNumber);
   }
 
   private void LoadLevel(string sceneName, int projectNumber) {
