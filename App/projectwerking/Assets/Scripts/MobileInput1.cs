@@ -195,6 +195,7 @@ public class MobileInput1 : MonoBehaviour {
           bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity, mask);
           if (hitInfo.collider.gameObject.name == "Paper")
           {
+            gameObject.SendMessage("PrintStamp");
             stampSelected = sController.CheckStamp(toDrag.name);
             readyToMoveStampToPaper = sController.setRaycastHit(hitInfo);
             readyToCheckStamps = false;
@@ -203,6 +204,9 @@ public class MobileInput1 : MonoBehaviour {
           {
             sController.resetStamps();
           }
+
+          
+
           dragging = false;
         }
       }
