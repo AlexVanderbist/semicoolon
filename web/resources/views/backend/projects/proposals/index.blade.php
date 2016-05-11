@@ -18,8 +18,26 @@
             <p>Nieuwe stelling toevoegen</p>
         </div>
 
-        <table class="table table-hover">
-            <tbody>
+    </div>
+
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th>Stelling</th>
+                <th>Type</th>
+                <th>Stemming</th>
+                <th>Verwijderen</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @if($proposals->isEmpty())
+                <tr>
+                    <td colspan="4" align="center">Er zijn nog geen stellingen toegevoegd.</td>
+                </tr>
+            @else
                 @foreach($proposals as $proposal)
                     <tr>
                         <td>{{$proposal->description}}</td>
@@ -27,10 +45,11 @@
                         <td>
                             ja: 5 | nee: 8
                         </td>
+                        <td>X</td>
                     </tr>
                 @endforeach
-            </tbody>
-        </table>
-    </div>
+            @endif
+        </tbody>
+    </table>
 
 @endsection
