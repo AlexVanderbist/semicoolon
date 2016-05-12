@@ -10,13 +10,20 @@ public class StampController : MonoBehaviour {
   Vector3 greenScaleRestState, redScaleRestState;
 
   float rotationZ = 0;
-  Vector3 extraStampDest;
   int currentQuestionNumber = 0;
-  public string selectedStamp = "";
   string answer = "";
   public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
   RaycastHit hitInfo;
   GameInfo GI;
+
+  private string selectedStamp = "";
+
+  public string SelectedStamp
+  {
+    get { return selectedStamp; }
+    set { selectedStamp = value; }
+  }
+
 
   // Use this for initialization
   void Start () {

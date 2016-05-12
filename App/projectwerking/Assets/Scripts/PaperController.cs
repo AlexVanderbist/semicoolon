@@ -140,6 +140,11 @@ public class PaperController : MonoBehaviour
   {  
     currentPaper.transform.localPosition = Vector3.Lerp(focusposition.position, endposition.position, step);
   }
+
+  public GameObject getCurrentPaper
+  {
+    get { return currentPaper; }
+  }
 }
 
 

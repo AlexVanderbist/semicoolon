@@ -3,38 +3,49 @@ using System.Collections;
 
 public class SetStamp : MonoBehaviour {
 
-    public GameObject GoodStampPrefab, BadStampPrefab, GameManager;
+    public GameObject goodStampPrefab, badStampPrefab, gameManager;
     StampController stamps;
-
-    string selectedStamp;
+    PaperController paper;
     
 	// Use this for initialization
 	void Start () {
-        stamps = GameManager.GetComponent<StampController>();
-        
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        selectedStamp = stamps.selectedStamp;
-	
-	}
+    stamps = gameManager.GetComponent<StampController>();
+    paper = gameManager.GetComponent<PaperController>();
+  }
 
-    public void PrintStamp()
+  IEnumerator WaitSecondsForStamp(int seconds, RaycastHit hit)
+  {
+    yield return new WaitForSeconds(seconds);
+    string selectedStamp = stamps.SelectedStamp;
+
+    if (selectedStamp == "green")
     {
-        if (selectedStamp == "green")
-        {
-            Debug.Log(selectedStamp);
-            GameObject printedStamp = (GameObject)Instantiate(GoodStampPrefab, transform.position, transform.rotation);
-            //printedStamp.transform.parent = stamps.hit.collider.transform;
-        }
-        else if (selectedStamp == "red")
-        {
-            Debug.Log(selectedStamp);
-            GameObject printedStamp = (GameObject)Instantiate(BadStampPrefab, transform.position, transform.rotation);
-            //printedStamp.transform.parent = hit.collider.transform;
-        }
-
+      Debug.Log(selectedStamp);
+      GameObject printedStamp = (GameObject)Instantiate(goodStampPrefab, hit.point, transform.rotation);
+      printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
+    else if (selectedStamp == "red")
+    {
+      Debug.Log(selectedStamp);
+      GameObject printedStamp = (GameObject)Instantiate(badStampPrefab, hit.point, transform.rotation);
+      printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
+    }
+  }
+
+    public void PrintStamp(RaycastHit hit)
+    {
+      
+      foreach (Transform child in paper.getCurrentPaper.transform)
+      {
+        if (child.name == (badStampPrefab.name + "(Clone)") || child.name == (goodStampPrefab.name + "(Clone)"))
+        {
+          Destroy(child.gameObject);
+        }
+      }
+
+    StartCoroutine(WaitSecondsForStamp(1, hit));
+      
+
+
+  }
 }
