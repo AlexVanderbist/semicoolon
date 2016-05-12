@@ -17,5 +17,9 @@ class Opinion extends Model
         'anon_user_id',
         'opinion',
     ];
-
+    
+    public function posted_by()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

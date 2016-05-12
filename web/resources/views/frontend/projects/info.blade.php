@@ -22,7 +22,10 @@
     <div class="reactions container">
         <h2>Reacties</h2>
         <hr>
-
+        @foreach($opinions as $opinion)
+            <div><strong>{!! $opinion->user_id != 0 ? $opinion->posted_by->firstname . " " . $opinion->posted_by->lastname : "Anoniem"!!}</strong>{!! Auth::user()->admin == '1' ? ' [ADMIN]' : '' !!}</div> 
+            <div>{{$opinion->opinion}}</div>
+        @endforeach
         <div class="reactform">
             {!! Form::model($opinion, [
                 'method' => 'post',
@@ -31,9 +34,9 @@
             ]) !!}
 
             <div class="form-group">
-                {!! Form::label('opinion','Reactie') !!}
-                <p>Ingelogd als <strong>{{Auth::user()->firstname}} {{Auth::user()->lastname}}</strong></p>
-                {!! Form::textarea('opinion', null, ['class' => 'form-control']) !!}
+                {!! Form::label('opinion','Reageer') !!}
+                <p>Ingelogd als <strong>{!! Auth::check() ? Auth::user()->firstname . ' ' . Auth::user()->lastname: 'Anoniem' !!}</strong>{!! Auth::user()->admin == '1' ? ' [ADMIN]' : '' !!}</p>
+                {!! Form::textarea('opinion', null, ['class' => 'form-control', 'size' => '10x3', 'placeholder' => 'Uw reactie ...']) !!}
             </div>
 
             {!! Form::submit('Reageren', ['class' => 'btn btn-primary']) !!}
