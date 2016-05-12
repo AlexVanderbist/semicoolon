@@ -30,47 +30,16 @@ class ProposalsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests\StoreProjectProposalRequest $request, Project $project)
     {
-        //
-    }
+        $this->proposals->create($request->all() + ['project_id' => $project->id]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('stats', 'De stelling is toegevoegd!');
     }
 
     /**
@@ -79,8 +48,13 @@ class ProposalsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project, $id)
     {
-        //
+
+        $proposal = $this->proposals->findOrFail($id);
+
+        $proposal->delete();
+
+        return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('status', 'De stelling is verwijderd.');
     }
 }

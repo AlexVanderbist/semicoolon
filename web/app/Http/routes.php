@@ -83,6 +83,6 @@ Route::group(['middleware' => 'web'], function () {
 		'uses' => 'Backend\ProjectsController@confirm'
 	]);
 
-	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show']]);
+	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show', 'create']]);
 
 });
