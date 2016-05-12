@@ -28,15 +28,17 @@ public class SetStamp : MonoBehaviour {
     PlaySound();
     if (selectedStamp == "green")
     {
-      Debug.Log(selectedStamp);
-      GameObject printedStamp = (GameObject)Instantiate(goodStampPrefab, hit.point, transform.rotation);
-      printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
+        gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = true;
+        Debug.Log(selectedStamp);
+        GameObject printedStamp = (GameObject)Instantiate(goodStampPrefab, hit.point, transform.rotation);
+        printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
     else if (selectedStamp == "red")
     {
-      Debug.Log(selectedStamp);
-      GameObject printedStamp = (GameObject)Instantiate(badStampPrefab, hit.point, transform.rotation);
-      printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
+        gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = true;
+        Debug.Log(selectedStamp);
+        GameObject printedStamp = (GameObject)Instantiate(badStampPrefab, hit.point, transform.rotation);
+        printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
     
   }
