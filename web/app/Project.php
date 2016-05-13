@@ -53,7 +53,7 @@ class Project extends Model
     }
 
     public function getYoutubeIdAttribute () {
-        return $this->youtube_url;
+        return $this->attributes['youtube_url'];
     }
 
     public function youtubeID($url)
