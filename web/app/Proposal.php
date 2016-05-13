@@ -22,4 +22,8 @@ class Proposal extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function opinions() {
+        return $this->hasMany(ProposalOpinion::class);
+    }
 }

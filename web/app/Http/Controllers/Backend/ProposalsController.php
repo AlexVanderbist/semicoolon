@@ -22,11 +22,11 @@ class ProposalsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Project $project)
+    public function index(Project $project, Proposal $proposal)
     { 
         $proposals = $project->proposals;
 
-        return view('backend.projects.proposals.index', compact('project', 'proposals'));
+        return view('backend.projects.proposals.index', compact('project', 'proposals', 'proposal'));
     }
 
     /**

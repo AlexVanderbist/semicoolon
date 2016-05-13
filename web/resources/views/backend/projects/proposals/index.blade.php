@@ -16,7 +16,7 @@
         <div class="panel-heading">Nieuwe stelling toevoegen</div>
 
         <div class="panel-body">
-            {!! Form::model($project, [
+            {!! Form::model($proposal, [
                 'method' => 'post',
                 'route' => ['backend.projects.{project}.proposals.store', $project->id],
             ]) !!}

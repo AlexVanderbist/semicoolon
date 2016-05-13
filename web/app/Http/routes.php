@@ -26,6 +26,9 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 	    // GET Projects
 	    Route::get('projects', 'API\ProjectsController@index');
 
+	    // GET Project proposals
+	    Route::get('projects/{project}/proposals', 'API\ProjectsController@getProposals');
+
 	});
 });
 
@@ -83,6 +86,6 @@ Route::group(['middleware' => 'web'], function () {
 		'uses' => 'Backend\ProjectsController@confirm'
 	]);
 
-	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show', 'create']]);
+	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show', 'create', 'update', 'edit', 'show']]);
 
 });
