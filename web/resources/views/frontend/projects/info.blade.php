@@ -14,7 +14,7 @@
         @if ($project->youtube_url !== '')
         <div class="col-md-6 col-md-offset-3">
             <div class="ytpreview embed-responsive embed-responsive-16by9">
-                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{ $project->youtubeID($project->youtube_url)}}" frameborder="0" allowfullscreen></iframe>
+                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{$project->youtube_id}}" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
         @endif
