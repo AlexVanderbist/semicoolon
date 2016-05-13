@@ -39,12 +39,11 @@ class ProjectsController extends Controller
         return view('frontend.projects.map', compact('projects'));
     }
 
-    public function info(Opinion $opinion, $id)
+    public function info($id, Opinion $opinion)
     {
-        $project = $this->projects->with('theme', 'creator')->findOrFail($id);
-        $opinions = $this->opinions->with('posted_by')->where('project_id', $id)->get();
+        $project = $this->projects->with('theme', 'creator', 'opinions')->findOrFail($id);
         
-        return view('frontend.projects.info', compact('project', 'opinion', 'opinions'));
+        return view('frontend.projects.info', compact('project', 'opinion'));
     }
 
     public function opinionstore(Requests\StoreOpinionRequest $request, $id)

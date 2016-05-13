@@ -22,15 +22,15 @@
     <div class="reactions container">
         <h2>Reacties</h2>
         <hr>
-        @foreach($opinions as $opinion)
-            <div><strong>{!! $opinion->user_id != 0 ? ($opinion->posted_by->admin ? $opinion->posted_by->fullname . ' [ADMIN]' : $opinion->posted_by->fullname) : "Anoniem"!!}</strong>
-                @if (Auth::user()->admin || $opinion->posted_by->id === Auth::id())
-                <a href="{{ route('frontend.projects.opiniondestroy', [$project->id, $opinion->id]) }}">
+        @foreach($project->opinions as $loopedOpinion)
+            <div><strong>{!! $loopedOpinion->user_id != 0 ? ($loopedOpinion->posted_by->admin ? $loopedOpinion->posted_by->fullname . ' | ADMIN' : $loopedOpinion->posted_by->fullname) : "Anoniem"!!}</strong>
+                @if (Auth::user()->admin || $loopedOpinion->posted_by->id === Auth::id())
+                <a href="{{ route('frontend.projects.opiniondestroy', [$project->id, $loopedOpinion->id]) }}">
                     verwijderen
                 </a>
                 @endif
             </div> 
-            <div>{{$opinion->opinion}}</div>
+            <div>{{$loopedOpinion->opinion}}</div>
         @endforeach
         <div class="reactform">
             {!! Form::model($opinion, [
@@ -41,7 +41,7 @@
 
             <div class="form-group">
                 {!! Form::label('opinion','Reageer') !!}
-                <p>Ingelogd als <strong>{!! Auth::check() ? (Auth::user()->admin ? Auth::user()->fullname . ' [ADMIN]' : Auth::user()->fullname) : 'Anoniem' !!}</strong></p>
+                <p>Ingelogd als <strong>{!! Auth::check() ? (Auth::user()->admin ? Auth::user()->fullname . ' | ADMIN' : Auth::user()->fullname) : 'Anoniem' !!}</strong></p>
                 {!! Form::textarea('opinion', null, ['class' => 'form-control', 'size' => '10x3', 'placeholder' => 'Uw reactie ...']) !!}
             </div>
 
