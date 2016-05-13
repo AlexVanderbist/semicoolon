@@ -57,7 +57,7 @@ Route::group(['middleware' => 'web'], function () {
 		'uses' => 'Frontend\ProjectsController@opinionstore'
 	]);
 
-	Route::post('projecten/{project}/deletereaction', [
+	Route::get('projecten/{project}/deletereaction/{opinion}', [
 		'as' => 'frontend.projects.opiniondestroy',
 		'uses' => 'Frontend\ProjectsController@opiniondestroy'
 	]);
