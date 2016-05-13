@@ -43,6 +43,11 @@ class Project extends Model
         return $this->hasMany(Proposal::class);
     }
 
+    public function opinions()
+    {
+        return $this->hasMany(Opinion::class);
+    }
+
     public function setYoutubeUrlAttribute($value) {
         parse_str( parse_url( $value, PHP_URL_QUERY ), $id );
         $this->attributes['youtube_url'] = $id['v'];
