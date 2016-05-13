@@ -51,7 +51,7 @@ class ProjectsController extends Controller
      */
     public function store(Requests\StoreProjectRequest $request)
     {
-        $this->projects->create($request->all());
+        $this->projects->create($request->all() + ['project_creator' => auth()->user()->id]);
 
         return redirect(route('backend.projects.index'))->with('stats', 'Het project is gemaakt!');
     }

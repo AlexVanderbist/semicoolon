@@ -55,10 +55,4 @@ class Project extends Model
     public function getYoutubeIdAttribute () {
         return $this->attributes['youtube_url'];
     }
-
-    public function youtubeID($url)
-    {
-        parse_str( parse_url( $url, PHP_URL_QUERY ), $id );
-        return $id['v'];
-    }
 }

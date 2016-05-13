@@ -28,8 +28,7 @@ class UpdateProjectRequest extends Request
             'lat' => ['required'],
             'lng' => ['required'],
             'locationText' => ['required'],
-            'theme_id' => ['required'],
-            'project_creator' => ['required']
+            'theme_id' => ['required']
         ];
     }
 }

@@ -60,6 +60,11 @@ Route::group(['middleware' => 'web'], function () {
 		'uses' => 'Frontend\ProjectsController@opinionstore'
 	]);
 
+	Route::post('projecten/{project}/deletereaction', [
+		'as' => 'frontend.projects.opiniondestroy',
+		'uses' => 'Frontend\ProjectsController@opiniondestroy'
+	]);
+
 
 
 	/* BACKEND */ // add middleware around this instead of on the parent constructor?

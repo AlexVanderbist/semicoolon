@@ -55,4 +55,13 @@ class ProjectsController extends Controller
         return redirect(route('frontend.projects.info', $id))->with('stats', 'Uw reactie is gelukt!');
     }
 
+    public function opiniondestroy(Requests\DeleteOpinionRequest $request, $id)
+    {
+        $opinion = $this->opinions->findOrFail($id);
+
+        $opinion->delete();
+
+        return redirect(route('frontend.projects.info', $id))->with('status', 'De reactie is verwijderd.');
+    }
+
 }

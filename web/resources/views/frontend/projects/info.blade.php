@@ -14,7 +14,7 @@
         @if ($project->youtube_url !== '')
         <div class="col-md-6 col-md-offset-3">
             <div class="ytpreview embed-responsive embed-responsive-16by9">
-                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{ $project->youtubeID($project->youtube_url)}}" frameborder="0" allowfullscreen></iframe>
+                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{$project->youtube_id}}" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
         @endif
@@ -23,7 +23,13 @@
         <h2>Reacties</h2>
         <hr>
         @foreach($opinions as $opinion)
-            <div><strong>{!! $opinion->user_id != 0 ? $opinion->posted_by->firstname . " " . $opinion->posted_by->lastname : "Anoniem"!!}</strong>{!! Auth::user()->admin == '1' ? ' [ADMIN]' : '' !!}</div> 
+            <div><strong>{!! $opinion->user_id != 0 ? ($opinion->posted_by->admin ? $opinion->posted_by->fullname . ' [ADMIN]' : $opinion->posted_by->fullname) : "Anoniem"!!}</strong>
+                @if (Auth::user()->admin)
+                <a href="{{ route('frontend.projects.opiniondestroy', $opinion->id) }}">
+                    verwijderen
+                </a>
+                @endif
+            </div> 
             <div>{{$opinion->opinion}}</div>
         @endforeach
         <div class="reactform">
@@ -35,7 +41,7 @@
 
             <div class="form-group">
                 {!! Form::label('opinion','Reageer') !!}
-                <p>Ingelogd als <strong>{!! Auth::check() ? Auth::user()->firstname . ' ' . Auth::user()->lastname: 'Anoniem' !!}</strong>{!! Auth::user()->admin == '1' ? ' [ADMIN]' : '' !!}</p>
+                <p>Ingelogd als <strong>{!! Auth::check() ? (Auth::user()->admin ? Auth::user()->fullname . ' [ADMIN]' : Auth::user()->fullname) : 'Anoniem' !!}</strong></p>
                 {!! Form::textarea('opinion', null, ['class' => 'form-control', 'size' => '10x3', 'placeholder' => 'Uw reactie ...']) !!}
             </div>
 

@@ -14,8 +14,9 @@
                 <th>Geboortejaar</th>
                 <th>Geslacht</th>
                 <th>Gemeente</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Type</th>
+                <th>Aanpassen</th>
+                <th>Verwijderen</th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +26,21 @@
                     <td>{{$user->lastname}}</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->birthyear}}</td>
-                    <td>{{$user->sex}}</td>
+                    <td>
+                        @if ($user->sex === 0)
+                            Vrouw
+                        @elseif ($user->sex === 1) 
+                            Man
+                        @endif
+                    </td>
                     <td>{{$user->city}}</td>
+                    <td>
+                        @if ($user->admin === 0)
+                            Gebruiker
+                        @elseif ($user->admin === 1) 
+                            Admin
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('backend.users.edit', $user->id) }}">
                             <span class="glyphicon glyphicon-edit"></span>

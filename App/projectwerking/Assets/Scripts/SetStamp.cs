@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SetStamp : MonoBehaviour {
 
-    public GameObject goodStampPrefab, badStampPrefab, gameManager;
+    public GameObject goodStampPrefab, badStampPrefab, gameManager, goodStampParticle, badStampParticle;
     StampController stamps;
     PaperController paper;
 
@@ -28,15 +28,13 @@ public class SetStamp : MonoBehaviour {
     PlaySound();
     if (selectedStamp == "green")
     {
-        gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = true;
-        Debug.Log(selectedStamp);
+        goodStampParticle.GetComponentInChildren<ParticleSystem>().Play();
         GameObject printedStamp = (GameObject)Instantiate(goodStampPrefab, hit.point, transform.rotation);
         printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
     else if (selectedStamp == "red")
     {
-        gameObject.GetComponentInChildren<ParticleSystem>().enableEmission = true;
-        Debug.Log(selectedStamp);
+        badStampParticle.GetComponentInChildren<ParticleSystem>().Play();
         GameObject printedStamp = (GameObject)Instantiate(badStampPrefab, hit.point, transform.rotation);
         printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
