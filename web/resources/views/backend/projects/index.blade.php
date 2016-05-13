@@ -12,9 +12,10 @@
                 <th>Locatie</th>
                 <th>Thema</th>
                 <th>Gemaakt door</th>
+                <th>Fases</th>
                 <th>Stellingen</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Aanpassen</th>
+                <th>Verwijderen</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,11 @@
                     <td>{{$project->locationText}}</td>
                     <td>{{$project->theme->name}}</td>
                     <td>{{$project->creator->full_name}}</td>
+                    <td>
+                        <a href="{{ route('backend.projects.{project}.stages.index', $project->id) }}">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </a>
+                    </td>
                     <td>
                         <a href="{{ route('backend.projects.{project}.proposals.index', $project->id) }}">
                             <span class="glyphicon glyphicon-pencil"></span>

@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Opinion;
+use Auth;
 
-class UpdateProjectRequest extends Request
+class DeleteOpinionRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,12 @@ class UpdateProjectRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        $opinionId = $this->route('opinion');
+
+        $isUserOpinionPoster = Opinion::where('id', $opinionId)
+                      ->where('user_id', Auth::id())->exists();
+
+        return $isUserOpinionPoster || Auth::user()->admin;
     }
 
     /**
@@ -24,11 +31,7 @@ class UpdateProjectRequest extends Request
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'lat' => ['required'],
-            'lng' => ['required'],
-            'locationText' => ['required'],
-            'theme_id' => ['required']
+            //
         ];
     }
 }

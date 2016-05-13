@@ -35,12 +35,17 @@ class Project extends Model
 
     public function stages()
     {
-        return $this->hasMany(Stage::class);
+        return $this->hasMany(Stage::class)->orderBy('startdate', 'asc');
     }
 
     public function proposals()
     {
         return $this->hasMany(Proposal::class);
+    }
+
+    public function opinions()
+    {
+        return $this->hasMany(Opinion::class);
     }
 
     public function setYoutubeUrlAttribute($value) {
@@ -54,11 +59,5 @@ class Project extends Model
 
     public function getYoutubeIdAttribute () {
         return $this->attributes['youtube_url'];
-    }
-
-    public function youtubeID($url)
-    {
-        parse_str( parse_url( $url, PHP_URL_QUERY ), $id );
-        return $id['v'];
     }
 }

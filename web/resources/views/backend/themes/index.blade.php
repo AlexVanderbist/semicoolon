@@ -10,8 +10,8 @@
             <tr>
                 <th>Thema</th>
                 <th>Kleur</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Aanpassen</th>
+                <th>Verwijderen</th>
             </tr>
         </thead>
         <tbody>

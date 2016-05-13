@@ -74,3 +74,14 @@ body, html {
 .ytpreview {
 	margin-top: 2%;
 }
+
+/* TABLE OVERFLOWS */
+#stages {
+	table-layout:fixed;
+}
+
+#stages td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

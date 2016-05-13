@@ -25,10 +25,10 @@ class UpdateProjectRequest extends Request
     {
         return [
             'name' => ['required'],
-            'lat' => ['required'],
-            'lng' => ['required'],
-            'locationText' => ['required'],
-            'theme_id' => ['required']
+            'description' => ['required'],
+            'startdate' => ['required',
+            'enddate' => ['required'],
+            'allow_input' => ['required']
         ];
     }
 }

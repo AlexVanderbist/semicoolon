@@ -11,20 +11,36 @@
         <p><span>door {{$project->creator->full_name}} op {{$project->created_at}}</span></p>
         <div id="smallmap"></div>
         <p>{!! $project->description !!}</p>
-        @if ($project->youtube_url !== '')
+        @if ($project->youtube_id !== '')
         <div class="col-md-6 col-md-offset-3">
             <div class="ytpreview embed-responsive embed-responsive-16by9">
-                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{ $project->youtubeID($project->youtube_url)}}" frameborder="0" allowfullscreen></iframe>
+                <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{$project->youtube_id}}" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
         @endif
     </div>
+    <div class="frontstages container">
+        <h2>Fases</h2>
+        <hr>
+        @foreach($project->stages as $stage)
+            <div><h3>{!! $stage->name !!}</h3></div>
+            <div><strong>Van {{$stage->startdate->toFormattedDateString()}} tot {{$stage->enddate->toFormattedDateString()}}</strong></div>
+            <div>{!! $stage->description !!}</div>
+        @endforeach
+        
+    </div>
     <div class="reactions container">
         <h2>Reacties</h2>
         <hr>
-        @foreach($opinions as $opinion)
-            <div><strong>{!! $opinion->user_id != 0 ? $opinion->posted_by->firstname . " " . $opinion->posted_by->lastname : "Anoniem"!!}</strong>{!! Auth::user()->admin == '1' ? ' [ADMIN]' : '' !!}</div> 
-            <div>{{$opinion->opinion}}</div>
+        @foreach($project->opinions as $loopedOpinion)
+            <div><strong>{!! $loopedOpinion->user_id != 0 ? ($loopedOpinion->posted_by->admin ? $loopedOpinion->posted_by->fullname . ' | ADMIN' : $loopedOpinion->posted_by->fullname) : "Anoniem"!!}</strong>
+                @if (Auth::check() && (Auth::user()->admin || $opinion->posted_by->id === Auth::id()))
+                <a href="{{ route('frontend.projects.opiniondestroy', [$project->id, $loopedOpinion->id]) }}">
+                    verwijderen
+                </a>
+                @endif
+            </div> 
+            <div>{{$loopedOpinion->opinion}}</div>
         @endforeach
         <div class="reactform">
             {!! Form::model($opinion, [
@@ -35,7 +51,7 @@
 
             <div class="form-group">
                 {!! Form::label('opinion','Reageer') !!}
-                <p>Ingelogd als <strong>{!! Auth::check() ? Auth::user()->firstname . ' ' . Auth::user()->lastname: 'Anoniem' !!}</strong>{!! Auth::user()->admin == '1' ? ' [ADMIN]' : '' !!}</p>
+                <p>Ingelogd als <strong>{!! Auth::check() ? (Auth::user()->admin ? Auth::user()->fullname . ' | ADMIN' : Auth::user()->fullname) : 'Anoniem' !!}</strong></p>
                 {!! Form::textarea('opinion', null, ['class' => 'form-control', 'size' => '10x3', 'placeholder' => 'Uw reactie ...']) !!}
             </div>
 

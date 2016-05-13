@@ -39,12 +39,11 @@ class ProjectsController extends Controller
         return view('frontend.projects.map', compact('projects'));
     }
 
-    public function info(Opinion $opinion, $id)
+    public function info($id, Opinion $opinion)
     {
-        $project = $this->projects->with('theme', 'creator')->findOrFail($id);
-        $opinions = $this->opinions->with('posted_by')->where('project_id', $id)->get();
+        $project = $this->projects->with('theme', 'creator', 'opinions', 'stages')->findOrFail($id);
         
-        return view('frontend.projects.info', compact('project', 'opinion', 'opinions'));
+        return view('frontend.projects.info', compact('project', 'opinion'));
     }
 
     public function opinionstore(Requests\StoreOpinionRequest $request, $id)
@@ -53,6 +52,13 @@ class ProjectsController extends Controller
             ['user_id' =>  auth()->check() ? auth()->user()->id : '0', 'project_id' => $id] + $request->only('opinion')
         );
         return redirect(route('frontend.projects.info', $id))->with('stats', 'Uw reactie is gelukt!');
+    }
+
+    public function opiniondestroy(Requests\DeleteOpinionRequest $request, Project $project, Opinion $opinion)
+    {
+        $opinion->delete();
+
+        return redirect(route('frontend.projects.info', $project->id))->with('status', 'De reactie is verwijderd.');
     }
 
 }
