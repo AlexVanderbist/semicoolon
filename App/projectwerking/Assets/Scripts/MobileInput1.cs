@@ -76,9 +76,17 @@ public class MobileInput1 : MonoBehaviour {
       {
         if (Input.GetButtonDown("Jump"))
         {
-          pController.createNewPaper();
-          readyToMovePaper = true;
-          readyToSwipePaper = false;
+          // Check if there are still papers to make
+          if (pController.createNewPaper())
+          {
+            readyToMovePaper = true;
+            readyToSwipePaper = false;
+          }
+          // If not (no questions left), show ready with questions panel
+          else
+          {
+
+          }
         }
       }
 
@@ -195,18 +203,21 @@ public class MobileInput1 : MonoBehaviour {
           LayerMask mask = 1 << LayerMask.NameToLayer("Paper");
           RaycastHit hitInfo = new RaycastHit();
           bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity, mask);
-          if (hitInfo.collider.gameObject.name == "Paper")
+          if (hit)
           {
-            stampSelected = sController.CheckStamp(toDrag.name);
-            readyToMoveStampToPaper = sController.setRaycastHit(hitInfo);
-            gameObject.SendMessage("PrintStamp", hitInfo);
-            readyToCheckStamps = false;
+            if (hitInfo.collider.gameObject.name == "Paper")
+            {
+              stampSelected = sController.CheckStamp(toDrag.name);
+              readyToMoveStampToPaper = sController.setRaycastHit(hitInfo);
+              gameObject.SendMessage("PrintStamp", hitInfo);
+              readyToCheckStamps = false;
+            }
+            else
+            {
+              sController.resetStamps();
+            }
+            dragging = false;
           }
-          else
-          {
-            sController.resetStamps();
-          }
-          dragging = false;
         }
       }
     }
