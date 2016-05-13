@@ -15,10 +15,10 @@ public class MobileInput1 : MonoBehaviour {
   private StampController sController;
 
   //ALL BOOLEANS THAT CONTROL THE INPUT AND MOVEMENT OF OBJECTS
-  private bool movePapers = false;
+  private bool readyToMovePaper = false;
   private bool firstPaper = false;
   private bool firstPaperCreated = false;
-  private bool receiveInput = false;
+  private bool readyToSwipePaper = false;
   private bool readyToCheckStamps = false;
   private bool readyToMoveStampToPaper = false;
   private bool readyWithStampToPaper = false;
@@ -72,25 +72,25 @@ public class MobileInput1 : MonoBehaviour {
       }
 
       //PC Input, After first object is created
-      if (receiveInput)
+      if (readyToSwipePaper)
       {
         if (Input.GetButtonDown("Jump"))
         {
           pController.createNewPaper();
-          movePapers = true;
-          receiveInput = false;
+          readyToMovePaper = true;
+          readyToSwipePaper = false;
         }
       }
 
       //Move New and Focused Paper
-      if (movePapers)
+      if (readyToMovePaper)
       {
         step += speed * Time.deltaTime;
         pController.moveNewPaper(step);
         pController.moveFocusPaper(step);
         if (step >= 1)
         {
-          movePapers = false;
+          readyToMovePaper = false;
           step = 0;
           pController.DestroyCurrentPaper();
           pController.setCurrentPaper();
@@ -118,7 +118,8 @@ public class MobileInput1 : MonoBehaviour {
           if (step >= 1)
           {
             step = 0;
-            receiveInput = true;
+            readyToSwipePaper = true;
+            readyToCheckStamps = true;
             readyToMoveStampToPaper = false;
             readyWithStampToPaper = false;
           }
@@ -180,6 +181,7 @@ public class MobileInput1 : MonoBehaviour {
             v3 = Camera.main.ScreenToWorldPoint(v3);
             offset = toDrag.position - v3;
             dragging = true;
+            readyToSwipePaper = false;
           }
         }
         if (dragging && touch.phase == TouchPhase.Moved)
@@ -195,27 +197,23 @@ public class MobileInput1 : MonoBehaviour {
           bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity, mask);
           if (hitInfo.collider.gameObject.name == "Paper")
           {
-            gameObject.SendMessage("PrintStamp");
             stampSelected = sController.CheckStamp(toDrag.name);
             readyToMoveStampToPaper = sController.setRaycastHit(hitInfo);
+            gameObject.SendMessage("PrintStamp", hitInfo);
             readyToCheckStamps = false;
           }
           else
           {
             sController.resetStamps();
           }
-
-          
-
           dragging = false;
         }
       }
     }
 
     //RightSwipe when stampController is ready
-    if (receiveInput)
+    if (readyToSwipePaper)
     {
-      //OLDCODE
       if (Input.touchCount > 0)
       {
         Touch touch = Input.touches[0];
@@ -240,8 +238,9 @@ public class MobileInput1 : MonoBehaviour {
               if (swipeHValue > 0)//right swipe
               {
                 pController.createNewPaper();
-                movePapers = true;
-                receiveInput = false;
+                readyToCheckStamps = false;
+                readyToMovePaper = true;
+                readyToSwipePaper = false;
               }
 
               else if (swipeHValue < 0)//left swipe

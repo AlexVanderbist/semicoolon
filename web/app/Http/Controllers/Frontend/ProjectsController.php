@@ -42,14 +42,15 @@ class ProjectsController extends Controller
     public function info(Opinion $opinion, $id)
     {
         $project = $this->projects->with('theme', 'creator')->findOrFail($id);
+        $opinions = $this->opinions->with('posted_by')->where('project_id', $id)->get();
         
-        return view('frontend.projects.info', compact('project', 'opinion'));
+        return view('frontend.projects.info', compact('project', 'opinion', 'opinions'));
     }
 
     public function opinionstore(Requests\StoreOpinionRequest $request, $id)
     {
         $this->opinions->create(
-            ['user_id' => auth()->user()->id, 'project_id' => $id] + $request->only('opinion')
+            ['user_id' =>  auth()->check() ? auth()->user()->id : '0', 'project_id' => $id] + $request->only('opinion')
         );
         return redirect(route('frontend.projects.info', $id))->with('stats', 'Uw reactie is gelukt!');
     }

@@ -21,7 +21,7 @@ class ProjectsController extends Controller
 
     public function index() {
 
-    	$projects = $this->projects->with('theme', 'creator')->get();
+    	$projects = $this->projects->with('theme', 'creator', 'proposals')->get();
 
     	return response()->json(compact('projects'));
     }

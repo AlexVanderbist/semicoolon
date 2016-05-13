@@ -12,6 +12,7 @@
                 <th>Locatie</th>
                 <th>Thema</th>
                 <th>Gemaakt door</th>
+                <th>Stellingen</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -23,6 +24,11 @@
                     <td>{{$project->locationText}}</td>
                     <td>{{$project->theme->name}}</td>
                     <td>{{$project->creator->full_name}}</td>
+                    <td>
+                        <a href="{{ route('backend.projects.{project}.proposals.index', $project->id) }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
                     <td>
                         <a href="{{ route('backend.projects.edit', $project->id) }}">
                             <span class="glyphicon glyphicon-edit"></span>
