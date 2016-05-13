@@ -54,11 +54,6 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('project_creator','Aangemaakt door') !!}
-        {!! Form::text('project_creator', Auth::user()->id, ['class' => 'form-control', 'readonly']) !!}
-    </div>
-
-    <div class="form-group">
         {!! Form::label('youtube_url','Youtube video','Aangemaakt door') !!}
         <p>Plak hier de youtubeURL</p>
         {!! Form::text('youtube_url', null, ['class' => 'form-control', 'id' => 'yturl']) !!}

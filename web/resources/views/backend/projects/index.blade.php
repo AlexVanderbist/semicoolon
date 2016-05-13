@@ -13,8 +13,8 @@
                 <th>Thema</th>
                 <th>Gemaakt door</th>
                 <th>Stellingen</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Aanpassen</th>
+                <th>Verwijderen</th>
             </tr>
         </thead>
         <tbody>
