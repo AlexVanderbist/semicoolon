@@ -5,8 +5,8 @@ using LitJson;
 
 public class DataObtainer : MonoBehaviour {
 
-  public string urlProjects = "http://semicolon.multimediatechnology.be/api/v1/projecten?token=";
-  public string urlProposalsPartOne = "http://semicolon.multimediatechnology.be/api/v1/projecten/";
+  public string urlProjects = "http://semicolon.multimediatechnology.be/api/v1/projects?token=";
+  public string urlProposalsPartOne = "http://semicolon.multimediatechnology.be/api/v1/projects/";
   public string urlProposalsPartTwo = "/proposals?token=";
 
   static int numberOfProjects = 0;
@@ -28,7 +28,7 @@ public class DataObtainer : MonoBehaviour {
   {
     projectNameList = new List<string>();
     placeNameList = new List<string>();
-    GI = GetComponent<GameInfo>();
+    GI = GameObject.Find("GameData").GetComponent<GameInfo>();
     urlProjects += GI.Token;
     www = new WWW(urlProjects);
     yield return www;
@@ -56,8 +56,6 @@ public class DataObtainer : MonoBehaviour {
 
   IEnumerator GetProposals()
   {
-    GI = GetComponent<GameInfo>();
-
     for (int i = 0; i < numberOfProjects; i++)
     {
       string urlProposals = urlProposalsPartOne + projectIds[i] + urlProposalsPartTwo + GI.Token;

@@ -19,7 +19,7 @@ public class ProjectSelecter : MonoBehaviour
 
   void Start()
   {
-    GI = GetComponent<GameInfo>();
+    GI = GameObject.Find("GameData").GetComponent<GameInfo>();
   }
 
   private void SpawnButtons()
@@ -29,17 +29,29 @@ public class ProjectSelecter : MonoBehaviour
     {
       int tempInt = i+1;
       GameObject container = Instantiate(levelButtonPrefab) as GameObject;
+      container.transform.FindChild("DoneSign").GetComponent<Image>().enabled = false;
       container.transform.FindChild("Plaatsnaam").GetComponent<Text>().text = GI.PlaceNameList[i];
-      container.transform.FindChild("Banner").GetComponent<Image>().sprite = tempImageStock[Random.Range(0,tempImageStock.Length)];
+      container.transform.FindChild("Banner").GetComponent<Image>().sprite = tempImageStock[Random.Range(0, tempImageStock.Length)];
       container.transform.FindChild("Title").GetComponent<Text>().text = GI.ProjectNameList[i];
       container.transform.FindChild("MeerLezen").GetComponent<Button>().onClick.AddListener(() => ReadMore(tempInt));
       container.transform.SetParent(levelButtonContainer.transform, false);
+
+      if (GI.Questions[i] == null)
+      {
+        container.transform.FindChild("DoneSign").GetComponent<Image>().enabled = true;
+        container.transform.GetComponent<Button>().interactable = false;
+      }
+      else
+      {
+        container.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
+      }
+
+     
       if (i != GI.PlaceNameList.Count - 1)
       {
         containerRecT.sizeDelta = new Vector2(containerRecT.rect.width, containerRecT.rect.height + 1000);
       }
-      container.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
-      Debug.Log(i);
+
     }
   }
 

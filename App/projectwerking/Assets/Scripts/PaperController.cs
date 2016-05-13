@@ -11,30 +11,31 @@ public class PaperController : MonoBehaviour
   public Transform startposition, focusposition, endposition;
   public bool ListIsReady = false;
   public Text testTextBox;
-  
+  public GameObject donePaperPrefab;
+
   TextMesh tMeshText, tMeshTitle;
   GameObject currentPaper, newPaper;
   int currentQuestionNr = 0;
   //string url = "http://semicolon.multimediatechnology.be/projecten";
 
   string titleText = "Vraag: ";
-  List<string> QuestionList = new List<string>();
+  string[] QuestionList;
 
   int numberOfQuestions = 0;
+  int currentProjectNumber = 0;
   GameInfo GI;
-
-  void Start()
-  {
-    GI = GetComponent<GameInfo>();
-    numberOfQuestions = GI.Questions[GI.CurrentProjectNumber].Length;
-  }
 
   void Awake() {
     tMeshText = tMeshPrefab.GetComponent<TextMesh>();
     tMeshTitle = tMeshTitlePrefab.GetComponent<TextMesh>();
-
     testTextBox.enabled = false;
-    
+
+    GI = GameObject.Find("GameData").GetComponent<GameInfo>();
+    currentProjectNumber = GI.CurrentProjectNumber - 1;
+    QuestionList = GI.Questions[currentProjectNumber];
+    numberOfQuestions = QuestionList.Length;
+    ListIsReady = true;
+    Debug.Log("Aantal vragen: " + numberOfQuestions);
   }
 
   public void SetBeginValues() {
@@ -84,10 +85,11 @@ public class PaperController : MonoBehaviour
 
 
   void setText() {
-    string temp = ResolveTextSize(GI.Questions[GI.CurrentProjectNumber][currentQuestionNr],24);
+    Debug.Log("QuestionNr: " + currentQuestionNr);
+    string temp = ResolveTextSize(GI.Questions[currentProjectNumber][currentQuestionNr-1],24);
     tMeshText.text = temp;
-    tMeshTitle.text = titleText + (currentQuestionNr + 1).ToString();
-    Debug.Log(currentQuestionNr);
+    tMeshTitle.text = titleText + (currentQuestionNr).ToString();
+ 
   }
 
   public void DestroyCurrentPaper() {
@@ -100,15 +102,21 @@ public class PaperController : MonoBehaviour
 
   public bool createNewPaper()
   {
-    bool paperCreated = false;
+    bool questionPaperCreated = false;
     currentQuestionNr++;
     if (currentQuestionNr <= numberOfQuestions)
     {
-      newPaper = (GameObject)Instantiate(tMeshPrefab, startposition.position, transform.rotation);
       setText();
-      paperCreated = true;
+      newPaper = (GameObject)Instantiate(tMeshPrefab, startposition.position, transform.rotation);
+      questionPaperCreated = true;
     }
-    return paperCreated;
+    else
+    {
+      newPaper = (GameObject)Instantiate(donePaperPrefab, startposition.position, transform.rotation);
+      questionPaperCreated = false;
+    }
+ 
+    return questionPaperCreated;
   }
 
   public void moveNewPaper(float step) {
