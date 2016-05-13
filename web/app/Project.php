@@ -48,8 +48,8 @@ class Project extends Model
         $this->attributes['youtube_url'] = $id['v'];
     }
 
-    public function getYoutubeUrlAttribute () {
-        return 'https://www.youtube.com/watch?v=' . $this->youtube_url;
+    public function getYoutubeUrlAttribute ($value) {
+        return 'https://www.youtube.com/watch?v=' . $value;
     }
 
     public function getYoutubeIdAttribute () {
