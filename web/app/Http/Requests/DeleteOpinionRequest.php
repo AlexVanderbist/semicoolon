@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use App\Opinion;
 
 class DeleteOpinionRequest extends Request
 {
@@ -13,8 +14,12 @@ class DeleteOpinionRequest extends Request
      */
     public function authorize()
     {
+        $opinionId = $this->route('opinion');
 
-        return true;
+        $isUserOpinionPoster = Opinion::where('id', $opinionId)
+                      ->where('user_id', Auth::id())->exists();
+
+        return $isUserOpinionPoster || Auth::user()->admin;
     }
 
     /**
