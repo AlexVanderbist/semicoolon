@@ -11,13 +11,23 @@
         <p><span>door {{$project->creator->full_name}} op {{$project->created_at}}</span></p>
         <div id="smallmap"></div>
         <p>{!! $project->description !!}</p>
-        @if ($project->youtube_url !== '')
+        @if ($project->youtube_id !== '')
         <div class="col-md-6 col-md-offset-3">
             <div class="ytpreview embed-responsive embed-responsive-16by9">
                 <iframe class="center-block" width="560" height="315" src="https://www.youtube.com/embed/{{$project->youtube_id}}" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
         @endif
+    </div>
+    <div class="frontstages container">
+        <h2>Fases</h2>
+        <hr>
+        @foreach($project->stages as $stage)
+            <div><h3>{!! $stage->name !!}</h3></div>
+            <div><strong>Van {{$stage->startdate->toFormattedDateString()}} tot {{$stage->enddate->toFormattedDateString()}}</strong></div>
+            <div>{!! $stage->description !!}</div>
+        @endforeach
+        
     </div>
     <div class="reactions container">
         <h2>Reacties</h2>

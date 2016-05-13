@@ -11,7 +11,8 @@ class Stage extends Model
         'description',
         'startdate', 
         'enddate',
-        'allow_input'
+        'allow_input',
+        'project_id'
     ];
 
     protected $dates = ['startdate', 'enddate'];
