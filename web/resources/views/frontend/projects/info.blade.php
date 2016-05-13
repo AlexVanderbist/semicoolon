@@ -24,7 +24,7 @@
         <hr>
         @foreach($opinions as $opinion)
             <div><strong>{!! $opinion->user_id != 0 ? ($opinion->posted_by->admin ? $opinion->posted_by->fullname . ' [ADMIN]' : $opinion->posted_by->fullname) : "Anoniem"!!}</strong>
-                @if (Auth::user()->admin)
+                @if (Auth::user()->admin || $opinion->posted_by->id === Auth::id())
                 <a href="{{ route('frontend.projects.opiniondestroy', $opinion->id) }}">
                     verwijderen
                 </a>
