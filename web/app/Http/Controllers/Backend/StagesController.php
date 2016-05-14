@@ -42,10 +42,15 @@ class StagesController extends Controller
         return redirect(route('backend.projects.{project}.stages.index', $project->id))->with('stats', 'De fase is toegevoegd!');
     }
 
+    public function edit(Project $project, Stage $stage)
+    {
+        $stages = $project->stages;
+        return view('backend.projects.stages.index', compact('project', 'stage', 'stages'));
+    }
+
     public function update(Requests\UpdateProjectStageRequest $request, Project $project, Stage $stage)
     {
-        $this->stages->fill($request->all() + ['project_id' => $project->id]);
-
+        $stage->fill($request->all() + ['project_id' => $project->id])->save();
         return redirect(route('backend.projects.{project}.stages.index', $project->id))->with('stats', 'De fase is geupdate!');
     }
 

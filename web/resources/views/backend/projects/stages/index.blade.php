@@ -17,7 +17,7 @@
         <div class="panel-body">
             {!! Form::model($stage, [
                 'method' => $stage->exists ? 'put' : 'post',
-                'route' => $stage->exists ? ['backend.projects.{project}.stages.update', $project->id] : ['backend.projects.{project}.stages.store', $project->id],
+                'route' => $stage->exists ? ['backend.projects.{project}.stages.update', $project->id, $stage->id] : ['backend.projects.{project}.stages.store', $project->id],
             ]) !!}
 
             <div class="form-group">

@@ -94,8 +94,12 @@ Route::group(['middleware' => 'web'], function () {
 	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show', 'create', 'update', 'edit', 'show']]);
 	
 	Route::resource('backend/projects/{project}/stages', 'Backend\StagesController', ['except' => ['show', 'create', 'update', 'edit', 'show']]);
-	Route::get('backend/projects/{project}/stages/edit', [
+	Route::get('backend/projects/{project}/stages/{stage}/edit', [
 		'as' => 'backend.projects.{project}.stages.edit',
+		'uses' => 'Backend\StagesController@edit'
+	]);
+	Route::put('backend/projects/{project}/stages/{stage}/update', [
+		'as' => 'backend.projects.{project}.stages.update',
 		'uses' => 'Backend\StagesController@update'
 	]);
 

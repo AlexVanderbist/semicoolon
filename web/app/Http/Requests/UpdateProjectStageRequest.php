@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UpdateProjectRequest extends Request
+class UpdateProjectStageRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class UpdateProjectRequest extends Request
         return [
             'name' => ['required'],
             'description' => ['required'],
-            'startdate' => ['required',
+            'startdate' => ['required'],
             'enddate' => ['required'],
             'allow_input' => ['required']
         ];
