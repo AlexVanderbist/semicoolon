@@ -190,12 +190,15 @@ public class MobileInput : MonoBehaviour {
         {
           RaycastHit hitInfo = new RaycastHit();
           bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-          if (hitInfo.collider.gameObject.name == "Paper")
+          if (hit)
           {
-            readyToMoveStampToPaper = sController.CheckPaper(hitInfo);
-            readyToCheckStamps = false;
+            if (hitInfo.collider.gameObject.name == "Paper")
+            {
+              readyToMoveStampToPaper = sController.CheckPaper(hitInfo);
+              readyToCheckStamps = false;
+            }
+            dragging = false;
           }
-          dragging = false;
         }
       }
     }

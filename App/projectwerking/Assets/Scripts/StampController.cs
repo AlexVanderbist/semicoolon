@@ -33,7 +33,7 @@ public class StampController : MonoBehaviour {
     maxScaleGreenStamp = new Vector3(greenStamp.transform.localScale.x + maxScaleToAdd, greenStamp.transform.localScale.y + maxScaleToAdd, greenStamp.transform.localScale.z + maxScaleToAdd);
     greenScaleRestState = greenStamp.transform.localScale;
     redScaleRestState = redStamp.transform.localScale;
-    GI = GetComponent<GameInfo>();
+    GI = GameObject.Find("GameData").GetComponent<GameInfo>();
 	}
 
   public bool CheckStamp(string hit) {

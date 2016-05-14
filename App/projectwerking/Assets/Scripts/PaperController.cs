@@ -11,63 +11,37 @@ public class PaperController : MonoBehaviour
   public Transform startposition, focusposition, endposition;
   public bool ListIsReady = false;
   public Text testTextBox;
-  
+  public GameObject donePaperPrefab;
+
   TextMesh tMeshText, tMeshTitle;
   GameObject currentPaper, newPaper;
   int currentQuestionNr = 0;
-  int counter = 0;
   //string url = "http://semicolon.multimediatechnology.be/projecten";
-  string testurl = "http://jsonplaceholder.typicode.com/posts";
 
   string titleText = "Vraag: ";
-  string questionValue = "body";
-  List<string> QuestionList = new List<string>();
+  string[] QuestionList;
 
   int numberOfQuestions = 0;
-  static WWW www;
-  JsonData textData;
+  int currentProjectNumber = 0;
+  GameInfo GI;
 
   void Awake() {
     tMeshText = tMeshPrefab.GetComponent<TextMesh>();
     tMeshTitle = tMeshTitlePrefab.GetComponent<TextMesh>();
     testTextBox.enabled = false;
+
+    GI = GameObject.Find("GameData").GetComponent<GameInfo>();
+    currentProjectNumber = GI.CurrentProjectNumber - 1;
+    QuestionList = GI.Questions[currentProjectNumber];
+    numberOfQuestions = QuestionList.Length;
+    ListIsReady = true;
+    Debug.Log("Aantal vragen: " + numberOfQuestions);
   }
 
   public void SetBeginValues() {
     tMeshText.text = ResolveTextSize(QuestionList[currentQuestionNr], 24);
     tMeshTitle.text = titleText + (currentQuestionNr + 1).ToString();
   }
-
-  IEnumerator Start()
-  {
-    www = new WWW(testurl);
-    yield return www;
-    if (www.error == null)
-    {
-      textData = JsonMapper.ToObject(www.text);
-
-      numberOfQuestions = textData.Count;
-      for (int i = 0; i < numberOfQuestions; i++)
-      {
-        QuestionList.Add(textData[i][questionValue].ToString());
-      }
-      Debug.Log(QuestionList.Count);
-      ListIsReady = true;
-    }
-    else
-    {
-      if(counter < 5)
-      {
-        testTextBox.text = "error, kijk internetverbinding na";
-        testTextBox.enabled = true;
-        counter++;
-        Debug.Log("ERROR: " + www.error);
-        StartCoroutine(Start());
-      }
-    }
-  }
-
-
 
  private string ResolveTextSize(string input, int lineLength)
   {
@@ -110,12 +84,12 @@ public class PaperController : MonoBehaviour
   }
 
 
-  public void setText() {
-    currentQuestionNr++;
-    string temp = ResolveTextSize(QuestionList[currentQuestionNr],24);
+  void setText() {
+    Debug.Log("QuestionNr: " + currentQuestionNr);
+    string temp = ResolveTextSize(GI.Questions[currentProjectNumber][currentQuestionNr-1],24);
     tMeshText.text = temp;
-    tMeshTitle.text = titleText + (currentQuestionNr + 1).ToString();
-    Debug.Log(currentQuestionNr);
+    tMeshTitle.text = titleText + (currentQuestionNr).ToString();
+ 
   }
 
   public void DestroyCurrentPaper() {
@@ -126,10 +100,23 @@ public class PaperController : MonoBehaviour
     currentPaper = newPaper;
   }
 
-  public void createNewPaper()
+  public bool createNewPaper()
   {
-    newPaper = (GameObject)Instantiate(tMeshPrefab, startposition.position, transform.rotation);
-    setText();
+    bool questionPaperCreated = false;
+    currentQuestionNr++;
+    if (currentQuestionNr <= numberOfQuestions)
+    {
+      setText();
+      newPaper = (GameObject)Instantiate(tMeshPrefab, startposition.position, transform.rotation);
+      questionPaperCreated = true;
+    }
+    else
+    {
+      newPaper = (GameObject)Instantiate(donePaperPrefab, startposition.position, transform.rotation);
+      questionPaperCreated = false;
+    }
+ 
+    return questionPaperCreated;
   }
 
   public void moveNewPaper(float step) {
