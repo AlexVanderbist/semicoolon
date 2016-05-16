@@ -21,9 +21,11 @@ public class GameController : MonoBehaviour {
   private bool firstPaperCreated = false;
   private bool readyToSwipePaper = false;
   private bool readyToCheckStamps = false;
-  private bool readyToMoveStampToPaper = false;
+  private bool readyToMoveStampToPaperAndBack = false;
   private bool readyWithStampToPaper = false;
   private bool lastQuestionReached = false;
+  private bool inNeedForNumberInput = false;
+  private bool numberIsSet = false;
 
   //MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
   private float step = 0f;
@@ -33,6 +35,7 @@ public class GameController : MonoBehaviour {
   private bool dragging = false;
   private Vector3 offset;
   private Transform toDrag;
+  private RaycastHit stampPoint; // Used to remember stamppoint if there is a need of number input.
 
   // Use this for initialization
   void Start () {
@@ -87,7 +90,7 @@ public class GameController : MonoBehaviour {
       }
 
       //Move selected stamp when paper has been hit
-      if (readyToMoveStampToPaper)
+      if (readyToMoveStampToPaperAndBack)
       {
         if (!readyWithStampToPaper)
         {
@@ -108,7 +111,7 @@ public class GameController : MonoBehaviour {
             step = 0;
             readyToSwipePaper = true;
             readyToCheckStamps = true;
-            readyToMoveStampToPaper = false;
+            readyToMoveStampToPaperAndBack = false;
             readyWithStampToPaper = false;
           }
         }
@@ -160,8 +163,17 @@ public class GameController : MonoBehaviour {
             if (hitInfo.collider.gameObject.name == "Paper")
             {
               sController.CheckStamp(toDrag.name);
-              readyToMoveStampToPaper = sController.setRaycastHit(hitInfo);
-              gameObject.SendMessage("PrintStamp", hitInfo);
+              if (sController.SelectedStamp == "number")
+              {
+                inNeedForNumberInput = true;
+                stampPoint = hitInfo;
+              }
+              else
+              {
+                readyToMoveStampToPaperAndBack = sController.setRaycastHit(hitInfo);
+                gameObject.SendMessage("PrintStamp", hitInfo);
+              }
+
               readyToCheckStamps = false;
             }
             else
@@ -219,6 +231,20 @@ public class GameController : MonoBehaviour {
       }
     }
 
+    if (inNeedForNumberInput)
+    {
+      gameObject.SendMessage("ShowPanel");
+      inNeedForNumberInput = false;
+    }
+
+    if (numberIsSet)
+    {
+      readyToMoveStampToPaperAndBack = sController.setRaycastHit(stampPoint);
+      gameObject.SendMessage("PrintStamp", stampPoint);
+      readyToMoveStampToPaperAndBack = true;
+      numberIsSet = false;
+    }
+
     if (lastQuestionReached)
     {
       if (Input.touchCount > 0)
@@ -236,5 +262,11 @@ public class GameController : MonoBehaviour {
         }
       }
     }
+  }
+
+  public void StopNumberInput()
+  {
+    Debug.Log("stop number input");
+    numberIsSet = true;
   }
 }

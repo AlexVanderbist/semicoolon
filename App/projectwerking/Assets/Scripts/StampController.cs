@@ -3,16 +3,21 @@ using System.Collections;
 
 public class StampController : MonoBehaviour {
 
-  public GameObject redStamp, greenStamp;
+  public GameObject redStamp, greenStamp, numberStamp;
   public int maxScaleToAdd = 30;
-  Vector3 restStateRedStamp, restStateGreenStamp;
-  Vector3 maxScaleRedStamp, maxScaleGreenStamp;
-  Vector3 greenScaleRestState, redScaleRestState;
+  public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
+
+  Vector3 restPosRedStamp, restPosGreenStamp, restPosNumberStamp;
+  Vector3 maxScaleRedStamp, maxScaleGreenStamp, maxScaleNumberStamp;
+  //Vector3 greenScaleRestState, redScaleRestState, numberScaleRestState;
+
+  GameObject stampToMove;
+  Vector3 restPos, maxScale, restScale;
 
   float rotationZ = 0;
   int currentQuestionNumber = 0;
   string answer = "";
-  public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
+
   RaycastHit hitInfo;
   GameInfo GI;
 
@@ -27,37 +32,53 @@ public class StampController : MonoBehaviour {
 
   // Use this for initialization
   void Start () {
-    restStateRedStamp = redStamp.transform.position;
-    restStateGreenStamp = greenStamp.transform.position;
-    maxScaleRedStamp = new Vector3(redStamp.transform.localScale.x + maxScaleToAdd, redStamp.transform.localScale.y + maxScaleToAdd, redStamp.transform.localScale.z + maxScaleToAdd);
-    maxScaleGreenStamp = new Vector3(greenStamp.transform.localScale.x + maxScaleToAdd, greenStamp.transform.localScale.y + maxScaleToAdd, greenStamp.transform.localScale.z + maxScaleToAdd);
-    greenScaleRestState = greenStamp.transform.localScale;
-    redScaleRestState = redStamp.transform.localScale;
+    restPosRedStamp = redStamp.transform.position;
+    restPosGreenStamp = greenStamp.transform.position;
+    restPosNumberStamp = numberStamp.transform.position;
+    // ALL REST SCALES HAVE TO BE SAME VALUE
+    maxScale = new Vector3(redStamp.transform.localScale.x + maxScaleToAdd, redStamp.transform.localScale.y + maxScaleToAdd, redStamp.transform.localScale.z + maxScaleToAdd);
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
 	}
 
   public bool CheckStamp(string hit) {
     bool readyChecking = false;
-      if (hit == "RedStamp")
-      {
-        rotationZ = getRotation(redStamp);
-        selectedStamp = "red";
-        answer = "false";
-        readyChecking = true;
-      }
-      else if (hit == "GreenStamp")
-      {
-        rotationZ = getRotation(greenStamp);
-        selectedStamp = "green";
-        answer = "true";
-        readyChecking = true;
-      }
+    if (hit == redStamp.name)
+    {
+      rotationZ = getRotation(redStamp);
+      selectedStamp = "red";
+      stampToMove = redStamp;
+      restPos = restPosRedStamp;
+      restScale = redStamp.transform.localScale;
+      answer = "false";
+      readyChecking = true;
+    }
+    else if (hit == greenStamp.name)
+    {
+      rotationZ = getRotation(greenStamp);
+      selectedStamp = "green";
+      stampToMove = greenStamp;
+      restPos = restPosGreenStamp;
+      restScale = greenStamp.transform.localScale;
+      answer = "true";
+      readyChecking = true;
+    }
+    else if (hit == numberStamp.name)
+    {
+      rotationZ = getRotation(numberStamp);
+      SelectedStamp = "number";
+      stampToMove = numberStamp;
+      restPos = restPosNumberStamp;
+      restScale = numberStamp.transform.localScale;
+      answer = "true";
+      readyChecking = true;
+    }
     return readyChecking;
   }
 
+
+
   public void resetStamps() {
-    greenStamp.transform.position = restStateGreenStamp;
-    redStamp.transform.position = restStateRedStamp;
+    stampToMove.transform.position = restPos;
   }
 
   private float getRotation(GameObject stamp)
@@ -88,33 +109,16 @@ public class StampController : MonoBehaviour {
   }
 
   public void MoveStampToPaper(float step) {
-    if (selectedStamp == "green") {
-      greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, hitInfo.point, step);
-      greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, rotationZ), step);
-      greenStamp.transform.localScale = Vector3.Lerp(greenStamp.transform.localScale, maxScaleGreenStamp,step);
-    }
-    else if (selectedStamp == "red")
-    {
-      redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, hitInfo.point, step);
-      redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, rotationZ), step);
-      redStamp.transform.localScale = Vector3.Lerp(redStamp.transform.localScale, maxScaleRedStamp, step);
-    }
+    stampToMove.transform.localPosition = Vector3.Lerp(stampToMove.transform.position, hitInfo.point, step);
+    stampToMove.transform.rotation = Quaternion.Slerp(stampToMove.transform.rotation, Quaternion.Euler(0, 90, rotationZ), step);
+    stampToMove.transform.localScale = Vector3.Lerp(stampToMove.transform.localScale, maxScale, step);
   }
 
   public void MoveStampBackToRestPosition(float step)
   {
-    if (selectedStamp == "green")
-    {
-      greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, restStateGreenStamp, step);
-      greenStamp.transform.rotation = Quaternion.Slerp(greenStamp.transform.rotation, Quaternion.Euler(0, 90, 340f), step);
-      greenStamp.transform.localScale = Vector3.Lerp(greenStamp.transform.localScale, greenScaleRestState, step);
-    }
-    else if (selectedStamp == "red")
-    {
-      redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, restStateRedStamp, step);
-      redStamp.transform.rotation = Quaternion.Slerp(redStamp.transform.rotation, Quaternion.Euler(0, 90, 340f), step);
-      redStamp.transform.localScale = Vector3.Lerp(redStamp.transform.localScale, redScaleRestState, step);
-    }
+    stampToMove.transform.localPosition = Vector3.Lerp(stampToMove.transform.position, restPos, step);
+    stampToMove.transform.rotation = Quaternion.Slerp(stampToMove.transform.rotation, Quaternion.Euler(0, 90, 340f), step);
+    stampToMove.transform.localScale = Vector3.Lerp(stampToMove.transform.localScale, restScale, step);
   }
 
   public bool setRaycastHit(RaycastHit hit) {
@@ -128,7 +132,7 @@ public class StampController : MonoBehaviour {
     {
       hitInfo = hit;
       stampIsReady = true;
-      //SendAnswer();
+      //StartCoroutine(SendAnswer());
     }
     else if(hit.transform.name != "Paper")
     {
@@ -138,11 +142,13 @@ public class StampController : MonoBehaviour {
   }
 
   IEnumerator SendAnswer() {
+    
     WWWForm Form = new WWWForm();
 
     Form.AddField("response", answer);
     Form.AddField("token", GI.Token);
-    answerURL += GI.CurrentProjectNumber + "/" + currentQuestionNumber;
+    int projectNumber = GI.CurrentProjectNumber;
+    answerURL += projectNumber + "/" + GI.QuestionIds[projectNumber][currentQuestionNumber];
 
     WWW antwoordWWW = new WWW(answerURL, Form);
 

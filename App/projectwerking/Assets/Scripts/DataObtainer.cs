@@ -19,6 +19,7 @@ public class DataObtainer : MonoBehaviour {
   List<string> projectNameList = new List<string>();
   List<string> placeNameList = new List<string>();
   string[][] questionArray;
+  int[][] questionIdArray;
   List<int> projectIds = new List<int>();
 
   string projectNameString = "name";
@@ -38,6 +39,7 @@ public class DataObtainer : MonoBehaviour {
 
       numberOfProjects = textData["projects"].Count;
       questionArray = new string[numberOfProjects][];
+      questionIdArray = new int[numberOfProjects][];
       for (int i = 0; i < numberOfProjects; i++)
       {
         projectNameList.Add(textData["projects"][i][projectNameString].ToString());
@@ -67,14 +69,18 @@ public class DataObtainer : MonoBehaviour {
 
         numberOfProposals = textData["proposals"].Count;
         string[] tempProposals = new string[numberOfProposals];
+        int[] tempProposalsIds = new int[numberOfProposals];
         if (numberOfProposals != 0)
         {
           for (int j = 0; j < numberOfProposals; j++)
           {
             tempProposals[j] = textData["proposals"][j]["description"].ToString();
+            tempProposalsIds[j] = int.Parse(textData["proposals"][j]["id"].ToString());
           }
           questionArray[i] = tempProposals;
+          questionIdArray[i] = tempProposalsIds;
           GI.Questions = questionArray;
+          GI.QuestionIds = questionIdArray;
         }
       }
       else

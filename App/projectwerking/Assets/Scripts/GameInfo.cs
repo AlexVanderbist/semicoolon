@@ -8,9 +8,16 @@ public class GameInfo : MonoBehaviour {
   private static int currentProjectNumber;
 
   static int[] projectIds;
+  static int[][] questionIds;
   static List<string> projectNameList = new List<string>();
   static List<string> placeNameList = new List<string>();
   static string[][] questionArray;
+
+  public int[][] QuestionIds
+  {
+    get { return questionIds; }
+    set { questionIds = value; }
+  }
 
   public int[] ProjectIds
   {

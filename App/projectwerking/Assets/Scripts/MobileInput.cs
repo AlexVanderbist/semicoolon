@@ -37,213 +37,194 @@ public class MobileInput : MonoBehaviour {
   void Start () {
     pController = GetComponent<PaperController>();
     sController = GetComponent<StampController>();
+    StartCoroutine(Loop());
 	}
 
   // Update is called once per frame
-  void Update()
+  IEnumerator Loop()
   {
-    //Wait till questions are loaded
-    if (pController.ListIsReady)
+    while (true)
     {
-      //Spawn First Object
-      if (!firstPaperCreated)
+      //Wait till questions are loaded
+      if (pController.ListIsReady)
       {
-        pController.SetBeginValues();
-        pController.createNewPaper();
-        firstPaperCreated = true;
-        firstPaper = true;
-      }
-
-      //Move First Object
-      if (firstPaper)
-      {
-        step += speed * Time.deltaTime;
-        pController.moveNewPaper(step);
-        pController.setCurrentPaper();
-
-        if (step >= 1f)
+        //Spawn First Object
+        if (!firstPaperCreated)
         {
-          firstPaper = false;
-          step = 0f;
-          readyToCheckStamps = true;
+          pController.SetBeginValues();
+          pController.createNewPaper();
+          firstPaperCreated = true;
+          firstPaper = true;
+        }
+
+        //Move First Object
+        if (firstPaper)
+        {
+          step += speed * Time.deltaTime;
+          pController.moveNewPaper(step);
+          pController.setCurrentPaper();
+
+          if (step >= 1f)
+          {
+            firstPaper = false;
+            step = 0f;
+            readyToCheckStamps = true;
+          }
+        }
+
+        //PC Input, After first object is created
+        if (receiveInput)
+        {
+          if (Input.GetButtonDown("Jump"))
+          {
+            pController.createNewPaper();
+            movePapers = true;
+            receiveInput = false;
+          }
+        }
+
+        //Move New and Focused Paper
+        if (movePapers)
+        {
+          step += speed * Time.deltaTime;
+          pController.moveNewPaper(step);
+          pController.moveFocusPaper(step);
+          if (step >= 1)
+          {
+            movePapers = false;
+            step = 0;
+            pController.DestroyCurrentPaper();
+            pController.setCurrentPaper();
+            readyToCheckStamps = true;
+          }
+        }
+
+        //Move selected stamp when paper has been hit
+        if (readyToMoveStampToPaper)
+        {
+          if (!readyWithStampToPaper)
+          {
+            step += stampSpeed * Time.deltaTime;
+            sController.MoveStampToPaper(step);
+            if (step >= 1)
+            {
+              if (sController.SelectedStamp == "number")
+              {
+                Debug.Log("hej");
+              }
+              step = 0;
+              readyWithStampToPaper = true;
+            }
+          }
+          else
+          {
+            step += stampSpeed * Time.deltaTime;
+            sController.MoveStampBackToRestPosition(step);
+            if (step >= 1)
+            {
+              step = 0;
+              receiveInput = true;
+              readyToMoveStampToPaper = false;
+              readyWithStampToPaper = false;
+            }
+          }
+        }
+
+        //DRAG STAMPS
+        if (readyToCheckStamps)
+        {
+          Vector3 v3;
+
+          if (Input.touchCount != 1)
+          {
+            dragging = false;
+            yield return null;
+          }
+
+          Touch touch = Input.touches[0];
+          Vector3 pos = touch.position;
+
+          if (touch.phase == TouchPhase.Began)
+          {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(pos);
+            if (Physics.Raycast(ray, out hit) && (hit.collider.tag == "Stamp"))
+            {
+              Debug.Log("Here");
+              toDrag = hit.transform;
+              dist = hit.transform.position.z - Camera.main.transform.position.z;
+              v3 = new Vector3(pos.x, pos.y, dist);
+              v3 = Camera.main.ScreenToWorldPoint(v3);
+              offset = toDrag.position - v3;
+              dragging = true;
+            }
+          }
+          if (dragging && touch.phase == TouchPhase.Moved)
+          {
+            v3 = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
+            v3 = Camera.main.ScreenToWorldPoint(v3);
+            toDrag.position = v3 + offset;
+          }
+          if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
+          {
+            RaycastHit hitInfo = new RaycastHit();
+            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            if (hit)
+            {
+              if (hitInfo.collider.gameObject.name == "Paper")
+              {
+                readyToMoveStampToPaper = sController.CheckPaper(hitInfo);
+                readyToCheckStamps = false;
+              }
+              dragging = false;
+            }
+          }
         }
       }
 
-      //PC Input, After first object is created
+      //RightSwipe when stampController is ready
       if (receiveInput)
       {
-        if (Input.GetButtonDown("Jump"))
+        //OLDCODE
+        if (Input.touchCount > 0)
         {
-          pController.createNewPaper();
-          movePapers = true;
-          receiveInput = false;
-        }
-      }
+          Touch touch = Input.touches[0];
 
-      //Move New and Focused Paper
-      if (movePapers)
-      {
-        step += speed * Time.deltaTime;
-        pController.moveNewPaper(step);
-        pController.moveFocusPaper(step);
-        if (step >= 1)
-        {
-          movePapers = false;
-          step = 0;
-          pController.DestroyCurrentPaper();
-          pController.setCurrentPaper();
-          readyToCheckStamps = true;
-        }
-      }
-
-      //Move selected stamp when paper has been hit
-      if (readyToMoveStampToPaper)
-      {
-        if (!readyWithStampToPaper)
-        {
-          step += stampSpeed * Time.deltaTime;
-          sController.MoveStampToPaper(step);
-          if (step >= 1)
+          switch (touch.phase)
           {
-            step = 0;
-            readyWithStampToPaper = true;
-          }
-        }
-        else
-        {
-          step += stampSpeed * Time.deltaTime;
-          sController.MoveStampBackToRestPosition(step);
-          if (step >= 1)
-          {
-            step = 0;
-            receiveInput = true;
-            readyToMoveStampToPaper = false;
-            readyWithStampToPaper = false;
-          }
-        }
-      }
 
-      //  //Evrything that checks and handles the stamps
-      //  if (readyToCheckStamps)
-      //  {
-      //    RaycastHit hitInfo = new RaycastHit();
-      //    bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-      //    if (Input.touchCount > 0)
-      //    {
-      //      if (stampSelected)
-      //      {
-      //        if (hitInfo.collider.gameObject.name == "Paper")
-      //        {
-      //          readyToMoveStampToPaper = sController.CheckPaper(hitInfo.collider.gameObject);
-      //        }
-      //      }
+            case TouchPhase.Began:
 
-      //      if (hit && !readyToMoveStampToPaper)
-      //      {
-      //        stampSelected = sController.CheckStamp(hitInfo.collider.gameObject.name);
-      //      }
+              startPos = touch.position;
+              break;
 
-      //      if (readyToMoveStampToPaper)
-      //      {
-      //        readyToCheckStamps = false;
-      //        stampSelected = false;
-      //      }
-      //    }
-      //  }
+            case TouchPhase.Ended:
 
-      //DRAG STAMPS
-      if (readyToCheckStamps)
-      {
-        Vector3 v3;
+              float swipeDistHorizontal = (new Vector3(touch.position.x, 0, 0) - new Vector3(startPos.x, 0, 0)).magnitude;
 
-        if (Input.touchCount != 1)
-        {
-          dragging = false;
-          return;
-        }
+              if (swipeDistHorizontal > minSwipeDistX)
+              {
 
-        Touch touch = Input.touches[0];
-        Vector3 pos = touch.position;
+                float swipeHValue = Mathf.Sign(touch.position.x - startPos.x);
 
-        if (touch.phase == TouchPhase.Began)
-        {
-          RaycastHit hit;
-          Ray ray = Camera.main.ScreenPointToRay(pos);
-          if (Physics.Raycast(ray, out hit) && (hit.collider.tag == "Stamp"))
-          {
-            Debug.Log("Here");
-            toDrag = hit.transform;
-            dist = hit.transform.position.z - Camera.main.transform.position.z;
-            v3 = new Vector3(pos.x, pos.y, dist);
-            v3 = Camera.main.ScreenToWorldPoint(v3);
-            offset = toDrag.position - v3;
-            dragging = true;
-          }
-        }
-        if (dragging && touch.phase == TouchPhase.Moved)
-        {
-          v3 = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
-          v3 = Camera.main.ScreenToWorldPoint(v3);
-          toDrag.position = v3 + offset;
-        }
-        if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
-        {
-          RaycastHit hitInfo = new RaycastHit();
-          bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-          if (hit)
-          {
-            if (hitInfo.collider.gameObject.name == "Paper")
-            {
-              readyToMoveStampToPaper = sController.CheckPaper(hitInfo);
-              readyToCheckStamps = false;
-            }
-            dragging = false;
+                if (swipeHValue > 0)//right swipe
+                {
+                  pController.createNewPaper();
+                  movePapers = true;
+                  receiveInput = false;
+                }
+
+                else if (swipeHValue < 0)//left swipe
+                {
+                  //
+
+                }
+              }
+              break;
           }
         }
       }
     }
-
-    //RightSwipe when stampController is ready
-    if (receiveInput)
-    {
-      //OLDCODE
-      if (Input.touchCount > 0)
-      {
-        Touch touch = Input.touches[0];
-
-        switch (touch.phase)
-        {
-
-          case TouchPhase.Began:
-
-            startPos = touch.position;
-            break;
-
-          case TouchPhase.Ended:
-
-            float swipeDistHorizontal = (new Vector3(touch.position.x, 0, 0) - new Vector3(startPos.x, 0, 0)).magnitude;
-
-            if (swipeDistHorizontal > minSwipeDistX)
-            {
-
-              float swipeHValue = Mathf.Sign(touch.position.x - startPos.x);
-
-              if (swipeHValue > 0)//right swipe
-              {
-                pController.createNewPaper();
-                movePapers = true;
-                receiveInput = false;
-              }
-
-              else if (swipeHValue < 0)//left swipe
-              {
-                //
-
-              }
-            }
-            break;
-        }
-      }
-    }
+    
   }
 }
