@@ -26,4 +26,14 @@ class Proposal extends Model
     public function opinions() {
         return $this->hasMany(ProposalOpinion::class);
     }
+
+    public function vote() {
+        //dd($this->opinions()->ofType(1)->get());
+
+        return [
+            'yes' => $this->opinions()->ofType(1)->withValue(1)->count(),
+            'no'  => $this->opinions()->ofType(1)->withValue(2)->count(),
+            'avg' => $this->opinions()->ofType(2)->avg('value')
+        ];
+    }
 }

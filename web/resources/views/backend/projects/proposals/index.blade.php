@@ -63,7 +63,12 @@
                         <td>{{$proposal->description}}</td>
                         <td>{{$proposal->type}}</td>
                         <td>
-                            ja: 5 | nee: 8
+                            @if($proposal->type == 1)
+                                Ja: {{$proposal->vote()['yes']}} | 
+                                Nee: {{$proposal->vote()['no']}}
+                            @else
+                                Gem. score: {{$proposal->vote()['avg']}}
+                            @endif
                         </td>
                         <td>
                             {!! Form::open(['method' => 'delete', 'route' => ['backend.projects.{project}.proposals.destroy', $project->id, $proposal->id]]) !!}

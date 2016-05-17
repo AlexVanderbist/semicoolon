@@ -15,18 +15,18 @@ class ProposalOpinion extends Model
     protected $fillable = [
         'value',
         'type',
-        'user_id'
+        'user_id',
         'proposal_id'
     ];
 
-    public function scopeYesNo($query)
+    public function scopeOfType($query, $type)
     {
-        return $query->where('type', 1);
+        return $query->where('type', $type);
     }
 
-    public function scopeScore($query)
+    public function scopeWithValue($query, $value)
     {
-        return $query->where('type', 2);
+        return $query->where('value', $value);
     }
 
     public function proposal()
