@@ -19,6 +19,16 @@ class ProposalOpinion extends Model
         'proposal_id'
     ];
 
+    public function scopeYesNo($query)
+    {
+        return $query->where('type', 1);
+    }
+
+    public function scopeScore($query)
+    {
+        return $query->where('type', 2);
+    }
+
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);
