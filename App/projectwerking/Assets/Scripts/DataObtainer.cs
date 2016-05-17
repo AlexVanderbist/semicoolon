@@ -48,6 +48,7 @@ public class DataObtainer : MonoBehaviour {
       }
       GI.ProjectNameList = projectNameList;
       GI.PlaceNameList = placeNameList;
+      GI.ProjectIds = projectIds;
       StartCoroutine(GetProposals());
     }
     else

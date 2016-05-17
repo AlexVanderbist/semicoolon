@@ -7,7 +7,7 @@ public class GameInfo : MonoBehaviour {
   private static string token;
   private static int currentProjectNumber;
 
-  static int[] projectIds;
+  static List<int> projectIds = new List<int>();
   static int[][] questionIds;
   static List<string> projectNameList = new List<string>();
   static List<string> placeNameList = new List<string>();
@@ -19,7 +19,7 @@ public class GameInfo : MonoBehaviour {
     set { questionIds = value; }
   }
 
-  public int[] ProjectIds
+  public List<int> ProjectIds
   {
     get { return projectIds; }
     set { projectIds = value; }

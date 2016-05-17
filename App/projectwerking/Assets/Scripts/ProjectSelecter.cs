@@ -33,7 +33,7 @@ public class ProjectSelecter : MonoBehaviour
       container.transform.FindChild("Plaatsnaam").GetComponent<Text>().text = GI.PlaceNameList[i];
       container.transform.FindChild("Banner").GetComponent<Image>().sprite = tempImageStock[Random.Range(0, tempImageStock.Length)];
       container.transform.FindChild("Title").GetComponent<Text>().text = GI.ProjectNameList[i];
-      container.transform.FindChild("MeerLezen").GetComponent<Button>().onClick.AddListener(() => ReadMore(tempInt));
+      container.transform.FindChild("MeerLezen").GetComponent<Button>().onClick.AddListener(() => ReadMore(GI.ProjectIds[tempInt]));
       container.transform.SetParent(levelButtonContainer.transform, false);
 
       if (GI.Questions[i] == null)
