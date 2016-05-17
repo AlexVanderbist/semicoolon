@@ -28,6 +28,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 
 	    // GET Project proposals
 	    Route::get('projects/{project}/proposals', 'API\ProjectsController@getProposals');
+	    Route::get('projects/{project}/proposals/user', 'API\ProjectsController@getProposals');
 
 	});
 });
