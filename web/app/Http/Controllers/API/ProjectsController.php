@@ -27,7 +27,16 @@ class ProjectsController extends Controller
     }
 
     public function getProposals(Project $project) {
-    	$proposals = $project->proposals;
-    	return response()->json(compact('proposals'));
+        $proposals = $project->proposals;
+        return response()->json(compact('proposals'));
+    }
+
+    public function getProposalsForUser(Project $project) {
+        $proposals = $project->with('proposals')->whereHas('proposals.opinions', function($q)
+        {
+            $q->where('user_id', '!=', \Auth::user()->id);
+        });
+
+        return response()->json(compact('proposals'));
     }
 }
