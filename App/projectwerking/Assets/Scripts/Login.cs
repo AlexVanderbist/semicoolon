@@ -11,7 +11,7 @@ public class Login : MonoBehaviour {
     string password = "";
     public Text errorMessage;
     public string sceneToLoad = "ProjectsScene";
-    public string CreateAccountUrl = "http://semicolon.multimediatechnology.be";
+    public string CreateAccountUrl = "http://semicolon.multimediatechnology.be/register";
     public string LoginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
 
     public InputField inputEmail, inputPassword;
