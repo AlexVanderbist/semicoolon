@@ -9,12 +9,12 @@ public class StampController : MonoBehaviour {
 
   Vector3 restPosRedStamp, restPosGreenStamp, restPosNumberStamp;
   Vector3 maxScaleRedStamp, maxScaleGreenStamp, maxScaleNumberStamp;
-  //Vector3 greenScaleRestState, redScaleRestState, numberScaleRestState;
 
   GameObject stampToMove;
   Vector3 restPos, maxScale, restScale;
 
   float rotationZ = 0;
+  float beginRotation = 0;
   int currentQuestionNumber = 0;
   string answer = "";
 
@@ -35,6 +35,7 @@ public class StampController : MonoBehaviour {
     restPosRedStamp = redStamp.transform.position;
     restPosGreenStamp = greenStamp.transform.position;
     restPosNumberStamp = numberStamp.transform.position;
+    beginRotation = redStamp.transform.rotation.z;
     // ALL REST SCALES HAVE TO BE SAME VALUE
     maxScale = new Vector3(redStamp.transform.localScale.x + maxScaleToAdd, redStamp.transform.localScale.y + maxScaleToAdd, redStamp.transform.localScale.z + maxScaleToAdd);
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
@@ -87,23 +88,23 @@ public class StampController : MonoBehaviour {
     float rotation = 0f;
     if (height < -110f)
     {
-      rotation = -70f;
+      rotation = -65f;
     }
     else if (height >= -110f && height < -65f)
     {
-      rotation = -75f;
+      rotation = -70f;
     }
     else if (height >= -65f && height < 0)
     {
-      rotation = -80f;
+      rotation = -75f;
     }
     else if (height >= 0f && height < 50)
     {
-      rotation = -85f;
+      rotation = -80f;
     }
     else if (height >= 50f)
     {
-      rotation = -90f;
+      rotation = -85f;
     }
     return rotation;
   }
@@ -117,7 +118,7 @@ public class StampController : MonoBehaviour {
   public void MoveStampBackToRestPosition(float step)
   {
     stampToMove.transform.localPosition = Vector3.Lerp(stampToMove.transform.position, restPos, step);
-    stampToMove.transform.rotation = Quaternion.Slerp(stampToMove.transform.rotation, Quaternion.Euler(0, 90, 340f), step);
+    stampToMove.transform.rotation = Quaternion.Slerp(stampToMove.transform.rotation, Quaternion.Euler(0, 90, 315f), step);
     stampToMove.transform.localScale = Vector3.Lerp(stampToMove.transform.localScale, restScale, step);
   }
 

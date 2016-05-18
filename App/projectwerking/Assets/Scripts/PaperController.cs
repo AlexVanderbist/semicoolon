@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class PaperController : MonoBehaviour
 {
-  public GameObject tMeshPrefab, tMeshTitlePrefab;
+  public GameObject tMeshNormalText, tMeshTitleText, tMeshPrefab;
   public Transform startposition, focusposition, endposition;
   public bool ListIsReady = false;
   public Text testTextBox;
@@ -26,8 +26,8 @@ public class PaperController : MonoBehaviour
   GameInfo GI;
 
   void Awake() {
-    tMeshText = tMeshPrefab.GetComponent<TextMesh>();
-    tMeshTitle = tMeshTitlePrefab.GetComponent<TextMesh>();
+    tMeshText = tMeshNormalText.GetComponent<TextMesh>();
+    tMeshTitle = tMeshTitleText.GetComponent<TextMesh>();
     testTextBox.enabled = false;
 
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();

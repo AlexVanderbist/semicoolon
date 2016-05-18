@@ -32,7 +32,7 @@ public class SetStamp : MonoBehaviour {
     stamps = gameManager.GetComponent<StampController>();
     paper = gameManager.GetComponent<PaperController>();
     numberPanelHiddenPos = numberPanel.transform.position;
-    numberPanelShownPos = new Vector3(numberPanel.transform.position.x, numberPanel.transform.position.y + 50, numberPanel.transform.position.z);
+    numberPanelShownPos = new Vector3(numberPanel.transform.position.x, (Screen.height/ 854) / 2, numberPanel.transform.position.z); // 854 IS FOR ASPECT RATIO
     gameObject.AddComponent<AudioSource>();
     source.clip = sound;
     source.playOnAwake = false;
@@ -113,7 +113,7 @@ public class SetStamp : MonoBehaviour {
       numberStampParticle.GetComponentInChildren<ParticleSystem>().Play();
       printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
-
+    printedStamp.transform.rotation = Quaternion.AngleAxis(10, Vector3.right);
   }
 
     public void PrintStamp(RaycastHit hit)
