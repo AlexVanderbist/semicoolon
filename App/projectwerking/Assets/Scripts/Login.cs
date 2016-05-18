@@ -14,15 +14,30 @@ public class Login : MonoBehaviour {
     public string CreateAccountUrl = "http://semicolon.multimediatechnology.be";
     public string LoginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
 
+    public InputField inputEmail, inputPassword;
+
     private string invalidString = "invalid_credentials";
 
     JsonData textdata;
     GameInfo GI;
+    public Toggle rememberMeCheckbox;
 
 	// Use this for initialization
 	void Start () {
-    GI = GetComponent<GameInfo>();
-    errorMessage.enabled = false;
+        GI = GetComponent<GameInfo>();
+        errorMessage.enabled = false;
+        if (PlayerPrefs.HasKey("username") && PlayerPrefs.HasKey("password"))
+        {
+            email = PlayerPrefs.GetString("username");
+            inputEmail.text = email;
+            password = PlayerPrefs.GetString("password");
+            inputPassword.text = password;
+            Debug.Log(email + " " + password);
+        }
+        else
+        {
+            Debug.Log("can't find keys");
+        }
 	}
 
 
@@ -76,15 +91,20 @@ public class Login : MonoBehaviour {
       //SAVE TOKEN
       if (textdata["token"].ToString() != "")
       {
-        errorMessage.enabled = false;
-        GI.Token = textdata["token"].ToString();
-        SceneManager.LoadScene(sceneToLoad);
+          if (rememberMeCheckbox.isOn)
+          {
+              PlayerPrefs.SetString("username", email);
+              PlayerPrefs.SetString("password", password);
+          }
+          errorMessage.enabled = false;
+          GI.Token = textdata["token"].ToString();
+          SceneManager.LoadScene(sceneToLoad);
       }
       //CHECK ERROR STRING
       else if(textdata[0]["error"].ToString() == invalidString)
       {
-        errorMessage.text = "Verkeerde email of passwoord";
-        errorMessage.enabled = true;
+          errorMessage.text = "Verkeerde email of passwoord";
+          errorMessage.enabled = true;
       }
     }
     //ERROR! CANT LOGIN
