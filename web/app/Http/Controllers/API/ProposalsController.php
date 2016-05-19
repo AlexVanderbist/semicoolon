@@ -31,11 +31,13 @@ class ProposalsController extends Controller
 
     public function getProposalsForUser($projectId) {
     	$proposals = $this->proposals->where('project_id', $projectId)
-    								 ->whereHas('opinions', function($q)
-								        {
-								            $q->where('user_id', '!=', \Auth::user()->id);
-								        })
-    								 ->orHas('opinions', '<', 1)
+    								 ->where(function($query) {
+	    								 $query->whereHas('opinions', function($q)
+									        {
+									            $q->where('user_id', '!=', \Auth::user()->id);
+									        })
+	    								 ->orHas('opinions', '<', 1);
+    								 })
     								 ->get();
 
         return response()->json(compact('proposals'));
