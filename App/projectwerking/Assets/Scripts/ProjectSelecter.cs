@@ -27,7 +27,7 @@ public class ProjectSelecter : MonoBehaviour
     
     for (int i = 0; i < GI.PlaceNameList.Count; i++)
     {
-      int tempInt = i+1;
+      int tempInt = i;
       GameObject container = Instantiate(levelButtonPrefab) as GameObject;
       container.transform.FindChild("DoneSign").GetComponent<Image>().enabled = false;
       container.transform.FindChild("Plaatsnaam").GetComponent<Text>().text = GI.PlaceNameList[i];

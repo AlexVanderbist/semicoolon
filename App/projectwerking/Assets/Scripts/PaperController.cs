@@ -31,7 +31,7 @@ public class PaperController : MonoBehaviour
     testTextBox.enabled = false;
 
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
-    currentProjectNumber = GI.CurrentProjectNumber - 1;
+    currentProjectNumber = GI.CurrentProjectNumber;
     QuestionList = GI.Questions[currentProjectNumber];
     numberOfQuestions = QuestionList.Length;
     ListIsReady = true;

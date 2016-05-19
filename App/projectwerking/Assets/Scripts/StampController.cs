@@ -1,11 +1,13 @@
 ﻿ using UnityEngine;
 using System.Collections;
+using LitJson;
 
 public class StampController : MonoBehaviour {
 
   public GameObject redStamp, greenStamp, numberStamp;
   public int maxScaleToAdd = 30;
   public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
+  public string answerURLTokenPart = "?token=";
 
   Vector3 restPosRedStamp, restPosGreenStamp, restPosNumberStamp;
   Vector3 maxScaleRedStamp, maxScaleGreenStamp, maxScaleNumberStamp;
@@ -16,10 +18,12 @@ public class StampController : MonoBehaviour {
   float rotationZ = 0;
   float beginRotation = 0;
   int currentQuestionNumber = 0;
+  int numberAnswer;
   string answer = "";
 
   RaycastHit hitInfo;
   GameInfo GI;
+
 
   private string selectedStamp = "";
 
@@ -124,6 +128,7 @@ public class StampController : MonoBehaviour {
 
   public bool setRaycastHit(RaycastHit hit) {
     hitInfo = hit;
+    StartCoroutine(SendAnswer());
     return true;
   }
 
@@ -133,7 +138,7 @@ public class StampController : MonoBehaviour {
     {
       hitInfo = hit;
       stampIsReady = true;
-      //StartCoroutine(SendAnswer());
+
     }
     else if(hit.transform.name != "Paper")
     {
@@ -142,16 +147,32 @@ public class StampController : MonoBehaviour {
     return stampIsReady;
   }
 
+  public void numberReceiver(int initnumber)
+  {
+    numberAnswer = initnumber;
+  }
+
   IEnumerator SendAnswer() {
-    
+    int value = 0;
+    string url = "";
+    JsonData textData;
     WWWForm Form = new WWWForm();
-
-    Form.AddField("response", answer);
-    Form.AddField("token", GI.Token);
+    switch (selectedStamp)
+    {
+      case "green": value = 1;
+        break;
+      case "red": value = 2;
+        break;
+      case "number": value = numberAnswer;
+        break;
+      default:
+        break;
+    }
+    Form.AddField("value", value);
     int projectNumber = GI.CurrentProjectNumber;
-    answerURL += projectNumber + "/" + GI.QuestionIds[projectNumber][currentQuestionNumber];
-
-    WWW antwoordWWW = new WWW(answerURL, Form);
+    url += answerURL + GI.QuestionIds[projectNumber][currentQuestionNumber] + answerURLTokenPart + GI.Token;
+    Debug.Log(url);
+    WWW antwoordWWW = new WWW(url, Form);
 
     yield return antwoordWWW;
 
@@ -161,8 +182,13 @@ public class StampController : MonoBehaviour {
       }
       else
       {
-        
+      Debug.Log("in orde");
+      textData = JsonMapper.ToObject(antwoordWWW.text);
+      if (textData["status"].ToString() == "success")
+      {
+        Debug.Log("dubbel in orde");
       }
+    }
 
       //set currentQuestionNumber For Next Answer
       currentQuestionNumber++;
