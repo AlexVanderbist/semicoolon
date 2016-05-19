@@ -13,7 +13,7 @@ class AlterProjectImagesAddHeaderToggle extends Migration
     public function up()
     {
         Schema::table('project_images', function (Blueprint $table) {
-            //
+            $table->boolean('is_header');
         });
     }
 
@@ -25,7 +25,7 @@ class AlterProjectImagesAddHeaderToggle extends Migration
     public function down()
     {
         Schema::table('project_images', function (Blueprint $table) {
-            //
+            $table->dropColumn('is_header');
         });
     }
 }

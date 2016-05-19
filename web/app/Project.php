@@ -43,6 +43,11 @@ class Project extends Model
         return $this->hasMany(Proposal::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class);
+    }
+
     public function opinions()
     {
         return $this->hasMany(Opinion::class);
