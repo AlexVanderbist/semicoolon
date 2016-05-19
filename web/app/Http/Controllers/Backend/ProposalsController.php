@@ -25,8 +25,12 @@ class ProposalsController extends Controller
     public function index(Project $project, Proposal $proposal)
     { 
         $proposals = $project->proposals;
+        $typeNames = [
+            1 => 'Ja/nee vraag',
+            2 => 'Score 1-5'
+        ];
 
-        return view('backend.projects.proposals.index', compact('project', 'proposals', 'proposal'));
+        return view('backend.projects.proposals.index', compact('project', 'proposals', 'proposal', 'typeNames'));
     }
 
     /**

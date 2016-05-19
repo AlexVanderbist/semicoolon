@@ -62,7 +62,7 @@
                 @foreach($proposals as $proposal)
                     <tr>
                         <td>{{$proposal->description}}</td>
-                        <td>{{$proposal->type}}</td>
+                        <td>{{$typeNames[$proposal->type]}}</td>
                         <td>
                             @if($proposal->type == 1)
                                 Ja: {{$proposal->vote()['yes']}} | 

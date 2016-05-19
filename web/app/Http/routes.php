@@ -74,45 +74,48 @@ Route::group(['middleware' => 'web'], function () {
 
 
 	/* BACKEND */ // add middleware around this instead of on the parent constructor?
-	Route::get('/backend', [
-		'as' => 'backend.dashboard',
-		'uses' => 'Backend\DashboardController@index'
-	]);
+	Route::group(['middleware' => 'admin', 'prefix' => 'backend'], function() {
 
-	Route::resource('backend/users', 'Backend\UsersController', ['except' => ['show']]);
-	Route::get('backend/users/{users}/confirm', [
-		'as' => 'backend.users.confirm',
-		'uses' => 'Backend\UsersController@confirm'
-	]);
+		Route::get('/', [
+			'as' => 'backend.dashboard',
+			'uses' => 'Backend\DashboardController@index'
+		]);
 
-	Route::resource('backend/themes', 'Backend\ThemesController', ['except' => ['show']]);
-	Route::get('backend/themes/{themes}/confirm', [
-		'as' => 'backend.themes.confirm',
-		'uses' => 'Backend\ThemesController@confirm'
-	]);
+		Route::resource('users', 'Backend\UsersController', ['except' => ['show']]);
+		Route::get('users/{users}/confirm', [
+			'as' => 'backend.users.confirm',
+			'uses' => 'Backend\UsersController@confirm'
+		]);
 
-	Route::resource('backend/projects', 'Backend\ProjectsController', ['except' => ['show']]);
-	Route::get('backend/projects/{project}/confirm', [
-		'as' => 'backend.projects.confirm',
-		'uses' => 'Backend\ProjectsController@confirm'
-	]);
+		Route::resource('themes', 'Backend\ThemesController', ['except' => ['show']]);
+		Route::get('themes/{themes}/confirm', [
+			'as' => 'backend.themes.confirm',
+			'uses' => 'Backend\ThemesController@confirm'
+		]);
 
-	// Proposals
-	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show', 'create', 'update', 'edit']]);
-	Route::delete('backend/projects/{project}/proposals/{proposal}/opinions', [
-		'uses' => 'Backend\ProposalsController@destroyOpinions',
-		'as' => 'backend.projects.{project}.proposals.opinions.destroy'
-	]);
-	
-	// Stages
-	Route::resource('backend/projects/{project}/stages', 'Backend\StagesController', ['except' => ['show', 'create', 'update', 'edit', 'show']]);
-	Route::get('backend/projects/{project}/stages/{stage}/edit', [
-		'as' => 'backend.projects.{project}.stages.edit',
-		'uses' => 'Backend\StagesController@edit'
-	]);
-	Route::put('backend/projects/{project}/stages/{stage}/update', [
-		'as' => 'backend.projects.{project}.stages.update',
-		'uses' => 'Backend\StagesController@update'
-	]);
+		Route::resource('projects', 'Backend\ProjectsController', ['except' => ['show']]);
+		Route::get('projects/{project}/confirm', [
+			'as' => 'backend.projects.confirm',
+			'uses' => 'Backend\ProjectsController@confirm'
+		]);
+
+		// Proposals
+		Route::resource('projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show', 'create', 'update', 'edit']]);
+		Route::delete('projects/{project}/proposals/{proposal}/opinions', [
+			'uses' => 'Backend\ProposalsController@destroyOpinions',
+			'as' => 'backend.projects.{project}.proposals.opinions.destroy'
+		]);
+		
+		// Stages
+		Route::resource('projects/{project}/stages', 'Backend\StagesController', ['except' => ['show', 'create', 'update', 'edit', 'show']]);
+		Route::get('projects/{project}/stages/{stage}/edit', [
+			'as' => 'backend.projects.{project}.stages.edit',
+			'uses' => 'Backend\StagesController@edit'
+		]);
+		Route::put('projects/{project}/stages/{stage}/update', [
+			'as' => 'backend.projects.{project}.stages.update',
+			'uses' => 'Backend\StagesController@update'
+		]);
+	});
 
 });
