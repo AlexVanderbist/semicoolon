@@ -21,12 +21,18 @@
     </div>
     <div class="frontstages container">
         <h2>Fases</h2>
-        <hr>
+        <div class="timeline">
         @foreach($project->stages as $stage)
-            <div><h3>{!! $stage->name !!}</h3></div>
-            <div><strong>Van {{$stage->startdate->toFormattedDateString()}} tot {{$stage->enddate->toFormattedDateString()}}</strong></div>
-            <div>{!! $stage->description !!}</div>
+            <div class="fase">
+                <div class="fasedate col-md-4 col-xs-4"><h4>{{$stage->startdate->toFormattedDateString()}}</h4></div>
+                <div class="fasedescription col-md-8 col-xs-8">
+                    <h3>{!! $stage->name !!}</h3>
+                    <p>{!! $stage->description !!}</p>
+                    <p class="enddate">Eindigd op {{$stage->enddate->toFormattedDateString()}}</p>
+                </div>
+            </div>
         @endforeach
+        </div>
         
     </div>
     <div class="reactions container">

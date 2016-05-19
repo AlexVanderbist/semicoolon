@@ -28,7 +28,6 @@ class StoreProjectStageRequest extends Request
             'description' => 'required',
             'startdate' => 'required',
             'enddate' => 'required',
-            'allow_input' => 'required',
         ];
     }
 }

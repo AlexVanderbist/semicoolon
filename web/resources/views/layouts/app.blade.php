@@ -59,7 +59,7 @@
                 </a>
 
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="{{ route('backend.dashboard') }}"><i class="fa fa-btn fa-gear"></i>Backend</a></li>
+                  @if(Auth::check() && Auth::user()->admin)<li><a href="{{ route('backend.dashboard') }}"><i class="fa fa-btn fa-gear"></i>Backend</a></li>@endif
                   <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Log uit</a></li>
                 </ul>
               </li>

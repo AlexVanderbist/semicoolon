@@ -27,8 +27,7 @@ class UpdateProjectStageRequest extends Request
             'name' => ['required'],
             'description' => ['required'],
             'startdate' => ['required'],
-            'enddate' => ['required'],
-            'allow_input' => ['required']
+            'enddate' => ['required']
         ];
     }
 }

@@ -40,14 +40,9 @@
                     {!! Form::date('enddate', \Carbon\Carbon::now(), ['class' => 'form-control']) !!}
                 </div>
             </div>
-            <div class="form-inline">
-                <div class="form-group">
-                    {!! Form::label('allow_input','Input goedkeuren') !!}
-                    {!! Form::select('allow_input', array('0' => 'Nee', '1' => 'Ja'), null, ['class' => 'form-control']) !!}
-                </div>
 
-                {!! Form::submit($stage->exists ? 'Fase wijzigen' : 'Fase toevoegen', ['class' => 'btn btn-primary pull-right']) !!}
-            </div>
+            {!! Form::submit($stage->exists ? 'Fase wijzigen' : 'Fase toevoegen', ['class' => 'btn btn-primary']) !!}
+
 
             {!! Form::close() !!}
         </div>

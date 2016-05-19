@@ -74,7 +74,71 @@ body, html {
 .ytpreview {
 	margin-top: 2%;
 }
-
+/*.fasedescription {
+	border-left: 1px solid #A7A7A7;
+	border-top: 1px solid #A7A7A7;
+} 
+*/
+.fasedate {
+	text-align: right;
+}
+.frontstages {
+	position: relative;
+}
+.frontstages:before { /*TIJDLIJN*/
+  position: absolute;
+  left: 34%;
+  top: 20px;
+  content: ' ';
+  display: block;
+  width: 6px;
+  height: 100%;
+  margin-left: -3px;
+  background: rgb(80,80,80);
+  background: -moz-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
+  background: -webkit-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -o-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -ms-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: linear-gradient(to bottom, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  z-index: 5;
+}
+.fasedescription:before { /* RODE BOL */
+  position: absolute;
+  left: -10px;
+  content: ' ';
+  display: block;
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  border-radius: 20px;
+  border: 8px solid #D11F38;
+  z-index: 10;
+}
+.enddate:after { /* DRIEHOEKJE */
+  content: "";
+  position: absolute;
+  left: 5px;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  border-left-color: #505050;
+  border-width: 8px;
+  pointer-events: none;
+}
+.fasedate h4 {
+	margin-top: 0px;
+}
+.fasedescription h3 {
+	margin-top: 0px;
+}
+.fasedescription {
+	padding-left: 25px;
+}
+.fasedate, .fasedescription {
+	margin-top: 15px;
+	padding-right: 30px;
+}
 /* TABLE OVERFLOWS */
 #stages {
 	table-layout:fixed;
@@ -84,4 +148,11 @@ body, html {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 700px) {
+	.frontstages:before{
+		left: 35.5%;
+		top: 40px;
+	}
 }
