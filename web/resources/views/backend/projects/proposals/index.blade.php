@@ -47,6 +47,7 @@
                 <th>Stelling</th>
                 <th>Type</th>
                 <th>Stemming</th>
+                <th>Reset stemming</th>
                 <th>Verwijderen</th>
             </tr>
         </thead>
@@ -71,13 +72,14 @@
                             @endif
                         </td>
                         <td>
-                            {!! Form::open(['method' => 'delete', 'route' => ['backend.projects.{project}.proposals.destroy', $project->id, $proposal->id]]) !!}
-
-                                <button type="submit" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span> Delete
-                                </button>
-
-                            {!! Form::close() !!}
+                            <a href="{!! route('backend.projects.{project}.proposals.opinions.destroy', [$project->id, $proposal->id]) !!}" data-method="delete" data-token="{{csrf_token()}}">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{!! route('backend.projects.{project}.proposals.destroy', [$project->id, $proposal->id]) !!}" data-method="delete" data-token="{{csrf_token()}}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

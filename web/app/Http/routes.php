@@ -27,10 +27,13 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 	    Route::get('projects', 'API\ProjectsController@index');
 
 	    // GET Project proposals
-	    Route::get('projects/{project}/proposals', 'API\ProjectsController@getProposals');
+	    Route::get('projects/{project}/proposals', 'API\ProposalsController@getProposals');
 
 	    // GET Project proposals unanswered by user
-	    Route::get('projects/{project}/proposals/user', 'API\ProjectsController@getProposalsForUser');
+	    Route::get('projects/{project}/proposals/user', 'API\ProposalsController@getProposalsForUser');
+
+	    // POST Project proposals opinion by user
+	    Route::post('proposals/{proposal}', 'API\ProposalsController@postProposalOpinionForUser');
 
 	});
 });
@@ -94,8 +97,14 @@ Route::group(['middleware' => 'web'], function () {
 		'uses' => 'Backend\ProjectsController@confirm'
 	]);
 
-	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show', 'create', 'update', 'edit', 'show']]);
+	// Proposals
+	Route::resource('backend/projects/{project}/proposals', 'Backend\ProposalsController', ['except' => ['show', 'create', 'update', 'edit']]);
+	Route::delete('backend/projects/{project}/proposals/{proposal}/opinions', [
+		'uses' => 'Backend\ProposalsController@destroyOpinions',
+		'as' => 'backend.projects.{project}.proposals.opinions.destroy'
+	]);
 	
+	// Stages
 	Route::resource('backend/projects/{project}/stages', 'Backend\StagesController', ['except' => ['show', 'create', 'update', 'edit', 'show']]);
 	Route::get('backend/projects/{project}/stages/{stage}/edit', [
 		'as' => 'backend.projects.{project}.stages.edit',

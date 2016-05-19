@@ -42,6 +42,16 @@ class ProposalsController extends Controller
         return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('stats', 'De stelling is toegevoegd!');
     }
 
+    public function destroyOpinions(Project $project, $id)
+    {
+
+        $proposal = $this->proposals->findOrFail($id);
+
+        $proposal->opinions()->delete();
+
+        return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('status', 'De stelling is reset.');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

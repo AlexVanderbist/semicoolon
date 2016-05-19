@@ -23,34 +23,9 @@ class ProjectsController extends Controller
 
     public function index() 
     {
-
-		try {
-    		$projects = $this->projects->with('theme', 'creator')->get();
-		}
-		catch (NotFoundHttpException $e)
-		{
-		    $projects = [];
-		}
-
+		$projects = $this->projects->with('theme', 'creator')->get();
+	    //$projects = [];
 
     	return response()->json(compact('projects'));
-    }
-
-    public function getProposals($id) {
-		$project = $this->projects->find($id);
-		if($project) {
-   			$proposals = $project->proposals;
-		} else $proposals = [];
-
-        return response()->json(compact('proposals'));
-    }
-
-    public function getProposalsForUser($projectId) {
-    	$proposals = $this->proposals->where('project_id', $projectId)->has('opinions', '<', 1)->orWhereHas('opinions', function($q)
-	        {
-	            $q->where('user_id', '!=', \Auth::user()->id);
-	        })->get();
-
-        return response()->json(compact('proposals'));
     }
 }
