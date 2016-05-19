@@ -53,6 +53,12 @@ class Project extends Model
         return $this->hasMany(Opinion::class);
     }
 
+    public function getHeaderImageAttribute() {
+        $image = $this->images()->where('is_header', 1)->first();
+        if(!$image) $image = $this->images()->first();
+        return $image;
+    }
+
     public function setYoutubeUrlAttribute($value) {
         parse_str( parse_url( $value, PHP_URL_QUERY ), $id );
         $this->attributes['youtube_url'] = $id['v'];

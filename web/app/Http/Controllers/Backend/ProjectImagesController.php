@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
+use File;
 
 use App\Http\Requests;
 
@@ -30,47 +31,29 @@ class ProjectImagesController extends Controller
         return view('backend.projects.images.index', compact('project', 'projectImage'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function store(Requests\UploadPhotosRequest $request, Project $project) {
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        // getting all of the post data
+        $files = $request->file('images');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        // Making counting of uploaded images
+        $file_count = count($files);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        // start count how many uploaded
+        $uploadcount = 0;
+
+        foreach($files as $file) {
+            $destinationPath = 'photos/uploads';
+            $filename = $file->getClientOriginalName();
+            $upload_success = $file->move(public_path($destinationPath), $filename);
+            $project->images()->create([
+                'filename' => $destinationPath . '/' . $filename,
+                'is_header' => false
+            ]);
+            $uploadcount++;
+        }
+
+        return redirect(route('backend.projects.{project}.images.index',$project->id))->with('status', $uploadcount . '/' . $file_count . ' foto\'s zijn geüpload.');
     }
 
     /**
@@ -80,9 +63,13 @@ class ProjectImagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Project $project, $imageId)
     {
-        //
+        $project->images()->update(['is_header' => false]);
+
+        $this->projectImages->findOrFail($imageId)->update(['is_header' => true]);
+
+        return redirect(route('backend.projects.{project}.images.index', $project->id))->with('status', 'Foto is ingesteld als hoofdafbeelding.');
     }
 
     /**
@@ -91,8 +78,14 @@ class ProjectImagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project, $imageId)
     {
-        //
+        $image = $this->projectImages->findOrFail($imageId);
+
+        File::delete(public_path($image->filename));
+
+        $image->delete();
+
+        return redirect(route('backend.projects.{project}.images.index', $project->id))->with('status', 'Foto verwijderd.');
     }
 }

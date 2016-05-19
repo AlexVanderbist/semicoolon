@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('title', 'Project photo\'s')
+@section('title', 'Project Foto\'s')
 
 @section('content')
 
@@ -15,107 +15,59 @@
         
     <div class="panel panel-default">
         <div class="panel-heading">
-            <strong>{{ $project->title }} Foto's</strong>
+            <strong>Foto's: {{ $project->name }}</strong>
         </div>
 
         <div class="panel-body">
-
-            {!! Form::model($projectImage, [
-                'method' => 'post',
-                'route' => ['backend.projects.{project}.images.store', $projectImage->id]
-            ]) !!}
-
             <div class="form-group">
                 @if(! $project->images->isEmpty())
-                    Click to delete an image.
+                    <small>Klik op een afbeelding om ze in te stellen als hoofdafbeelding.</small>
                     <div class="row" id="album_images">
                         @foreach($project->images as $image)
                             <div class="col-xs-3">
-                                <div class="thumbnail">
-                                    <a href="{{ route('backend.projects.{project}.images.destroy', [$project->id, $image->id]) }}">
-                                        <img src="{{$image->filename}}" alt="Click to remove">                                    
+                                <div class="thumbnail text-right {{ $project->header_image->id == $image->id ? 'active' : ''}}">
+                                    <a href="{{ route('backend.projects.{project}.images.destroy', [$project->id, $image->id]) }}" data-method="delete" data-token="{{csrf_token()}}" title="Foto verwijderen">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </a>
+                                    <a href="{{ route('backend.projects.{project}.images.update', [$project->id, $image->id]) }}" data-method="put" data-token="{{csrf_token()}}">
+                                        <img src="{{asset($image->filename)}}" alt="Klik om in te stellen als hoofdafbeelding">            
                                     </a>
                                 </div>  
                             </div> 
                         @endforeach
                     </div>
                 @else 
-                    <em>No image's yet...</em>
+                    <em>Nog geen foto's toegevoegd.</em>
                 @endif
             </div>
-
-            {!! Form::close() !!}
-
         </div>
 
         <div class="panel-footer">
             {!! Form::open([
-                'route' => ['backend.projects.{project}.images.create', $project->id],
+                'route' => ['backend.projects.{project}.images.store', $project->id],
                 'method'=>'POST',
                 'files'=>true
             ]) !!}
 
-            {!! Form::label('images', 'Upload images') !!}<br/>
+            {!! Form::label('images', 'Afbeeldingen uploaden') !!}<br/>
 
             <div class="input-group">
                 <span class="input-group-btn">
                     <span class="btn btn-default btn-file">
-                        Browse... {!! Form::file('images[]', ['multiple'=>true, 'accept'=>"image/*"]) !!}
+                        Bladeren... {!! Form::file('images[]', ['multiple'=>true, 'accept'=>"image/*"]) !!}
                     </span>
                 </span>
                 <input type="text" class="form-control" readonly>
                 <span class="input-group-btn">
-                    {!! Form::submit('Upload photo\'s to album', ['class' => 'btn btn-primary ']) !!}
+                    {!! Form::submit('Foto\'s toevoegen aan project', ['class' => 'btn btn-primary ']) !!}
                 </span>
             </div>
 
             {!! Form::close() !!}
         </div>
     </div>
-    
-    <!-- 
-        <button type="button" class="btn btn-default" id="open-file-browser">
-            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add photo
-        </button> 
-    -->
-
 
     <script>
-
-        // function addImage(url) {
-        //     $col = $('<div/>')
-        //         .addClass('col-xs-3')
-        //         .appendTo('#album_images');
-
-        //     $thumb = $("<div/>").addClass('thumbnail')
-        //         .appendTo($col);
-        //     $('<img/>').attr('src', url)
-        //         .attr('alt', 'Welcome2Altea')
-        //         .appendTo($thumb);
-        // }
-
-        // $('form').submit(function() {
-        //     var imageList = new Array();
-        //     $('#album_images img').each(function(){
-        //         imageList.push($(this).attr('src'));
-        //     });
-        //     $('#hidden-image-list').val(JSON.stringify(imageList));
-        //     //return false;
-        // });
-
-        // $('#open-file-browser').click(function(e) {
-        //     e.preventDefault();
-        //     window.open('/laravel-filemanager?type=Images&addImageFunction=true','','width=800,height=600,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
-        // });
-
-        // var images;
-        // if(images = JSON.parse($('#hidden-image-list').val())) {
-
-        //         console.log(images);
-        //     $.each(images, function(index, value) {
-        //         addImage(value.filename);
-        //     });
-        // }
 
         $(document).on('change', '.btn-file :file', function() {
             var input = $(this),

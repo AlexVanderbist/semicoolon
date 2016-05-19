@@ -107,7 +107,7 @@ Route::group(['middleware' => 'web'], function () {
 		]);
 
 		// Images
-		Route::resource('projects/{project}/images', 'Backend\ProjectImagesController', ['except' => ['show', 'update', 'edit']]);
+		Route::resource('projects/{project}/images', 'Backend\ProjectImagesController', ['except' => ['show', 'edit', 'create']]);
 
 		// Stages
 		Route::resource('projects/{project}/stages', 'Backend\StagesController', ['except' => ['show', 'create', 'update', 'edit', 'show']]);
