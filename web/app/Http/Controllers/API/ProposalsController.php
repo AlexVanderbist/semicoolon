@@ -30,10 +30,13 @@ class ProposalsController extends Controller
     }
 
     public function getProposalsForUser($projectId) {
-    	$proposals = $this->proposals->where('project_id', $projectId)->whereHas('opinions', '<', 1)->orWhereHas('opinions', function($q)
-	        {
-	            $q->where('user_id', '!=', \Auth::user()->id);
-	        })->get();
+    	$proposals = $this->proposals->where('project_id', $projectId)
+    								 ->whereHas('opinions', function($q)
+								        {
+								            $q->where('user_id', '!=', \Auth::user()->id);
+								        })
+    								 ->orHas('opinions', '<', 1)
+    								 ->get();
 
         return response()->json(compact('proposals'));
     }
