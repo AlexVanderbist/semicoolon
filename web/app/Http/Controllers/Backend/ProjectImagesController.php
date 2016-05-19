@@ -27,7 +27,9 @@ class ProjectImagesController extends Controller
      */
     public function index($projectId, ProjectImage $projectImage)
     {
-        $project = $this->projects->find($projectId)->with('images')->first();
+        $project = $this->projects->with('images')->findOrFail($projectId);
+
+        //dd($project);
         return view('backend.projects.images.index', compact('project', 'projectImage'));
     }
 
