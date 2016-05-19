@@ -17,9 +17,6 @@ public class StampController : MonoBehaviour {
 
   float rotationZ = 0;
   float beginRotation = 0;
-  int currentQuestionNumber = 0;
-  int numberAnswer;
-  string answer = "";
 
   RaycastHit hitInfo;
   GameInfo GI;
@@ -40,6 +37,7 @@ public class StampController : MonoBehaviour {
     restPosGreenStamp = greenStamp.transform.position;
     restPosNumberStamp = numberStamp.transform.position;
     beginRotation = redStamp.transform.rotation.z;
+
     // ALL REST SCALES HAVE TO BE SAME VALUE
     maxScale = new Vector3(redStamp.transform.localScale.x + maxScaleToAdd, redStamp.transform.localScale.y + maxScaleToAdd, redStamp.transform.localScale.z + maxScaleToAdd);
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
@@ -54,7 +52,6 @@ public class StampController : MonoBehaviour {
       stampToMove = redStamp;
       restPos = restPosRedStamp;
       restScale = redStamp.transform.localScale;
-      answer = "false";
       readyChecking = true;
     }
     else if (hit == greenStamp.name)
@@ -64,7 +61,6 @@ public class StampController : MonoBehaviour {
       stampToMove = greenStamp;
       restPos = restPosGreenStamp;
       restScale = greenStamp.transform.localScale;
-      answer = "true";
       readyChecking = true;
     }
     else if (hit == numberStamp.name)
@@ -74,13 +70,10 @@ public class StampController : MonoBehaviour {
       stampToMove = numberStamp;
       restPos = restPosNumberStamp;
       restScale = numberStamp.transform.localScale;
-      answer = "true";
       readyChecking = true;
     }
     return readyChecking;
   }
-
-
 
   public void resetStamps() {
     stampToMove.transform.position = restPos;
@@ -128,7 +121,6 @@ public class StampController : MonoBehaviour {
 
   public bool setRaycastHit(RaycastHit hit) {
     hitInfo = hit;
-    StartCoroutine(SendAnswer());
     return true;
   }
 
@@ -138,7 +130,6 @@ public class StampController : MonoBehaviour {
     {
       hitInfo = hit;
       stampIsReady = true;
-
     }
     else if(hit.transform.name != "Paper")
     {
@@ -146,51 +137,4 @@ public class StampController : MonoBehaviour {
     }
     return stampIsReady;
   }
-
-  public void numberReceiver(int initnumber)
-  {
-    numberAnswer = initnumber;
-  }
-
-  IEnumerator SendAnswer() {
-    int value = 0;
-    string url = "";
-    JsonData textData;
-    WWWForm Form = new WWWForm();
-    switch (selectedStamp)
-    {
-      case "green": value = 1;
-        break;
-      case "red": value = 2;
-        break;
-      case "number": value = numberAnswer;
-        break;
-      default:
-        break;
-    }
-    Form.AddField("value", value);
-    int projectNumber = GI.CurrentProjectNumber;
-    url += answerURL + GI.QuestionIds[projectNumber][currentQuestionNumber] + answerURLTokenPart + GI.Token;
-    Debug.Log(url);
-    WWW antwoordWWW = new WWW(url, Form);
-
-    yield return antwoordWWW;
-
-      if (antwoordWWW.error != null)
-      {
-        Debug.LogError("Can't send answer to API");
-      }
-      else
-      {
-      Debug.Log("in orde");
-      textData = JsonMapper.ToObject(antwoordWWW.text);
-      if (textData["status"].ToString() == "success")
-      {
-        Debug.Log("dubbel in orde");
-      }
-    }
-
-      //set currentQuestionNumber For Next Answer
-      currentQuestionNumber++;
-    }
 }
