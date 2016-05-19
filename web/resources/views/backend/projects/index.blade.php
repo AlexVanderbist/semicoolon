@@ -14,6 +14,7 @@
                 <th>Gemaakt door</th>
                 <th>Fases</th>
                 <th>Stellingen</th>
+                <th>Foto's</th>
                 <th>Aanpassen</th>
                 <th>Verwijderen</th>
             </tr>
@@ -38,6 +39,11 @@
                     <td>
                         <a href="{{ route('backend.projects.edit', $project->id) }}">
                             <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ route('backend.projects.{project}.images.index', $project->id) }}">
+                            <span class="glyphicon glyphicon-picture"></span>
                         </a>
                     </td>
                     <td>
