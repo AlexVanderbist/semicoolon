@@ -38,8 +38,8 @@ class ProposalsController extends Controller
 									            $q->where('user_id', '!=', \Auth::user()->id);
 									        });
     								 });
-    								 dd(\Auth::user()->id);
-    								 //->get();
+    								 dd($proposals->toSql());
+    								 ->get();
 
         return response()->json(compact('proposals'));
     }
