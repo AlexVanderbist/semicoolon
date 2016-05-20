@@ -164,6 +164,28 @@ body, html {
 	margin-top: 15px;
 	padding-right: 30px;
 }
+
+.imagediv {
+  width: 21%;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+  float:left;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+.imagediv img {
+  width: 100%;
+  position: absolute;
+  top:-100%; left:0; right: 0; bottom:-100%;
+  margin: auto;
+  -webkit-transition: width 0.5s;
+  transition: width 0.5s;
+}
+.imagediv:hover img{
+  width: 105%;
+}
 /* TABLE OVERFLOWS */
 #stages {
 	table-layout:fixed;
