@@ -35,11 +35,13 @@ class ProposalsController extends Controller
 	    								 $query->has('opinions', '=', 0)
 	    								 ->orWhereHas('opinions', function($q)
 									        {
-									            $q->where('user_id', '!=', \Auth::user()->id);
+									            $q->whereNotExists(function($q) {
+									            	$q->where('user_id', '==', \Auth::user()->id);
+									            });
 									        });
-    								 });
-    								 dd($proposals->toSql());
-    								 //->get();
+    								 })
+    								 //dd($proposals->toSql());
+    								 ->get();
 
         return response()->json(compact('proposals'));
     }
