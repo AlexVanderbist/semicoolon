@@ -223,6 +223,7 @@ public class GameController : MonoBehaviour {
                   readyToSwipePaper = false;
                   readyToCheckStamps = false;
                 }
+                gameObject.SendMessage("StartSendingAnswer");
                 readyToMovePaper = true;
               }
             }

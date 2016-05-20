@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class PaperController : MonoBehaviour
 {
   public GameObject tMeshNormalText, tMeshTitleText, tMeshPrefab;
+  public Sprite goodNotGoodSprite, numberSprite;
   public Transform startposition, focusposition, endposition;
   public bool ListIsReady = false;
   public Text testTextBox;
@@ -88,7 +89,7 @@ public class PaperController : MonoBehaviour
     Debug.Log("QuestionNr: " + currentQuestionNr);
     string temp = ResolveTextSize(GI.Questions[currentProjectNumber][currentQuestionNr-1],24);
     tMeshText.text = temp;
-    tMeshTitle.text = titleText + (currentQuestionNr).ToString();
+    tMeshTitle.text = titleText + (currentQuestionNr).ToString() + "/" + numberOfQuestions;
  
   }
 
@@ -108,6 +109,17 @@ public class PaperController : MonoBehaviour
     {
       setText();
       newPaper = (GameObject)Instantiate(tMeshPrefab, startposition.position, transform.rotation);
+      int type = GI.QuestionTypes[GI.CurrentProjectNumber][currentQuestionNr-1];
+      if (type == 1)
+      {
+        // GOOD / NOT GOOD
+        newPaper.transform.FindChild("Paper").GetComponent<SpriteRenderer>().sprite = goodNotGoodSprite;
+      }
+      else if(type == 2)
+      {
+        newPaper.transform.FindChild("Paper").GetComponent<SpriteRenderer>().sprite = numberSprite;
+      }
+
       questionPaperCreated = true;
     }
     else
