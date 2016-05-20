@@ -39,7 +39,7 @@ class ProposalsController extends Controller
 									        });
     								 });
     								 dd($proposals->toSql());
-    								 ->get();
+    								 //->get();
 
         return response()->json(compact('proposals'));
     }
