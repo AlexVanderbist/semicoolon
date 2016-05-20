@@ -32,13 +32,14 @@ class ProposalsController extends Controller
     public function getProposalsForUser($projectId) {
     	$proposals = $this->proposals->where('project_id', $projectId)
     								 ->where(function($query) {
-	    								 return $query->whereHas('opinions', function($q)
+	    								 $query->has('opinions', '=', 0)
+	    								 ->orWhereHas('opinions', function($q)
 									        {
 									            $q->where('user_id', '!=', \Auth::user()->id);
-									        })
-	    								 ->orHas('opinions', '<', 1);
-    								 })
-    								 ->get();
+									        });
+    								 });
+    								 dd($proposals->toSql());
+    								 //->get();
 
         return response()->json(compact('proposals'));
     }
