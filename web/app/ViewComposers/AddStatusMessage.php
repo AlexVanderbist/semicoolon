@@ -11,3 +11,5 @@ class AddStatusMessage
 		$view->with('status', session('status'));
 	}
 }
+
+// user view composer
