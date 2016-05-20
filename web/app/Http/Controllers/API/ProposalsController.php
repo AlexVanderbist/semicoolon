@@ -37,9 +37,9 @@ class ProposalsController extends Controller
 									        {
 									            $q->where('user_id', '!=', \Auth::user()->id);
 									        });
-    								 });
-    								 dd($proposals->toSql());
-    								 //->get();
+    								 })
+    								 //dd($proposals->toSql());
+    								 ->get();
 
         return response()->json(compact('proposals'));
     }
