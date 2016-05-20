@@ -3,6 +3,12 @@
 @section('title', $project->exists ? 'Wijzig '.$project->name : 'Nieuw project aanmaken')
 
 @section('content')
+    <div class="btn-group" role="group" style="margin-bottom:15px">
+        <a href="{{ route('backend.projects.index') }}" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Overzicht projecten
+        </a>
+    </div>
+
     {!! Form::model($project, [
         'method' => $project->exists ? 'put' : 'post',
         'route' => $project->exists ? ['backend.projects.update', $project->id] : ['backend.projects.store'],

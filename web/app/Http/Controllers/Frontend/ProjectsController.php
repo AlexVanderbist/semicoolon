@@ -41,7 +41,7 @@ class ProjectsController extends Controller
 
     public function info($id, Opinion $opinion)
     {
-        $project = $this->projects->with('theme', 'creator', 'opinions', 'stages')->findOrFail($id);
+        $project = $this->projects->with('theme', 'creator', 'opinions', 'stages', 'images')->findOrFail($id);
         
         return view('frontend.projects.info', compact('project', 'opinion'));
     }

@@ -35,6 +35,16 @@
         </div>
         
     </div>
+    <div class="projectpictures container">
+        <h2>Foto's</h2>
+        @foreach($project->images as $image)
+            <div class="imagediv">
+                <a href="../{{$image->filename}}" data-lightbox="{{$project->name}}" data-title="{{$project->name}}">
+                <img src="../{{$image->filename}}" alt="{{$project->name}}" class="image">
+                </a>
+            </div>
+        @endforeach
+    </div>
     <div class="reactions container">
         <h2>Reacties</h2>
         <hr>
@@ -127,6 +137,12 @@
         }
 
         addMarkerWithTimeout(projects, 500);
+
+        lightbox.option({
+          'resizeDuration': 200,
+          'alwaysShowNavOnTouchDevices' : true,
+          'wrapAround': true
+        })
     });
 </script>
 @endsection
