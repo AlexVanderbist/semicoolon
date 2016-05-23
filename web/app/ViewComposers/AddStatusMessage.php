@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\ViewComposers;
+namespace App\ViewComposers;
 
 use Illuminate\View\View;
 
@@ -11,3 +11,5 @@ class AddStatusMessage
 		$view->with('status', session('status'));
 	}
 }
+
+// user view composer

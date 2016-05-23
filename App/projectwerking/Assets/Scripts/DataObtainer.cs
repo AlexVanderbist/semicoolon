@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using LitJson;
 
 public class DataObtainer : MonoBehaviour {
@@ -15,22 +16,21 @@ public class DataObtainer : MonoBehaviour {
   static WWW www;
   JsonData textData;
   GameInfo GI;
-  List<string> projectNameList = null;
-  List<string> placeNameList = null;
+
+  List<string> projectNameList = new List<string>();
+  List<string> placeNameList = new List<string>();
+  List<string> projectDescriptions = new List<string>();
+  List<int> projectIds = new List<int>();
+
   string[][] questionArray = null;
   int[][] questionIdArray = null;
   int[][] questionTypeArray = null;
-  List<int> projectIds = null;
 
   string projectNameString = "name";
   string placeNameString = "locationText";
 
   IEnumerator Start()
   {
-    projectIds = new List<int>();
-    projectNameList = new List<string>();
-    placeNameList = new List<string>();
-
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
 
     urlProjects += GI.Token;
@@ -50,10 +50,14 @@ public class DataObtainer : MonoBehaviour {
         projectNameList.Add(textData["projects"][i][projectNameString].ToString());
         placeNameList.Add(textData["projects"][i][placeNameString].ToString());
         projectIds.Add(int.Parse(textData["projects"][i]["id"].ToString()));
+
+        string tempString = StripTagsRegex(textData["projects"][i]["description"].ToString());
+        projectDescriptions.Add(tempString);
       }
       GI.ProjectNameList = projectNameList;
       GI.PlaceNameList = placeNameList;
       GI.ProjectIds = projectIds;
+      GI.ProjectDescriptions = projectDescriptions;
       StartCoroutine(GetProposals());
     }
     else
@@ -67,7 +71,6 @@ public class DataObtainer : MonoBehaviour {
     for (int i = 0; i < numberOfProjects; i++)
     {
       string urlProposals = urlProposalsPartOne + projectIds[i] + urlProposalsPartTwo + GI.Token;
-      Debug.Log(urlProposals);
       www = new WWW(urlProposals);
       yield return www;
       if (www.error == null)
@@ -75,7 +78,6 @@ public class DataObtainer : MonoBehaviour {
         textData = JsonMapper.ToObject(www.text);
 
         numberOfProposals = textData["proposals"].Count;
-        Debug.Log("Nummer van proposals voor project " + projectIds[i] + "is" + numberOfProposals);
         string[] tempProposals = new string[numberOfProposals];
         int[] tempProposalsIds = new int[numberOfProposals];
         int[] tempProposalTypes = new int[numberOfProposals];
@@ -101,5 +103,10 @@ public class DataObtainer : MonoBehaviour {
     GI.QuestionIds = questionIdArray;
     GI.QuestionTypes = questionTypeArray;
     gameObject.SendMessage("SpawnButtons");
+  }
+
+  public static string StripTagsRegex(string source)
+  {
+    return Regex.Replace(source, "<.*?>", string.Empty);
   }
 }

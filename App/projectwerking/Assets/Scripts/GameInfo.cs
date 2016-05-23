@@ -13,8 +13,16 @@ public class GameInfo : MonoBehaviour {
   static List<string> placeNameList = new List<string>();
   static string[][] questionArray;
   static int[][] questionTypes;
-  
-  
+
+  private List<string> projectDescriptions;
+
+  public List<string> ProjectDescriptions
+  {
+    get { return projectDescriptions; }
+    set { projectDescriptions = value; }
+  }
+
+
   public int[][] QuestionTypes
   {
     get { return questionTypes; }
