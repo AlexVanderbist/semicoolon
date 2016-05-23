@@ -1,0 +1,21 @@
+<div class="col-sm-6 col-sm-offset-3">
+	<div class="well">
+        <h5 ng-if="authenticated">Welcome, {{currentUser.full_name}}</h5>
+        <h3>Projecten</h3>
+        <div class="buttons" style="margin-bottom: 10px">
+            <button class="btn btn-primary" ng-click="getProjects()">Haal projecten op!</button>
+            <button class="btn btn-danger" ng-click="logout()">Logout</button>
+        </div>
+		<ul class="list-group" ng-if="projects">
+			<pre>{{projects}}</pre>
+			<li class="list-group-item" ng-repeat="project in projects">
+				<h4>{{project.name}}</h4>
+				<div>{{project.description}}</div>
+			</li>
+		</ul>
+		<div class="alert alert-danger" ng-if="error">
+			<strong>There was an error: </strong> {{error.error}}
+			<br>Please go back and login again
+		</div>
+	</div>
+</div>

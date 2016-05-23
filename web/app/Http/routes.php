@@ -11,6 +11,7 @@
 |
 */
 
+
 /* API */
 Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 {
@@ -38,6 +39,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 	});
 });
 
+/* Laravel front end */
 Route::group(['middleware' => 'web'], function () {
     
     /* AUTH */
@@ -121,4 +123,10 @@ Route::group(['middleware' => 'web'], function () {
 		]);
 	});
 
+});
+
+
+/* Link to angular front-end */
+Route::get('angular-test', function () {
+	return view('angular.index');
 });
