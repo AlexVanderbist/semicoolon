@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Opinion;
 use App\Http\Requests;
+use Carbon\Carbon;
 
 class ProjectsController extends Controller
 {
@@ -42,7 +43,6 @@ class ProjectsController extends Controller
     public function info($id, Opinion $opinion)
     {
         $project = $this->projects->with('theme', 'creator', 'opinions', 'stages', 'images')->findOrFail($id);
-        
         return view('frontend.projects.info', compact('project', 'opinion'));
     }
 
