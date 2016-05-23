@@ -73,8 +73,8 @@
                     <tr>
                         <td>{{$stage->name}}</td>
                         <td>{{$stage->description}}</td>
-                        <td>{{$stage->startdate->toFormattedDateString()}}</td>
-                        <td>{{$stage->enddate->toFormattedDateString()}}</td>
+                        <td>{{$stage->startdate->formatLocalized('%A %d %B %Y')}}</td>
+                        <td>{{$stage->enddate->formatLocalized('%A %d %B %Y')}}</td>
                         <td>
                             <a href="{{ route('backend.projects.{project}.stages.edit', [$project->id, $stage->id]) }}">
                                 <span class="glyphicon glyphicon-edit"></span>
