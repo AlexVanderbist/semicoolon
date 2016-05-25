@@ -1,0 +1,15 @@
+<div class="col-sm-4 col-sm-offset-4">
+	<div class="well">
+		<h3>Inloggen</h3>
+		<form>
+			<p class="alert alert-danger" ng-if="loginError"><strong>Error:</strong> {{auth.loginErrorText}}</p>
+			<div class="form-group">
+		    	<input type="email" class="form-control" placeholder="E-mail" ng-model="email">
+		  	</div>
+		  	<div class="form-group">
+		    	<input type="password" class="form-control" placeholder="Wachtwoord" ng-model="password">
+		  	</div>
+		  	<button class="btn btn-primary" ng-click="login()">Inloggen</button>
+		</form>
+	</div>
+</div>

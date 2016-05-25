@@ -28,8 +28,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'admin'
+        'password', 'remember_token'
     ];
+
+    // Custom attributes also added to the array
+    protected $appends = ['full_name'];
 
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = bcrypt($value);

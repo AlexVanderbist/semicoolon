@@ -27,7 +27,6 @@ class ProjectsController extends Controller
     public function index()
     {
         $projects = $this->projects->paginate(10);
-
         return view('backend.projects.index', compact('projects', 'getThemes'));
     }
 

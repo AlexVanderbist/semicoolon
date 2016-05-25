@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class MenuButtonController : MonoBehaviour {
 
   public GameObject MenuContainer;
-  public float maxHeightShown = 150f;
+  public float maxHeightShown = 300f;
   Vector3 MenuContainerSlided, MenuRestPosition;
 
   bool menuIsShown = false, moveMenu = false;
