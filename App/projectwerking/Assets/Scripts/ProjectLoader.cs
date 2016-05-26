@@ -6,7 +6,7 @@ public class ProjectLoader : MonoBehaviour
 {
   public GameObject levelButtonPrefab;
   public GameObject containerToDo, containerDone;
-  public RectTransform containerRecToDo, containerRectDone ;
+  public RectTransform containerRecToDo, containerRecDone ;
   public string readMoreUrl = "http://semicolon.multimediatechnology.be/projecten/";
   public string sceneToLoad = "MainScene";
 
@@ -30,6 +30,7 @@ public class ProjectLoader : MonoBehaviour
       button.transform.FindChild("Plaatsnaam").GetComponent<Text>().text = GI.PlaceNameList[i];
       button.transform.FindChild("Uitleg").GetComponent<Text>().text = GI.ProjectDescriptions[i];
       button.transform.FindChild("Banner").GetComponent<Image>().sprite = tempImageStock[Random.Range(0, tempImageStock.Length)];
+      //button.transform.FindChild("Banner").GetComponent<Canvas>().sortingLayerName = "Banner";
       button.transform.FindChild("Title").GetComponent<Text>().text = GI.ProjectNameList[i];
       button.transform.FindChild("MeerLezen").GetComponent<Button>().onClick.AddListener(() => ReadMore(GI.ProjectIds[tempInt]));
 
@@ -37,20 +38,38 @@ public class ProjectLoader : MonoBehaviour
       if (GI.Questions[i] == null)
       {
         button.transform.FindChild("DoneSign").GetComponent<Image>().enabled = true;
-        button.transform.GetComponent<Button>().interactable = false;
+        //button.transform.GetComponent<Button>().interactable = false;
         button.transform.SetParent(containerDone.transform, false);
+        int numberOfChilds = 0;
+
+        foreach (Transform trans in containerDone.transform)
+        {
+          numberOfChilds++;
+        }
+        if (numberOfChilds > 1)
+        {
+          containerRecDone.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecDone.rect.height + 1100);
+        }
       }
       else
       {
+        Debug.Log(GI.Questions[i][0]);
+        button.transform.FindChild("CanvasMask").FindChild("BeginMetStempelen").GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
         button.transform.SetParent(containerToDo.transform, false);
-        button.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
+        int numberOfChilds = 0;
+
+        foreach (Transform trans in containerToDo.transform)
+        {
+          numberOfChilds++;
+        }
+        if (numberOfChilds > 1)
+        {
+          containerRecToDo.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecToDo.rect.height + 1100);
+        }
       }
 
-     
-      if (i != GI.PlaceNameList.Count - 1)
-      {
-        containerRecToDo.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecToDo.rect.height + 1100);
-      }
+      //button.transform.FindChild("BeginMetStempelen").GetComponent<Canvas>().sortingLayerName = "StartButton";
+
 
     }
   }

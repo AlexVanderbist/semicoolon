@@ -3,11 +3,11 @@ using System.Collections;
 
 public class SetStamp : MonoBehaviour {
 
-  public GameObject goodStampPrefab, badStampPrefab, gameManager, goodStampParticle, badStampParticle, numberStampParticle;
-  public GameObject[] numberStampPrefabs;
+  public GameObject gameManager, goodStampParticle, badStampParticle, numberStampParticle;
+  public GameObject[] numberStampPrefabs, goodStampPrefabs, badStampPrefabs;
   public GameObject numberPanel;
   public AudioClip sound;
-  public float showPanelSpeed = 0.7f;
+  public float showPanelSpeed = 0.7f, randomStampPrint;
 
   StampController stamps;
   PaperController paper;
@@ -75,16 +75,17 @@ public class SetStamp : MonoBehaviour {
     string selectedStamp = stamps.SelectedStamp;
     GameObject printedStamp = null;
     PlaySound();
+    randomStampPrint = Random.Range(0, 3);
     if (selectedStamp == "green")
     {
         goodStampParticle.GetComponentInChildren<ParticleSystem>().Play();
-        printedStamp = (GameObject)Instantiate(goodStampPrefab, hit.point, transform.rotation);
+        printedStamp = (GameObject)Instantiate(goodStampPrefabs[(int)randomStampPrint], hit.point, transform.rotation);
         printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
     else if (selectedStamp == "red")
     {
         badStampParticle.GetComponentInChildren<ParticleSystem>().Play();
-        printedStamp = (GameObject)Instantiate(badStampPrefab, hit.point, transform.rotation);
+        printedStamp = (GameObject)Instantiate(badStampPrefabs[(int)randomStampPrint], hit.point, transform.rotation);
         printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
     else if (selectedStamp == "number")
@@ -121,7 +122,7 @@ public class SetStamp : MonoBehaviour {
       
       foreach (Transform child in paper.getCurrentPaper.transform)
       {
-        if (child.name == (badStampPrefab.name + "(Clone)") || child.name == (goodStampPrefab.name + "(Clone)"))
+        if (child.name == (badStampPrefabs[(int)randomStampPrint].name + "(Clone)") || child.name == (goodStampPrefabs[(int)randomStampPrint].name + "(Clone)"))
         {
         Destroy(child.gameObject);
         }
