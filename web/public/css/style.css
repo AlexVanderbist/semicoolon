@@ -203,3 +203,10 @@ body, html {
 		top: 40px;
 	}
 }
+
+
+/* PROPOSALS */
+
+.proposals h1 {
+  font-size: 130%;
+}

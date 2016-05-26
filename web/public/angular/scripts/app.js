@@ -14,7 +14,7 @@
             $urlRouterProvider.otherwise('/projects');
             
             // States in ui-router
-            var templateUrlPrefix = '../angular/views/';
+            var templateUrlPrefix = '../public/angular/views/';
             $stateProvider
                 .state('login', {
                     url: '/login',
