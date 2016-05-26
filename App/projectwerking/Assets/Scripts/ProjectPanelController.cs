@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ProjectPanelController : MonoBehaviour {
 
-  public GameObject panelDone, panelToDo, panelProfile, profilePaperPrefab, buttonToDoGO, buttonDoneGO;
+  public GameObject panelDone, panelToDo, panelProfile, buttonToDoGO, buttonDoneGO;
   public Button buttonToDo, buttonDone, buttonUserBack;
   public string hexStringBlue, hexStringGrey;
   public Sprite iconBack, iconUser;
@@ -34,7 +34,6 @@ public class ProjectPanelController : MonoBehaviour {
         panelDone.SetActive(true);
       }
       panelProfile.SetActive(false);
-      profilePaperPrefab.SetActive(false);
       profilePanelShown = false;
       buttonDoneGO.SetActive(true);
       buttonToDoGO.SetActive(true);
@@ -52,7 +51,6 @@ public class ProjectPanelController : MonoBehaviour {
         panelDone.SetActive(false);
       }
       panelProfile.SetActive(true);
-      profilePaperPrefab.SetActive(true);
       profilePanelShown = true;
       buttonDoneGO.SetActive(false);
       buttonToDoGO.SetActive(false);

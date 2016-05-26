@@ -25,13 +25,14 @@ public class PaperController : MonoBehaviour
   int numberOfQuestions = 0;
   int currentProjectNumber = 0;
   GameInfo GI;
-
+  
   void Awake() {
     tMeshText = tMeshNormalText.GetComponent<TextMesh>();
     tMeshTitle = tMeshTitleText.GetComponent<TextMesh>();
     testTextBox.enabled = false;
 
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
+    GI.CurrentQuestionNumber = 0;
     currentProjectNumber = GI.CurrentProjectNumber;
     QuestionList = GI.Questions[currentProjectNumber];
     numberOfQuestions = QuestionList.Length;
@@ -105,6 +106,7 @@ public class PaperController : MonoBehaviour
   {
     bool questionPaperCreated = false;
     currentQuestionNr++;
+    GI.CurrentQuestionNumber = currentQuestionNr - 1;
     if (currentQuestionNr <= numberOfQuestions)
     {
       setText();

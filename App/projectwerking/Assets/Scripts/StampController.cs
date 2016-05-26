@@ -10,14 +10,13 @@ public class StampController : MonoBehaviour {
   public string answerURLTokenPart = "?token=";
 
   Vector3 restPosRedStamp, restPosGreenStamp, restPosNumberStamp;
-  Vector3 maxScaleRedStamp, maxScaleGreenStamp, maxScaleNumberStamp;
 
   GameObject stampToMove;
   Vector3 restPos, maxScale, restScale;
 
   float rotationZ = 0;
   float beginRotation = 0;
-
+  int currentQuestionNr = 0;
   RaycastHit hitInfo;
   GameInfo GI;
 
@@ -75,8 +74,25 @@ public class StampController : MonoBehaviour {
     return readyChecking;
   }
 
-  public void resetStamps() {
+  public void ResetStamps() {
     stampToMove.transform.position = restPos;
+  }
+
+  public void DeActivateStamps()
+  {
+    Debug.Log("QuestionType: " + GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber]);
+    if (GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber] == 1)
+    {
+      numberStamp.tag = "Untagged";
+      greenStamp.tag = "Stamp";
+      redStamp.tag = "Stamp";
+    }
+    else
+    {
+      numberStamp.tag = "Stamp";
+      greenStamp.tag = "Untagged";
+      redStamp.tag = "Untagged";
+    }
   }
 
   private float getRotation(GameObject stamp)
