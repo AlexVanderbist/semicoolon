@@ -60,7 +60,7 @@
                                 localStorage.removeItem('user');
 
                                 // Send the user to the auth state so they can login
-                                $state.go('auth.login');
+                                $state.go('login');
                             }
                         });
 
