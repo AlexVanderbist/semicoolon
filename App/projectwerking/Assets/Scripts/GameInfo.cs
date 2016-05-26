@@ -6,6 +6,8 @@ public class GameInfo : MonoBehaviour {
 
   private static string token;
   private static int currentProjectNumber;
+  private static string namePerson;
+  private static string numberOfStampsDone;
 
   static List<int> projectIds = new List<int>();
   static int[][] questionIds;
@@ -22,6 +24,10 @@ public class GameInfo : MonoBehaviour {
     set { projectDescriptions = value; }
   }
 
+  public int NumberOfProjects
+  {
+    get { return projectNameList.Count - 1; }
+  }
 
   public int[][] QuestionTypes
   {
