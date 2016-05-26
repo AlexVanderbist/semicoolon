@@ -4,9 +4,9 @@
 
     angular
         .module('antwerpApp')
-        .controller('ProjectController', ProjectController);  
+        .controller('projectController', projectController);  
 
-    function ProjectController($http, $scope, $auth, $rootScope, $state) {
+    function projectController($http, $scope, $auth, $rootScope, $state) {
         $scope.users;
         $scope.error;
 
@@ -18,19 +18,6 @@
                 $scope.projects = projects.projects;
             }).error(function(error) {
                 $scope.error = error;
-            });
-        }
-
-
-        // MOVE ME TO A SERVICE PLEASE :(((
-        $scope.logout = function() {
-
-            $auth.logout().then(function() {
-                localStorage.removeItem('user');
-                $rootScope.authenticated = false;
-                $rootScope.currentUser = null;
-
-                $state.go('auth');
             });
         }
 

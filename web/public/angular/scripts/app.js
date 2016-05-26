@@ -11,20 +11,28 @@
             $authProvider.loginUrl = '/api/v1/authenticate';
 
             // Default route when something else is requested other than the states bellow
-            $urlRouterProvider.otherwise('/auth');
+            $urlRouterProvider.otherwise('/projects');
             
             // States in ui-router
-            var templateUrlPrefix = '../angular/';
+            var templateUrlPrefix = '../angular/views/';
             $stateProvider
                 .state('auth', {
-                    url: '/auth',
-                    templateUrl: templateUrlPrefix + 'views/authView.html',
-                    controller: 'AuthController'
+                    url: '/auth'
+                })
+                .state('auth.login', {
+                    url: '/login',
+                    templateUrl: templateUrlPrefix + 'authView.html',
+                    controller: 'authController'
+                })
+                .state('auth.logout', {
+                    url: '/logout',
+                    templateUrl: templateUrlPrefix + 'authView.html',
+                    controller: 'logoutController'
                 })
                 .state('projects', {
                     url: '/projects',
-                    templateUrl: templateUrlPrefix + 'views/projectView.html',
-                    controller: 'ProjectController'
+                    templateUrl: templateUrlPrefix + 'projectView.html',
+                    controller: 'projectController'
                 });
 
 
@@ -55,7 +63,7 @@
                                 localStorage.removeItem('user');
 
                                 // Send the user to the auth state so they can login
-                                $state.go('auth');
+                                $state.go('auth.login');
                             }
                         });
 
@@ -85,8 +93,8 @@
                     $rootScope.authenticated = true;
                     $rootScope.currentUser = user;
 
-                    // If the user tried going to auth, redirect him somewhere else lol
-                    if(toState.name === "auth") {
+                    // If the user tried going to auth.login, redirect him somewhere else lol
+                    if(toState.name === "auth.login") {
 
 
                         event.preventDefault();
