@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('antwerpApp', ['ui.router', 'satellizer'])
+        .module('antwerpApp', ['ui.router', 'satellizer', 'ui.bootstrap'])
 
         .config(function($stateProvider, $urlRouterProvider, $authProvider, $provide, $httpProvider) {
 
