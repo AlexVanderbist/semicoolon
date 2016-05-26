@@ -16,17 +16,14 @@
             // States in ui-router
             var templateUrlPrefix = '../angular/views/';
             $stateProvider
-                .state('auth', {
-                    url: '/auth'
-                })
-                .state('auth.login', {
+                .state('login', {
                     url: '/login',
-                    templateUrl: templateUrlPrefix + 'authView.html',
+                    templateUrl: templateUrlPrefix + 'loginView.html',
                     controller: 'authController'
                 })
-                .state('auth.logout', {
+                .state('logout', {
                     url: '/logout',
-                    templateUrl: templateUrlPrefix + 'authView.html',
+                    templateUrl: templateUrlPrefix + 'logoutView.html',
                     controller: 'logoutController'
                 })
                 .state('projects', {
@@ -94,7 +91,7 @@
                     $rootScope.currentUser = user;
 
                     // If the user tried going to auth.login, redirect him somewhere else lol
-                    if(toState.name === "auth.login") {
+                    if(toState.name === "login") {
 
 
                         event.preventDefault();
