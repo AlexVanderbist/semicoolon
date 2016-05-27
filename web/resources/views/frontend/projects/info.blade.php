@@ -24,7 +24,7 @@
         <div class="timeline">
         @foreach($project->stages as $stage)
             <div class="fase">
-                <div class="fasedate col-md-4 col-xs-4"><h4>{{$stage->startdate->formatLocalized('%A %d %B %Y')}}</h4></div>
+                <div class="fasedate col-md-4 col-xs-4"><h4>{{$stage->startdate->formatLocalized('%A %d %B %Y')}}</h4></div> <!-- in right format and Dutch -->
                 <div class="fasedescription col-md-8 col-xs-8">
                     <h3>{!! $stage->name !!}</h3>
                     <p>{!! $stage->description !!}</p>
@@ -44,6 +44,17 @@
             </div>
         @endforeach
     </div>
+    <div class="projectproposals container">
+        <h2>Stellingen</h2>
+        @foreach($project->proposals as $proposal)
+            {!! $proposal->description !!}
+            @if($proposal->type == '1')
+            <p>ja/nee</p>
+            @elseif($proposal->type == '2')
+            <p>0 tot 5</p>
+            @endif
+        @endforeach
+    </div>
     <div class="reactions container">
         <h2>Reacties</h2>
         <hr>
@@ -58,6 +69,10 @@
             </div> 
             <div>{{$loopedOpinion->opinion}}</div>
         @endforeach
+
+        @if($reactionsallowed) <!-- when the comment deadline is passed -->
+            <p><span class="glyphicon glyphicon-ban-circle"></span>Reacties zijn niet meer toegestaan</p>
+        @else
         <div class="reactform">
             {!! Form::model($opinion, [
                 'method' => 'post',
@@ -74,6 +89,8 @@
             {!! Form::submit('Reageren', ['class' => 'btn btn-primary']) !!}
             {!! Form::close() !!}
         </div>
+        @endif
+
     </div>
 
 <script>

@@ -23,9 +23,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = $this->users->paginate(10);
+        // $users = $this->users->paginate(10);
+        $users = $this->users->where('admin', 0)->paginate(10);
+        $admins = $this->users->where('admin', 1)->get();
 
-        return view('backend.users.index', compact('users'));
+        return view('backend.users.index', compact('users','admins'));
     }
 
     /**

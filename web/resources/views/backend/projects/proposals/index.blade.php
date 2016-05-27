@@ -40,51 +40,92 @@
 
     </div>
 
-    <table class="table table-hover">
-
-        <thead>
-            <tr>
-                <th>Stelling</th>
-                <th>Type</th>
-                <th>Stemming</th>
-                <th>Reset stemming</th>
-                <th>Verwijderen</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @if($proposals->isEmpty())
-                <tr>
-                    <td colspan="4" align="center">Er zijn nog geen stellingen toegevoegd.</td>
-                </tr>
-            @else
-                @foreach($proposals as $proposal)
-                    <tr>
-                        <td>{{$proposal->description}}</td>
-                        <td>{{$typeNames[$proposal->type]}}</td>
-                        <td>
-                            @if($proposal->type == 1)
-                                Ja: {{$proposal->vote()['yes']}} | 
-                                Nee: {{$proposal->vote()['no']}}
-                            @else
-                                Gem. score: {{$proposal->vote()['avg']}}
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{!! route('backend.projects.{project}.proposals.opinions.destroy', [$project->id, $proposal->id]) !!}" data-method="delete" data-token="{{csrf_token()}}">
-                                <span class="glyphicon glyphicon-refresh"></span>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{!! route('backend.projects.{project}.proposals.destroy', [$project->id, $proposal->id]) !!}" data-method="delete" data-token="{{csrf_token()}}">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            @endif
-        </tbody>
-    </table>
-
+    <div class="row proposals">
+        @foreach($proposals as $proposal)
+            <div class="col-md-4">
+                <div class="well">
+                <h1>{{$proposal->description}} <a class="pull-right" data-toggle="tooltip" title="Verwijderen" href="{!! route('backend.projects.{project}.proposals.destroy', [$project->id, $proposal->id]) !!}" data-method="delete" data-token="{{csrf_token()}}">
+                                <span class="glyphicon glyphicon-remove"></span></a></h1>
+                <p>Aantal antwoorden: {{$proposal->opinions()->count()}}</p>
+                @if($proposal->type == 1 && $proposal->opinions()->count() > 0)
+                    <canvas id="Chart{{$proposal->id}}" width="200" height="200"></canvas>
+                    <script>
+                        var data{{$proposal->id}} = {
+                            labels: [
+                                "Ja",
+                                "Nee"
+                            ],
+                            datasets: [
+                                {
+                                    data: [{{$proposal->vote()['yes']}}, {{$proposal->vote()['no']}}],
+                                    backgroundColor: [
+                                        "#016F01",
+                                        "#960000"
+                                    ],
+                                    hoverBackgroundColor: [
+                                        "#009600",
+                                        "#CA0000"
+                                    ]
+                                }]
+                        };
+                        $(function() {    
+                            var ctx = $("#Chart{{$proposal->id}}").get(0).getContext("2d");
+                            var myPieChart = new Chart(ctx,{
+                                type: 'pie',
+                                data: data{{$proposal->id}},
+                                options: chartoptions
+                            });
+                        });
+                    </script>
+                @elseif($proposal->type == 2 && $proposal->opinions()->count() > 0)
+                    <canvas id="Chart{{$proposal->id}}" width="200" height="200"></canvas>
+                    <script>
+                        var data{{$proposal->id}} = {
+                            labels: [
+                                "Éen",
+                                "Twee",
+                                "Drie",
+                                "Vier",
+                                "Vijf"
+                            ],
+                            datasets: [
+                                {
+                                    data: [{{$proposal->vote()['1']}}, {{$proposal->vote()['2']}}, {{$proposal->vote()['3']}}, {{$proposal->vote()['4']}}, {{$proposal->vote()['5']}}],
+                                    backgroundColor: [
+                                        "#960000",
+                                        "#CC6900",
+                                        "#B1B500",
+                                        "#27A500",
+                                        "#00E614"
+                                    ],
+                                    hoverBackgroundColor: [
+                                        "#009600",
+                                        "##F17C00",
+                                        "#CDDC00",
+                                        "#2CBB00",
+                                        "#06FF1B"
+                                    ]
+                                }]
+                        };
+                        $(function() {    
+                            var ctx = $("#Chart{{$proposal->id}}").get(0).getContext("2d");
+                            var myPieChart = new Chart(ctx,{
+                                type: 'pie',
+                                data: data{{$proposal->id}},
+                                options: chartoptions
+                            });
+                        });
+                    </script>
+                @else
+                    <p>Er zijn nog geen antwoorden gegeven</p>
+                @endif
+                
+                
+                <a href="{!! route('backend.projects.{project}.proposals.opinions.destroy', [$project->id, $proposal->id]) !!}" data-method="delete" data-token="{{csrf_token()}}">
+                    <p>Reset</p>
+                </a>
+                </div>
+            </div> 
+        @endforeach
+    </div>
 @endsection

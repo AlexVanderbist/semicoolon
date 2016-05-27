@@ -18,6 +18,8 @@
     <script src='http://maps.google.com/maps/api/js?key=AIzaSyDhTfQGWyjyP7vj3t_GFtOrF7-mbGsVLAY&libraries=places'></script>
     <script src="{!! asset('js/locationpicker.jquery.min.js') !!}"></script>
     <script src="{!! asset('trumbowyg/trumbowyg.min.js') !!}"></script>
+    <script src="{!! asset('js/Chart.min.js') !!}"></script>
+    <script src="{!! asset('js/backend.js') !!}"></script>
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -39,8 +41,11 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/backend') }}">
-                    {!! config('cms.sitename') !!} backend
+                <a class="navbar-brand logobrand" href="{{ url('/backend') }}">
+                  <img src="{!! asset('images/A_logo_RGB_123x123.jpg') !!}" alt="logo" class="headerlogo">
+                </a>
+                <a class="navbar-brand namebrand" href="{{ url('/backend') }}">
+                <p>{!! config('cms.sitename') !!}</p>
                 </a>
             </div>
 

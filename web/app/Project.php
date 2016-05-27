@@ -20,7 +20,8 @@ class Project extends Model
         'locationText',
         'theme_id',
         'project_creator',
-        'youtube_url'
+        'youtube_url',
+        'comment_deadline'
     ];
 
     protected $appends = ['header_image', 'youtube_id'];
@@ -56,7 +57,7 @@ class Project extends Model
     }
 
     public function setYoutubeUrlAttribute($value) {
-        parse_str( parse_url( $value, PHP_URL_QUERY ), $id );
+        parse_str( parse_url( $value, PHP_URL_QUERY ), $id ); //gets the youtube ID
         $this->attributes['youtube_url'] = $id['v'];
     }
 
