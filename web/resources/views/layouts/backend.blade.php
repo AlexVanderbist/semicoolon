@@ -64,7 +64,7 @@
                         
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->firstname }} <span class="caret"></span>
+                                {{ $user->firstname }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -107,6 +107,8 @@
 
     <script>
         (function() {
+
+          // JS code to create anchor tags with a specific Anguler method
 
           var laravel = {
             initialize: function() {

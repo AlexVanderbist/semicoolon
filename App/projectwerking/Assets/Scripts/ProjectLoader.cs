@@ -11,7 +11,7 @@ public class ProjectLoader : MonoBehaviour
   public string sceneToLoad = "MainScene";
   public float marge = 250;
 
-  public Sprite[] tempImageStock;
+  public Sprite[] tempStockImages;
 
   GameInfo GI;
 
@@ -31,9 +31,9 @@ public class ProjectLoader : MonoBehaviour
       button.transform.FindChild("DoneSign").GetComponent<Image>().enabled = false;
       button.transform.FindChild("Plaatsnaam").GetComponent<Text>().text = GI.PlaceNameList[i];
       button.transform.FindChild("Uitleg").GetComponent<Text>().text = GI.ProjectDescriptions[i];
-      button.transform.FindChild("Banner").GetComponent<Image>().sprite = tempImageStock[Random.Range(0, tempImageStock.Length)];
+      button.transform.FindChild("Banner").GetComponent<Image>().sprite = tempStockImages[Random.Range(0, tempStockImages.Length)];
       button.transform.FindChild("Title").GetComponent<Text>().text = GI.ProjectNameList[i];
-      button.transform.FindChild("MeerLezen").GetComponent<Button>().onClick.AddListener(() => ReadMore(GI.ProjectIds[tempInt]));
+      button.transform.FindChild("MeerLezen").GetComponent<Button>().onClick.AddListener(() => ReadMoreUrls(GI.ProjectIds[tempInt]));
 
 
       if (GI.Questions[i] == null)
@@ -54,7 +54,6 @@ public class ProjectLoader : MonoBehaviour
       }
       else
       {
-        Debug.Log(GI.Questions[i][0]);
         button.transform.FindChild("BeginMetStempelen").GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
         button.transform.SetParent(containerToDo.transform, false);
         int numberOfChilds = 0;
@@ -73,14 +72,12 @@ public class ProjectLoader : MonoBehaviour
     }
   }
 
-  private void ReadMore(int projectNumber) {
+  private void ReadMoreUrls(int projectNumber) {
     Application.OpenURL(readMoreUrl + projectNumber.ToString());
-    Debug.Log(projectNumber);
   }
 
   private void LoadLevel(string sceneName, int projectNumber) {
     GI.CurrentProjectNumber = projectNumber;
-    Debug.Log(GI.CurrentProjectNumber);
     SceneManager.LoadScene(sceneName);
   }
 }

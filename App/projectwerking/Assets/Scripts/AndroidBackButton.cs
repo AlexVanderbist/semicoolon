@@ -9,22 +9,26 @@ public class AndroidBackButton : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if( Input.GetKeyUp(KeyCode.Escape))
+        if (Application.platform == RuntimePlatform.Android)
         {
-            Debug.Log("BackButton clicked");
-            isPause = !isPause;
-            if (isPause)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Time.timeScale = 0;
-                Debug.Log("looking for pause panel");
-                GameObject.Find("PausePanel").SetActive(true);
+                Debug.Log("BackButton clicked");
+                isPause = !isPause;
+                if (isPause)
+                {
+                    Time.timeScale = 0;
+                    Debug.Log("looking for pause panel");
+                    GameObject.Find("PausePanel").SetActive(true);
+                }
+                else
+                {
+                    Time.timeScale = 1;
+                }
+
             }
-            else
-            {
-                Time.timeScale = 1;
-            }
-                
         }
+        
 	
 	}
 }

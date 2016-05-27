@@ -10,7 +10,7 @@
 			<pre>{{projects}}</pre>
 			<li class="list-group-item" ng-repeat="project in projects">
 				<h4>{{project.name}}</h4>
-				<div>{{project.description}}</div>
+				<div ng-bind-html="project.description"></div>
 			</li>
 		</ul>
 		<div class="alert alert-danger" ng-if="error">
