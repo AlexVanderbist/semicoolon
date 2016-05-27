@@ -31,16 +31,17 @@ public class DataObtainer : MonoBehaviour {
 
   IEnumerator Start()
   {
+    string tempUrl = urlProjects;
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
 
-    urlProjects += GI.Token;
-    Debug.Log(urlProjects);
-    www = new WWW(urlProjects);
+    tempUrl += GI.Token;
+    Debug.Log(tempUrl);
+    www = new WWW(tempUrl);
     yield return www;
+
+    textData = JsonMapper.ToObject(www.text);
     if (www.error == null)
     {
-      textData = JsonMapper.ToObject(www.text);
-
       numberOfProjects = textData["projects"].Count;
       questionArray = new string[numberOfProjects][];
       questionIdArray = new int[numberOfProjects][];
@@ -62,21 +63,25 @@ public class DataObtainer : MonoBehaviour {
     }
     else
     {
-        Debug.Log("ERROR: " + www.error);
+      if (textData["error"].ToString() == "token_expired")
+      {
+        gameObject.SendMessage("StartReceivingNewToken", "ReObtainData");
+      }
     }
+   
   }
 
   IEnumerator GetProposals()
-  {
+  { 
     for (int i = 0; i < numberOfProjects; i++)
     {
       string urlProposals = urlProposalsPartOne + projectIds[i] + urlProposalsPartTwo + GI.Token;
       www = new WWW(urlProposals);
       yield return www;
+
+      textData = JsonMapper.ToObject(www.text);
       if (www.error == null)
       {
-        textData = JsonMapper.ToObject(www.text);
-
         numberOfProposals = textData["proposals"].Count;
         string[] tempProposals = new string[numberOfProposals];
         int[] tempProposalsIds = new int[numberOfProposals];
@@ -96,13 +101,26 @@ public class DataObtainer : MonoBehaviour {
       }
       else
       {
-          Debug.Log("ERROR: " + www.error);
+        if (textData["error"].ToString() == "token_expired")
+        {
+          gameObject.SendMessage("StartReceivingNewToken", "ReObtainProposals");
+        }
       }
     }
     GI.Questions = questionArray;
     GI.QuestionIds = questionIdArray;
     GI.QuestionTypes = questionTypeArray;
     gameObject.SendMessage("SpawnButtons");
+  }
+
+  public void ReObtainData()
+  {
+    StartCoroutine(Start());
+  }
+
+  public void ReObtainProposals()
+  {
+    StartCoroutine(GetProposals());
   }
 
   public static string StripTagsRegex(string source)

@@ -24,16 +24,15 @@
         <div class="timeline">
         @foreach($project->stages as $stage)
             <div class="fase">
-                <div class="fasedate col-md-4 col-xs-4"><h4>{{$stage->startdate->toFormattedDateString()}}</h4></div>
+                <div class="fasedate col-md-4 col-xs-4"><h4>{{$stage->startdate->formatLocalized('%A %d %B %Y')}}</h4></div>
                 <div class="fasedescription col-md-8 col-xs-8">
                     <h3>{!! $stage->name !!}</h3>
                     <p>{!! $stage->description !!}</p>
-                    <p class="enddate">Eindigd op {{$stage->enddate->toFormattedDateString()}}</p>
+                    <p class="enddate">Eindigd op {{$stage->enddate->formatLocalized('%A %d %B %Y')}}</p>
                 </div>
             </div>
         @endforeach
         </div>
-        
     </div>
     <div class="projectpictures container">
         <h2>Foto's</h2>
@@ -50,6 +49,7 @@
         <hr>
         @foreach($project->opinions as $loopedOpinion)
             <div><strong>{!! $loopedOpinion->user_id != 0 ? ($loopedOpinion->posted_by->admin ? $loopedOpinion->posted_by->fullname . ' | ADMIN' : $loopedOpinion->posted_by->fullname) : "Anoniem"!!}</strong>
+                {!! $loopedOpinion->created_at->diffForHumans() !!}
                 @if (Auth::check() && (Auth::user()->admin || $opinion->posted_by->id === Auth::id()))
                 <a href="{{ route('frontend.projects.opiniondestroy', [$project->id, $loopedOpinion->id]) }}">
                     verwijderen

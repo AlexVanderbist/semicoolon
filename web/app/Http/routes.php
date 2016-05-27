@@ -11,20 +11,21 @@
 |
 */
 
+
 /* API */
 Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 {
 	// Authenticate
 	Route::post('authenticate', 'API\AuthenticateController@authenticate');
+    
+    // GET Projects
+	Route::get('projects', 'API\ProjectsController@index');
 
 	// Authenticated users only
 	Route::group(['middleware' => 'jwt.auth'], function() {
 
 		// GET user
 	    Route::get('authenticate/user', 'API\AuthenticateController@getAuthenticatedUser');
-
-	    // GET Projects
-	    Route::get('projects', 'API\ProjectsController@index');
 
 	    // GET Project proposals
 	    Route::get('projects/{project}/proposals', 'API\ProposalsController@getProposals');
@@ -38,6 +39,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 	});
 });
 
+/* Laravel front end */
 Route::group(['middleware' => 'web'], function () {
     
     /* AUTH */
@@ -121,4 +123,10 @@ Route::group(['middleware' => 'web'], function () {
 		]);
 	});
 
+});
+
+
+/* Link to angular front-end */
+Route::get('angular-test', function () {
+	return view('angular.index');
 });

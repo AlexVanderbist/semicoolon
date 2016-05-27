@@ -13,7 +13,6 @@ class StagesController extends Controller
 
     public function __construct(Stage $stages) {
         $this->stages = $stages;
-
         parent::__construct();
     }
 
@@ -25,7 +24,6 @@ class StagesController extends Controller
     public function index(Project $project, Stage $stage)
     { 
         $stages = $project->stages;
-
         return view('backend.projects.stages.index', compact('project', 'stages', 'stage'));
     }
 

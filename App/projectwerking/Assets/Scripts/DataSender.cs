@@ -30,6 +30,11 @@ public class DataSender : MonoBehaviour {
     numberAnswer = initnumber;
   }
 
+  public void ReSendAnswer()
+  {
+    StartCoroutine(SendAnswer());
+  }
+
   IEnumerator SendAnswer()
   {
     int value = 0;
@@ -59,13 +64,16 @@ public class DataSender : MonoBehaviour {
 
     yield return antwoordWWW;
 
+    textData = JsonMapper.ToObject(antwoordWWW.text);
     if (antwoordWWW.error != null)
     {
-      Debug.LogError("Can't send answer to API");
+        if (textData["error"].ToString() == "token_expired")
+        {
+          gameObject.SendMessage("StartReceivingNewToken", "ReSendAnswer");
+        }
     }
     else
     {
-      textData = JsonMapper.ToObject(antwoordWWW.text);
       if (textData["status"].ToString() == "success")
       {
         Debug.Log("In orde");

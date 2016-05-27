@@ -4,11 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class ProjectLoader : MonoBehaviour
 {
-  public GameObject levelButtonPrefab;
+  public GameObject projectButtonPrefab;
   public GameObject containerToDo, containerDone;
-  public RectTransform containerRecToDo, containerRectDone ;
+  public RectTransform containerRecToDo, containerRecDone , projectButtonRec;
   public string readMoreUrl = "http://semicolon.multimediatechnology.be/projecten/";
   public string sceneToLoad = "MainScene";
+  public float marge = 250;
 
   public Sprite[] tempImageStock;
 
@@ -16,6 +17,7 @@ public class ProjectLoader : MonoBehaviour
 
   void Start()
   {
+    marge += 1000;
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
   }
 
@@ -25,7 +27,7 @@ public class ProjectLoader : MonoBehaviour
     for (int i = 0; i < GI.PlaceNameList.Count; i++)
     {
       int tempInt = i;
-      GameObject button = Instantiate(levelButtonPrefab) as GameObject;
+      GameObject button = Instantiate(projectButtonPrefab) as GameObject;
       button.transform.FindChild("DoneSign").GetComponent<Image>().enabled = false;
       button.transform.FindChild("Plaatsnaam").GetComponent<Text>().text = GI.PlaceNameList[i];
       button.transform.FindChild("Uitleg").GetComponent<Text>().text = GI.ProjectDescriptions[i];
@@ -37,20 +39,36 @@ public class ProjectLoader : MonoBehaviour
       if (GI.Questions[i] == null)
       {
         button.transform.FindChild("DoneSign").GetComponent<Image>().enabled = true;
-        button.transform.GetComponent<Button>().interactable = false;
+        button.transform.FindChild("BeginMetStempelen").GetComponent<Button>().interactable = false;
         button.transform.SetParent(containerDone.transform, false);
+        int numberOfChilds = 0;
+
+        foreach (Transform trans in containerDone.transform)
+        {
+          numberOfChilds++;
+        }
+        if (numberOfChilds > 1)
+        {
+          containerRecDone.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecDone.rect.height + marge);
+        }
       }
       else
       {
+        Debug.Log(GI.Questions[i][0]);
+        button.transform.FindChild("BeginMetStempelen").GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
         button.transform.SetParent(containerToDo.transform, false);
-        button.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
+        int numberOfChilds = 0;
+
+        foreach (Transform trans in containerToDo.transform)
+        {
+          numberOfChilds++;
+        }
+        if (numberOfChilds > 1)
+        {
+          containerRecToDo.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecToDo.rect.height + marge);
+        }
       }
 
-     
-      if (i != GI.PlaceNameList.Count - 1)
-      {
-        containerRecToDo.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecToDo.rect.height + 1100);
-      }
 
     }
   }
