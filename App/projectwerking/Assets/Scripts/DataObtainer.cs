@@ -17,14 +17,14 @@ public class DataObtainer : MonoBehaviour {
   JsonData textData;
   GameInfo GI;
 
-  List<string> projectNameList = new List<string>();
-  List<string> placeNameList = new List<string>();
-  List<string> projectDescriptions = new List<string>();
-  List<int> projectIds = new List<int>();
+  List<string> projectNamesList = new List<string>();
+  List<string> placeNamesList = new List<string>();
+  List<string> projectDescriptionsList = new List<string>();
+  List<int> projectIDsList = new List<int>();
 
-  string[][] questionArray = null;
-  int[][] questionIdArray = null;
-  int[][] questionTypeArray = null;
+  string[][] questionsArray = null;
+  int[][] questionsIDArray = null;
+  int[][] questionsTypeArray = null;
 
   string projectNameString = "name";
   string placeNameString = "locationText";
@@ -35,7 +35,6 @@ public class DataObtainer : MonoBehaviour {
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
 
     tempUrl += GI.Token;
-    Debug.Log(tempUrl);
     www = new WWW(tempUrl);
     yield return www;
 
@@ -43,22 +42,22 @@ public class DataObtainer : MonoBehaviour {
     if (www.error == null)
     {
       numberOfProjects = textData["projects"].Count;
-      questionArray = new string[numberOfProjects][];
-      questionIdArray = new int[numberOfProjects][];
-      questionTypeArray = new int[numberOfProjects][];
+      questionsArray = new string[numberOfProjects][];
+      questionsIDArray = new int[numberOfProjects][];
+      questionsTypeArray = new int[numberOfProjects][];
       for (int i = 0; i < numberOfProjects; i++)
       {
-        projectNameList.Add(textData["projects"][i][projectNameString].ToString());
-        placeNameList.Add(textData["projects"][i][placeNameString].ToString());
-        projectIds.Add(int.Parse(textData["projects"][i]["id"].ToString()));
+        projectNamesList.Add(textData["projects"][i][projectNameString].ToString());
+        placeNamesList.Add(textData["projects"][i][placeNameString].ToString());
+        projectIDsList.Add(int.Parse(textData["projects"][i]["id"].ToString()));
 
         string tempString = StripTagsRegex(textData["projects"][i]["description"].ToString());
-        projectDescriptions.Add(tempString);
+        projectDescriptionsList.Add(tempString);
       }
-      GI.ProjectNameList = projectNameList;
-      GI.PlaceNameList = placeNameList;
-      GI.ProjectIds = projectIds;
-      GI.ProjectDescriptions = projectDescriptions;
+      GI.ProjectNameList = projectNamesList;
+      GI.PlaceNameList = placeNamesList;
+      GI.ProjectIds = projectIDsList;
+      GI.ProjectDescriptions = projectDescriptionsList;
       StartCoroutine(GetProposals());
     }
     else
@@ -75,7 +74,7 @@ public class DataObtainer : MonoBehaviour {
   { 
     for (int i = 0; i < numberOfProjects; i++)
     {
-      string urlProposals = urlProposalsPartOne + projectIds[i] + urlProposalsPartTwo + GI.Token;
+      string urlProposals = urlProposalsPartOne + projectIDsList[i] + urlProposalsPartTwo + GI.Token;
       www = new WWW(urlProposals);
       yield return www;
 
@@ -94,9 +93,9 @@ public class DataObtainer : MonoBehaviour {
             tempProposalsIds[j] = int.Parse(textData["proposals"][j]["id"].ToString());
             tempProposalTypes[j] = int.Parse(textData["proposals"][j]["type"].ToString());
           }
-          questionArray[i] = tempProposals;
-          questionIdArray[i] = tempProposalsIds;
-          questionTypeArray[i] = tempProposalTypes;
+          questionsArray[i] = tempProposals;
+          questionsIDArray[i] = tempProposalsIds;
+          questionsTypeArray[i] = tempProposalTypes;
         }
       }
       else
@@ -107,9 +106,9 @@ public class DataObtainer : MonoBehaviour {
         }
       }
     }
-    GI.Questions = questionArray;
-    GI.QuestionIds = questionIdArray;
-    GI.QuestionTypes = questionTypeArray;
+    GI.Questions = questionsArray;
+    GI.QuestionIds = questionsIDArray;
+    GI.QuestionTypes = questionsTypeArray;
     gameObject.SendMessage("SpawnButtons");
   }
 

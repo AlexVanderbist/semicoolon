@@ -16,7 +16,7 @@
             $authProvider.loginUrl = '/api/v1/authenticate';
 
             // Default route when something else is requested other than the states bellow
-            $urlRouterProvider.otherwise('/projects');
+            //$urlRouterProvider.otherwise('/projects');
             
             // States in ui-router
             var templateUrlPrefix = '../angular/views/';
@@ -34,7 +34,17 @@
                 .state('projects', {
                     url: '/projects',
                     templateUrl: templateUrlPrefix + 'projectView.html',
-                    controller: 'projectController'
+                    controller: 'projectController',
+                    resolve: {
+                        projects: function (projectService) {
+                            return projectService.getAll();
+                        }
+                    }
+                })
+                .state('projects.list', {
+                    url: '/list',
+                    templateUrl: templateUrlPrefix + 'projectListView.html',
+                    controller: 'projectListController'
                 });
 
 

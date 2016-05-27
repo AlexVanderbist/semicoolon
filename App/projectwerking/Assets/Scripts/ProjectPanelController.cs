@@ -10,7 +10,7 @@ public class ProjectPanelController : MonoBehaviour {
   public Sprite iconBack, iconUser;
   public Text titleText;
 
-  bool panelToDoActive = true, profilePanelShown = false;
+  bool isPanelToDoActive = true, isProfilePanelShown = false;
   Color blueColor = new Color();
   Color greyColor = new Color();
 
@@ -23,9 +23,9 @@ public class ProjectPanelController : MonoBehaviour {
   // set profile panel active and other panels off
   public void ShowProfile()
   {
-    if (profilePanelShown)
+    if (isProfilePanelShown)
     {
-      if (panelToDoActive)
+      if (isPanelToDoActive)
       {
         panelToDo.SetActive(true);
       }
@@ -34,7 +34,7 @@ public class ProjectPanelController : MonoBehaviour {
         panelDone.SetActive(true);
       }
       panelProfile.SetActive(false);
-      profilePanelShown = false;
+      isProfilePanelShown = false;
       buttonDoneGO.SetActive(true);
       buttonToDoGO.SetActive(true);
       buttonUserBack.GetComponent<Image>().sprite = iconUser;
@@ -42,7 +42,7 @@ public class ProjectPanelController : MonoBehaviour {
     }
     else
     {
-      if (panelToDoActive)
+      if (isPanelToDoActive)
       {
         panelToDo.SetActive(false);
       }
@@ -51,7 +51,7 @@ public class ProjectPanelController : MonoBehaviour {
         panelDone.SetActive(false);
       }
       panelProfile.SetActive(true);
-      profilePanelShown = true;
+      isProfilePanelShown = true;
       buttonDoneGO.SetActive(false);
       buttonToDoGO.SetActive(false);
       buttonUserBack.GetComponent<Image>().sprite = iconBack;
@@ -61,7 +61,7 @@ public class ProjectPanelController : MonoBehaviour {
 
   public void ChangePanel()
   {
-    if (panelToDoActive)
+    if (isPanelToDoActive)
     {
       buttonDone.image.color = blueColor;
       buttonToDo.image.color = greyColor;
@@ -69,7 +69,7 @@ public class ProjectPanelController : MonoBehaviour {
       buttonToDo.GetComponentInChildren<Text>().color = Color.black;
       panelToDo.SetActive(false);
       panelDone.SetActive(true);
-      panelToDoActive = false;
+      isPanelToDoActive = false;
     }
     else
     {
@@ -79,7 +79,7 @@ public class ProjectPanelController : MonoBehaviour {
       buttonToDo.GetComponentInChildren<Text>().color = Color.white;
       panelToDo.SetActive(true);
       panelDone.SetActive(false);
-      panelToDoActive = true;
+      isPanelToDoActive = true;
     }
   }
 

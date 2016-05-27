@@ -68,7 +68,10 @@
     <!-- Application Scripts -->
     <script src="{!! asset('angular/scripts/app.js') !!}"></script>
     <script src="{!! asset('angular/scripts/userService.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/projectService.js') !!}"></script>
+
     <script src="{!! asset('angular/scripts/authController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/logoutController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/projectController.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/projectListController.js') !!}"></script>
 </html>

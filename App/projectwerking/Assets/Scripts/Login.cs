@@ -11,14 +11,14 @@ public class Login : MonoBehaviour {
     string password = "";
     public Text errorMessage;
     public string sceneToLoad = "ProjectsScene";
-    public string CreateAccountUrl = "http://semicolon.multimediatechnology.be/register";
-    public string LoginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
+    public string createAccountUrl = "http://semicolon.multimediatechnology.be/register";
+    public string loginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
 
     public InputField inputEmail, inputPassword;
 
     private string invalidString = "invalid_credentials";
 
-    JsonData textdata;
+    JsonData textData;
     GameInfo GI;
     public Toggle rememberMeCheckbox;
 
@@ -32,21 +32,12 @@ public class Login : MonoBehaviour {
             inputEmail.text = email;
             password = PlayerPrefs.GetString("password");
             inputPassword.text = password;
-            Debug.Log(email + " " + password);
         }
         else
         {
             Debug.Log("can't find keys");
         }
 	}
-
-
-  public void GoToCreateAccount(bool createAccount) {
-    if (createAccount)
-    {
-      LinkToCreateAccountURL();
-    }
-  }
 
   public void SetEmail(string initEmail)
   {
@@ -58,9 +49,9 @@ public class Login : MonoBehaviour {
     password = initPassword;
   }
 
-  public void LoginOnClick(bool initLogin)
+  public void LoginOnClick()
   {
-    if (initLogin && email != "" && password != "")
+    if (email != "" && password != "")
     {
       StartCoroutine(LoginAccount());
       errorMessage.enabled = false;
@@ -80,16 +71,16 @@ public class Login : MonoBehaviour {
         Form.AddField("email", email);
         Form.AddField("password", password);
 
-        WWW LoginAccountWWW = new WWW(LoginUrl, Form);
+        WWW LoginAccountWWW = new WWW(loginUrl, Form);
 
         yield return LoginAccountWWW;
 
     if (LoginAccountWWW.error == null)
     {
-      textdata = JsonMapper.ToObject(LoginAccountWWW.text);
+      textData = JsonMapper.ToObject(LoginAccountWWW.text);
 
       //SAVE TOKEN
-      if (textdata["token"].ToString() != "")
+      if (textData["token"].ToString() != "")
       {
           if (rememberMeCheckbox.isOn)
           {
@@ -97,11 +88,11 @@ public class Login : MonoBehaviour {
               PlayerPrefs.SetString("password", password);
           }
           errorMessage.enabled = false;
-          GI.Token = textdata["token"].ToString();
+          GI.Token = textData["token"].ToString();
           SceneManager.LoadScene(sceneToLoad);
       }
       //CHECK ERROR STRING
-      else if(textdata[0]["error"].ToString() == invalidString)
+      else if(textData[0]["error"].ToString() == invalidString)
       {
           errorMessage.text = "Verkeerde email of passwoord";
           errorMessage.enabled = true;
@@ -117,7 +108,7 @@ public class Login : MonoBehaviour {
     }
     }
 
-    void LinkToCreateAccountURL() {
-        Application.OpenURL(CreateAccountUrl);
+    public void LinkToCreateAccountURL() {
+        Application.OpenURL(createAccountUrl);
     }
 }

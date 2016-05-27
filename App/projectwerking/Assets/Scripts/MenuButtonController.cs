@@ -4,56 +4,56 @@ using UnityEngine.UI;
 
 public class MenuButtonController : MonoBehaviour {
 
-  public GameObject MenuContainer;
-  public float maxHeightShown = 150f;
-  Vector3 MenuContainerSlided, MenuRestPosition;
+  public GameObject menuContainer;
+  public float maxHeightShown;
+  Vector3 menuContainerSlided, menuRestPosition;
 
-  bool menuIsShown = false, moveMenu = false;
+  bool isMenuShown = false, isMenuReadyToMove = false;
   float step = 0;
   float speed = 1.5f;
 
   void Start()
   {
-    MenuRestPosition = MenuContainer.transform.position;
-    MenuContainerSlided = new Vector3(MenuContainer.transform.position.x, MenuContainer.transform.position.y - maxHeightShown, MenuContainer.transform.position.z);
+    menuRestPosition = menuContainer.transform.position;
+    menuContainerSlided = new Vector3(menuContainer.transform.position.x, menuContainer.transform.position.y - maxHeightShown, menuContainer.transform.position.z);
   }
 
   public void ShowMenu()
   {
-    if (menuIsShown)
+    if (isMenuShown)
     {
-      moveMenu = true;
-      menuIsShown = false;
+      isMenuReadyToMove = true;
+      isMenuShown = false;
     }
     else
     {
-      moveMenu = true;
-      menuIsShown = true;
+      isMenuReadyToMove = true;
+      isMenuShown = true;
     }
   }
 
   void Update()
   {
-    if (moveMenu)
+    if (isMenuReadyToMove)
     {
-      if (menuIsShown)
+      if (isMenuShown)
       {
         step += speed * Time.deltaTime;
-        MenuContainer.transform.position = Vector3.Lerp(MenuContainer.transform.position, MenuContainerSlided, step);
+        menuContainer.transform.position = Vector3.Lerp(menuContainer.transform.position, menuContainerSlided, step);
         if (step > 1)
         {
           step = 0;
-          moveMenu = false;
+          isMenuReadyToMove = false;
         }
       }
-      else if (!menuIsShown)
+      else if (!isMenuShown)
       {
         step += speed * Time.deltaTime;
-        MenuContainer.transform.position = Vector3.Lerp(MenuContainer.transform.position, MenuRestPosition, step);
+        menuContainer.transform.position = Vector3.Lerp(menuContainer.transform.position, menuRestPosition, step);
         if (step > 1)
         {
           step = 0;
-          moveMenu = false;
+          isMenuReadyToMove = false;
         }
       }
     }

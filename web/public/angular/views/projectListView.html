@@ -1,0 +1,7 @@
+<ul class="list-group" ng-if="$parent.projects">
+	<pre>{{$parent.projects}}</pre>
+	<li class="list-group-item" ng-repeat="project in projects | filter:$parent.projectFilter">
+		<h4>{{project.name}}</h4>
+		<div ng-bind-html="project.description"></div>
+	</li>
+</ul>

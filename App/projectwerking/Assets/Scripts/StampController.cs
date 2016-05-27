@@ -12,7 +12,7 @@ public class StampController : MonoBehaviour {
   Vector3 restPosRedStamp, restPosGreenStamp, restPosNumberStamp;
 
   GameObject stampToMove;
-  Vector3 restPos, maxScale, restScale;
+  Vector3 restPos, maxScale, restScale, positionToStamp;
 
   float rotationZ = 0;
   float beginRotation = 0;
@@ -38,6 +38,7 @@ public class StampController : MonoBehaviour {
     beginRotation = redStamp.transform.rotation.z;
 
     // ALL REST SCALES HAVE TO BE SAME VALUE
+    restScale = redStamp.transform.localScale;
     maxScale = new Vector3(redStamp.transform.localScale.x + maxScaleToAdd, redStamp.transform.localScale.y + maxScaleToAdd, redStamp.transform.localScale.z + maxScaleToAdd);
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
 	}
@@ -50,7 +51,6 @@ public class StampController : MonoBehaviour {
       selectedStamp = "red";
       stampToMove = redStamp;
       restPos = restPosRedStamp;
-      restScale = redStamp.transform.localScale;
       readyChecking = true;
     }
     else if (hit == greenStamp.name)
@@ -59,7 +59,6 @@ public class StampController : MonoBehaviour {
       selectedStamp = "green";
       stampToMove = greenStamp;
       restPos = restPosGreenStamp;
-      restScale = greenStamp.transform.localScale;
       readyChecking = true;
     }
     else if (hit == numberStamp.name)
@@ -68,7 +67,6 @@ public class StampController : MonoBehaviour {
       SelectedStamp = "number";
       stampToMove = numberStamp;
       restPos = restPosNumberStamp;
-      restScale = numberStamp.transform.localScale;
       readyChecking = true;
     }
     return readyChecking;
@@ -76,6 +74,12 @@ public class StampController : MonoBehaviour {
 
   public void ResetStamps() {
     stampToMove.transform.position = restPos;
+    stampToMove.transform.localScale = restScale;
+  }
+
+  public void ScaleStamp(float step)
+  {
+    stampToMove.transform.localScale = Vector3.Lerp(stampToMove.transform.localScale, maxScale, step);
   }
 
   public void DeActivateStamps()
@@ -123,9 +127,8 @@ public class StampController : MonoBehaviour {
   }
 
   public void MoveStampToPaper(float step) {
-    stampToMove.transform.localPosition = Vector3.Lerp(stampToMove.transform.position, hitInfo.point, step);
+    stampToMove.transform.localPosition = Vector3.Lerp(stampToMove.transform.position, positionToStamp, step);
     stampToMove.transform.rotation = Quaternion.Slerp(stampToMove.transform.rotation, Quaternion.Euler(0, 90, rotationZ), step);
-    stampToMove.transform.localScale = Vector3.Lerp(stampToMove.transform.localScale, maxScale, step);
   }
 
   public void MoveStampBackToRestPosition(float step)
@@ -137,20 +140,7 @@ public class StampController : MonoBehaviour {
 
   public bool setRaycastHit(RaycastHit hit) {
     hitInfo = hit;
+    positionToStamp = new Vector3(hit.point.x, hit.point.y, hit.point.z - 20f);
     return true;
-  }
-
-  public bool CheckPaper(RaycastHit hit) {
-    bool stampIsReady = false;
-    if (hit.transform.name == "Paper")
-    {
-      hitInfo = hit;
-      stampIsReady = true;
-    }
-    else if(hit.transform.name != "Paper")
-    {
-      stampIsReady = false;
-    }
-    return stampIsReady;
   }
 }
