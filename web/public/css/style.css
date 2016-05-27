@@ -1,14 +1,19 @@
 /*BODY*/
 
-.panel-heading, 
-.btn-primary {
-  background-color: #219dc8;
-  border-color: #219dc8;
+.panel-heading{
+  background-color: #CF0039 !important;
+  border-color: #CF0039 !important;
   color: white !important;
+}
+.btn-primary{
+  background-color: #0064B4;
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }
 .btn-link, 
 a {
-  color: #219dc8 !important;
+  color: #0064B4;
 }
 
 body, html {
@@ -16,6 +21,7 @@ body, html {
   height: 100%;
   width: 100%;
 }
+
 
 /* BACKEND */
 .thumbnail.active {
@@ -43,9 +49,12 @@ body, html {
 }
 
 /* NAV */
-
+.headerlogo{
+  width: 30%;
+  float: left;
+}
 .navbar-default {
-	background-color: #333333 !important;
+	background-color: #CF0039;
 	color: white !important;
 	border: none;
 	border-radius: 0px;
@@ -53,16 +62,22 @@ body, html {
 
 .navbar-nav a {
     color: white !important;
+    line-height: 40px !important;
 }
-.navbar-nav a:hover {
-    color: #CE003B !important;
+.navbar-nav li:hover {
+    background-color: #900028;
 }
 
 .navbar-default .navbar-brand {
-	color: #CE003B !important;
+	color: white;
+  height: auto;
+  padding:0;
+}
+.navbar-brand p{
+  line-height: 30px !important;
 }
 .navbar-default .navbar-brand:hover {
-	color: white !important;
+  color: white;
 }
 
 .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a {

@@ -11,7 +11,7 @@
             @foreach($projectChunk as $project)
                 <div class="col-md-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading projectheading"><span class="glyphicon glyphicon-bookmark" style="color:{{$project->theme->hex_color}};margin-right:5px;"></span>{{$project->name}} 
+                        <div class="panel-heading projectheading">{{$project->name}} 
                             <a class="pull-right projectlink" data-toggle="tooltip" title="Verwijderen" href="{{ route('backend.projects.confirm', $project->id) }}">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>

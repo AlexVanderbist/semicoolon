@@ -42,7 +42,8 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/backend') }}">
-                    {!! config('cms.sitename') !!} backend
+                    <img src="{!! asset('images/A_logo_RGB.svg') !!}" alt="logo" class="headerlogo">
+                    <p>{!! config('cms.sitename') !!} backend</p>
                 </a>
             </div>
 
