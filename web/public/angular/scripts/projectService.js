@@ -13,6 +13,10 @@
                 return $http.get(apiUrl + 'projects');
             };
 
+            projectService.themes = function () {
+                return $http.get(apiUrl + 'themes');
+            };
+
             return projectService;
         });
 })();

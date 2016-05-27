@@ -20,6 +20,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
     
     // GET Projects
 	Route::get('projects', 'API\ProjectsController@index');
+    // GET Themes
+	Route::get('themes', 'API\ProjectsController@getThemes');
 
 	// Authenticated users only
 	Route::group(['middleware' => 'jwt.auth'], function() {

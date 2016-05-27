@@ -3,8 +3,12 @@
 		<div ui-view></div>
 	</div>
 	<div class="col-sm-6">	
-	        <h3>Projecten</h3>
-	        <input type="number" value="0s" ng-model="projectFilter.id">
+	        <h3>Thema's</h3>
+	        <pre>{{filter}}</pre>
+	        <label ng-repeat="theme in themes">
+	        	<input type="checkbox" ng-model="filter[theme.id]">
+	        	{{theme.name}}
+	        </label>
 		</div>
 	</div>
 </div>

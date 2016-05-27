@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Project;
 use App\Proposal;
+use App\Theme;
 
 class ProjectsController extends Controller
 {
@@ -27,5 +28,11 @@ class ProjectsController extends Controller
 	    //$projects = [];
 
     	return response()->json(compact('projects'));
+    }
+
+    public function getThemes(Theme $themes) 
+    {
+    	$themes = $themes->all();
+    	return response()->json(compact('themes'));
     }
 }

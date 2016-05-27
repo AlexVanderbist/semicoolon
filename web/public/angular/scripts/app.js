@@ -7,16 +7,19 @@
             'ui.router', 
             'satellizer', 
             'ui.bootstrap',
-            'ngSanitize'
+            'ngSanitize',
+            'uiGmapgoogle-maps',
+            'nemLogging'
         ])
 
-        .config(function($stateProvider, $urlRouterProvider, $authProvider, $provide, $httpProvider) {
+        .config(function($stateProvider, $urlRouterProvider, $authProvider, $provide, $httpProvider,uiGmapGoogleMapApiProvider) {
 
             // Satellizer configuration that specifies which API route the JWT should be retrieved from
             $authProvider.loginUrl = '/api/v1/authenticate';
 
             // Default route when something else is requested other than the states bellow
-            //$urlRouterProvider.otherwise('/projects');
+            $urlRouterProvider.otherwise('/projects/map');
+            $urlRouterProvider.when('/projects', '/projects/map');
             
             // States in ui-router
             var templateUrlPrefix = '../angular/views/';
@@ -38,6 +41,9 @@
                     resolve: {
                         projects: function (projectService) {
                             return projectService.getAll();
+                        },
+                        themes: function (projectService) {
+                            return projectService.themes();
                         }
                     }
                 })
@@ -45,6 +51,11 @@
                     url: '/list',
                     templateUrl: templateUrlPrefix + 'projectListView.html',
                     controller: 'projectListController'
+                })
+                .state('projects.map', {
+                    url: '/map',
+                    templateUrl: templateUrlPrefix + 'projectMapView.html',
+                    controller: 'projectMapController'
                 });
 
 
@@ -89,6 +100,12 @@
 
             // Push the new factory onto the $http interceptor array
             $httpProvider.interceptors.push('redirectWhenLoggedOut');
+
+            uiGmapGoogleMapApiProvider.configure({
+                //    key: 'your api key',
+                v: '3.20', //defaults to latest 3.X anyhow
+                libraries: 'weather,geometry,visualization'
+            });
         })
 
         .run(function($rootScope, $state) {
