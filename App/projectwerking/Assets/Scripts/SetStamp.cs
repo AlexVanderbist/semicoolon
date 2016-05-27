@@ -13,9 +13,9 @@ public class SetStamp : MonoBehaviour {
   PaperController paper;
 
   private AudioSource source { get { return GetComponent<AudioSource>(); } }
-  private bool numberIsSet = false;
-  private bool readyToMovePanel = false;
-  private bool panelIsShown = false;
+  private bool isNumberSet = false;
+  private bool isPanelReadyToMove = false;
+  private bool isPanelShown = false;
   private int number;
   private float step;
   private Vector3 numberPanelHiddenPos;
@@ -40,9 +40,9 @@ public class SetStamp : MonoBehaviour {
 
   void Update()
   {
-    if (readyToMovePanel)
+    if (isPanelReadyToMove)
     {
-      if (!panelIsShown)
+      if (!isPanelShown)
       {
         step += showPanelSpeed * Time.deltaTime;
         numberPanel.transform.position = Vector3.Lerp(numberPanel.transform.position, numberPanelShownPos, step);
@@ -50,8 +50,8 @@ public class SetStamp : MonoBehaviour {
         {
           Debug.Log("ready");
           step = 0;
-          readyToMovePanel = false;
-          panelIsShown = true;
+          isPanelReadyToMove = false;
+          isPanelShown = true;
         }
       }
       else
@@ -62,8 +62,8 @@ public class SetStamp : MonoBehaviour {
         {
           Debug.Log("Move back");
           step = 0;
-          readyToMovePanel = false;
-          panelIsShown = false;
+          isPanelReadyToMove = false;
+          isPanelShown = false;
         }
       }
     }
@@ -90,7 +90,7 @@ public class SetStamp : MonoBehaviour {
     }
     else if (selectedStamp == "number")
     {
-      readyToMovePanel = true;
+      isPanelReadyToMove = true;
       switch (Number)
       {
         case 1:
@@ -145,14 +145,14 @@ public class SetStamp : MonoBehaviour {
 
   public void ShowPanel()
   {
-    readyToMovePanel = true;
+    isPanelReadyToMove = true;
   }
 
-  public void NumberSet(int initnumber)
+  public void SetNumber(int initnumber)
   {
     Number = initnumber;
-    numberIsSet = true;
-    readyToMovePanel = true;
+    isNumberSet = true;
+    isPanelReadyToMove = true;
     gameObject.SendMessage("StopNumberInput");
   }
 }
