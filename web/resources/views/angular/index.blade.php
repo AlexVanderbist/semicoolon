@@ -63,6 +63,7 @@
     <script src="{!! asset('node_modules/angular-ui-router/release/angular-ui-router.js') !!}"></script>
     <script src="{!! asset('node_modules/satellizer/satellizer.js') !!}"></script>
     <script src="{!! asset('node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js') !!}"></script>
+    <script src="{!! asset('node_modules/angular-sanitize/angular-sanitize.js') !!}"></script>
 
     <!-- Application Scripts -->
     <script src="{!! asset('angular/scripts/app.js') !!}"></script>
