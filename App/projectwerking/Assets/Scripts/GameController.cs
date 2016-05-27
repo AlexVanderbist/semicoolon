@@ -52,10 +52,10 @@ public class GameController : MonoBehaviour {
       //Spawn First Object
       if (!firstPaperCreated)
       {
-        //pController.SetBeginValues();
         pController.createNewPaper();
         firstPaperCreated = true;
         firstPaper = true;
+        sController.DeActivateStamps();
       }
 
       //Move First Object
@@ -178,7 +178,7 @@ public class GameController : MonoBehaviour {
             }
             else
             {
-              sController.resetStamps();
+              sController.ResetStamps();
             }
             dragging = false;
           }
@@ -214,6 +214,7 @@ public class GameController : MonoBehaviour {
               {
                 if (pController.createNewPaper())
                 {
+                  sController.DeActivateStamps();
                   readyToCheckStamps = false;
                   readyToSwipePaper = false;
                 }
