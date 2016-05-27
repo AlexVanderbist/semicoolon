@@ -42,8 +42,11 @@ class ProjectsController extends Controller
 
     public function info($id, Opinion $opinion)
     {
-        $project = $this->projects->with('theme', 'creator', 'opinions', 'stages', 'images')->findOrFail($id);
-        return view('frontend.projects.info', compact('project', 'opinion'));
+        $project = $this->projects->with('theme', 'creator', 'opinions', 'stages', 'images', 'proposals')->findOrFail($id);
+        if(Carbon::parse($project->comment_deadline)->diffInDays(Carbon::now(), false) > 0) //When its past the comment_deadline
+            {$reactionsallowed = true;}
+        else {$reactionsallowed = false;}
+        return view('frontend.projects.info', compact('project', 'opinion', 'reactionsallowed'));
     }
 
     public function opinionstore(Requests\StoreOpinionRequest $request, $id)

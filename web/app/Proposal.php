@@ -33,7 +33,25 @@ class Proposal extends Model
         return [
             'yes' => $this->opinions()->ofType(1)->withValue(1)->count(),
             'no'  => $this->opinions()->ofType(1)->withValue(2)->count(),
-            'avg' => $this->opinions()->ofType(2)->avg('value')
+            'avg' => $this->opinions()->ofType(2)->avg('value'),
+            '1'  => $this->opinions()->ofType(2)->withValue(1)->count(),
+            '2'  => $this->opinions()->ofType(2)->withValue(1)->count(),
+            '3'  => $this->opinions()->ofType(2)->withValue(1)->count(),
+            '4'  => $this->opinions()->ofType(2)->withValue(1)->count(),
+            '5'  => $this->opinions()->ofType(2)->withValue(1)->count()
         ];
+    }
+    public function statistics() {
+        $all =  $this->opinions()->count();
+        $yes = $this->opinions()->ofType(1)->withValue(1)->count();
+        if($all>0)
+        {
+            $statistic = ($yes/$all)*100;
+        }
+        else
+        {
+            $statistic = 0;
+        }
+        return $statistic;
     }
 }

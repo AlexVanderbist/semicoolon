@@ -6,13 +6,13 @@ public class TokenReceiver : MonoBehaviour {
 
   // THIS CLASS IS USED TO GET A NEW TOKEN WHEN THE OLD ONE EXPIRED
 
-  public string LoginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
+  public string loginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
   string email = "";
   string password = "";
 
   private string invalidString = "invalid_credentials";
 
-  JsonData textdata;
+  JsonData textData;
   GameInfo GI;
 
   void Start()
@@ -34,23 +34,23 @@ public class TokenReceiver : MonoBehaviour {
     Form.AddField("email", PlayerPrefs.GetString("username"));
     Form.AddField("password", PlayerPrefs.GetString("password"));
 
-    WWW LoginAccountWWW = new WWW(LoginUrl, Form);
+    WWW LoginAccountWWW = new WWW(loginUrl, Form);
 
     yield return LoginAccountWWW;
 
     if (LoginAccountWWW.error == null)
     {
-      textdata = JsonMapper.ToObject(LoginAccountWWW.text);
+      textData = JsonMapper.ToObject(LoginAccountWWW.text);
 
       //SAVE TOKEN
-      if (textdata["token"].ToString() != "")
+      if (textData["token"].ToString() != "")
       {
-        GI.Token = textdata["token"].ToString();
+        GI.Token = textData["token"].ToString();
         gameObject.SendMessage(methodToActivate);
         Debug.Log("new token is:" + GI.Token);
       }
       //CHECK ERROR STRING
-      else if (textdata[0]["error"].ToString() == invalidString)
+      else if (textData[0]["error"].ToString() == invalidString)
       {
         Debug.Log("fout email of pass");
       }

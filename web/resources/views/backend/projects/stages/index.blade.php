@@ -73,21 +73,17 @@
                     <tr>
                         <td>{{$stage->name}}</td>
                         <td>{{$stage->description}}</td>
-                        <td>{{$stage->startdate->formatLocalized('%A %d %B %Y')}}</td>
+                        <td>{{$stage->startdate->formatLocalized('%A %d %B %Y')}}</td> <!-- in normal format and Dutch -->
                         <td>{{$stage->enddate->formatLocalized('%A %d %B %Y')}}</td>
                         <td>
-                            <a href="{{ route('backend.projects.{project}.stages.edit', [$project->id, $stage->id]) }}">
+                            <a data-toggle="tooltip" title="Aanpassen" href="{{ route('backend.projects.{project}.stages.edit', [$project->id, $stage->id]) }}">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </a>
                         </td>
                         <td>
-                            {!! Form::open(['method' => 'delete', 'route' => ['backend.projects.{project}.stages.destroy', $project->id, $stage->id]]) !!}
-
-                                <button type="submit" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove"></span> Delete
-                                </button>
-
-                            {!! Form::close() !!}
+                            <a data-toggle="tooltip" title="Verwijderen" href="{!! route('backend.projects.{project}.stages.destroy', [$project->id, $stage->id]) !!}" data-method="delete" data-token="{{csrf_token()}}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
                         </td>
                     </tr>
                 @endforeach
