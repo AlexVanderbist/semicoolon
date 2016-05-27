@@ -41,9 +41,11 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/backend') }}">
-                    <img src="{!! asset('images/A_logo_RGB.svg') !!}" alt="logo" class="headerlogo">
-                    <p>{!! config('cms.sitename') !!} backend</p>
+                <a class="navbar-brand logobrand" href="{{ url('/backend') }}">
+                  <img src="{!! asset('images/A_logo_RGB_123x123.jpg') !!}" alt="logo" class="headerlogo">
+                </a>
+                <a class="navbar-brand namebrand" href="{{ url('/backend') }}">
+                <p>{!! config('cms.sitename') !!}</p>
                 </a>
             </div>
 

@@ -50,8 +50,7 @@ body, html {
 
 /* NAV */
 .headerlogo{
-  width: 30%;
-  float: left;
+  width:50px;
 }
 .navbar-default {
 	background-color: #CF0039;
@@ -62,19 +61,16 @@ body, html {
 
 .navbar-nav a {
     color: white !important;
-    line-height: 40px !important;
 }
-.navbar-nav li:hover {
-    background-color: #900028;
+.navbar-nav li:hover, .namebrand:hover, .dropdown-menu a:hover{
+  background-color: #900028 !important;
 }
 
 .navbar-default .navbar-brand {
 	color: white;
-  height: auto;
-  padding:0;
 }
-.navbar-brand p{
-  line-height: 30px !important;
+.logobrand{
+  padding-top: 0;
 }
 .navbar-default .navbar-brand:hover {
   color: white;
@@ -86,7 +82,7 @@ body, html {
 }
 
 .dropdown-menu {
-	background-color: #666666;
+	background-color:  #CF0039;
 }
 
 /* HOME */ 
