@@ -17,7 +17,7 @@
                     console.log("Logging in...");
 
                     // Get the user info
-                    $http.get('/api/v1/authenticate/user').then(function(response) {
+                    $http.get(apiUrl + 'authenticate/user').then(function(response) {
                         // object to string to store in localstorage
                         var user = JSON.stringify(response.data.user);
                         localStorage.setItem('user', user);
