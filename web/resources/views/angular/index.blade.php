@@ -52,10 +52,8 @@
       </div>
     </nav>
 
-        <div class="container" style="margin-top: 50px;">
-        	<div ui-view></div>
-        </div>
-     
+    <div ui-view></div>
+           
     </body>
 
     <!-- Application Dependencies - Dont forget to add .min in production build -->
@@ -64,6 +62,8 @@
     <script src="{!! asset('node_modules/satellizer/satellizer.js') !!}"></script>
     <script src="{!! asset('node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js') !!}"></script>
     <script src="{!! asset('node_modules/angular-sanitize/angular-sanitize.js') !!}"></script>
+    <script src="{!! asset('node_modules/angular-simple-logger/dist/angular-simple-logger.js') !!}"></script>
+    <script src="{!! asset('node_modules/angular-google-maps/dist/angular-google-maps.js') !!}"></script>
 
     <!-- Application Scripts -->
     <script src="{!! asset('angular/scripts/app.js') !!}"></script>
