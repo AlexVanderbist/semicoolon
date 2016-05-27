@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour {
   private bool inNeedForNumberInput = false;
   private bool numberIsSet = false;
   private bool stampIsScaled = false;
+  private bool needToResetStamps = false;
 
   //MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
   private float step = 0f;
@@ -192,12 +193,25 @@ public class GameController : MonoBehaviour {
             }
             else
             {
-              sController.ResetStamps();
+              needToResetStamps = true;
+              readyToCheckStamps = false;
             }
             dragging = false;
             stampIsScaled = false;
           }
         }
+      }
+    }
+
+    if (needToResetStamps)
+    {
+      step += stampSpeed * Time.deltaTime;
+      sController.MoveStampBackToRestPosition(step);
+      if (step >= 1)
+      {
+        step = 0;
+        needToResetStamps = false;
+        readyToCheckStamps = true;
       }
     }
 

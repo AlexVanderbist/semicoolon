@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class ProjectLoader : MonoBehaviour
 {
-  public GameObject projectButtonPrefab;
+  public GameObject projectButtonPrefab, projectPaperDonePrefab, projectPaperToDoPrefab;
   public GameObject containerToDo, containerDone;
   public RectTransform containerRecToDo, containerRecDone , projectButtonRec;
   public string readMoreUrl = "http://semicolon.multimediatechnology.be/projecten/";
@@ -67,8 +67,17 @@ public class ProjectLoader : MonoBehaviour
           containerRecToDo.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecToDo.rect.height + marge);
         }
       }
+    }
 
-
+    if (containerToDo.transform.childCount == 0)
+    {
+      GameObject button = Instantiate(projectPaperDonePrefab) as GameObject;
+      button.transform.SetParent(containerToDo.transform, false);
+    }
+    if (containerDone.transform.childCount == 0)
+    {
+      GameObject button = Instantiate(projectPaperToDoPrefab) as GameObject;
+      button.transform.SetParent(containerDone.transform, false);
     }
   }
 

@@ -16,7 +16,6 @@ public class StampController : MonoBehaviour {
 
   float rotationZ = 0;
   float beginRotation = 0;
-  int currentQuestionNr = 0;
   RaycastHit hitInfo;
   GameInfo GI;
 
@@ -72,10 +71,11 @@ public class StampController : MonoBehaviour {
     return readyChecking;
   }
 
-  public void ResetStamps() {
+  /*
+  public void ResetStamps(float step) {
     stampToMove.transform.position = restPos;
     stampToMove.transform.localScale = restScale;
-  }
+  }*/
 
   public void ScaleStamp(float step)
   {
