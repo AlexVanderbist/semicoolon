@@ -58,6 +58,11 @@
                 '' => ''
             ] + $themes, null, ['class' => 'form-control']) !!}
     </div>
+    
+    <div class="form-group">
+        {!! Form::label('comment_deadline','Reacties toelaten tot') !!}
+        {!! Form::date('comment_deadline', \Carbon\Carbon::now()->addWeeks(2), ['class' => 'form-control']) !!} <!-- default 2 weeks for comments -->
+    </div>
 
     <div class="form-group">
         {!! Form::label('youtube_url','Youtube video','Aangemaakt door') !!}

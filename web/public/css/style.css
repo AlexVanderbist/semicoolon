@@ -2,8 +2,8 @@
 
 .panel-heading, 
 .btn-primary {
-  background-color: #219dc8 !important;
-  border-color: #219dc8 !important;
+  background-color: #219dc8;
+  border-color: #219dc8;
   color: white !important;
 }
 .btn-link, 
@@ -99,6 +99,32 @@ body, html {
 .ytpreview {
 	margin-top: 2%;
 }
+.projectlink {
+  color:white !important;
+}
+.projectbody{
+  max-height: 300px;
+  overflow-y: auto;
+}
+.projectimg img {
+  width:100%;
+  position: absolute;
+  top: -100%;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+  margin: auto;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.projectimg{
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+.projectheading {
+}
+
 /*.fasedescription {
 	border-left: 1px solid #A7A7A7;
 	border-top: 1px solid #A7A7A7;
