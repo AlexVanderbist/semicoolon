@@ -3,7 +3,12 @@
     'use strict';
 
     angular
-        .module('antwerpApp', ['ui.router', 'satellizer', 'ui.bootstrap'])
+        .module('antwerpApp', [
+            'ui.router', 
+            'satellizer', 
+            'ui.bootstrap',
+            'ngSanitize'
+        ])
 
         .config(function($stateProvider, $urlRouterProvider, $authProvider, $provide, $httpProvider) {
 
@@ -14,7 +19,7 @@
             $urlRouterProvider.otherwise('/projects');
             
             // States in ui-router
-            var templateUrlPrefix = '../public/angular/views/';
+            var templateUrlPrefix = '../angular/views/';
             $stateProvider
                 .state('login', {
                     url: '/login',
