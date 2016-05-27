@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour {
 
   public float minSwipeDistY;
   public float minSwipeDistX;
-  public float speed = 0.5f;
+  public float paperSpeed = 0.8f;
   public float stampSpeed = 0.7f;
 
   private Vector2 startPos;
@@ -26,9 +26,11 @@ public class GameController : MonoBehaviour {
   private bool lastQuestionReached = false;
   private bool inNeedForNumberInput = false;
   private bool numberIsSet = false;
+  private bool stampIsScaled = false;
 
   //MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
   private float step = 0f;
+  private float dragStep = 0f; // EXTRA STEP BECAUSE OF CONFLICTS
 
   //DRAGING OBJECTS
   private float dist;
@@ -61,7 +63,7 @@ public class GameController : MonoBehaviour {
       //Move First Object
       if (firstPaper)
       {
-        step += speed * Time.deltaTime;
+        step += paperSpeed * Time.deltaTime;
         pController.moveNewPaper(step);
         pController.setCurrentPaper();
 
@@ -76,7 +78,7 @@ public class GameController : MonoBehaviour {
       //Move New and Focused Paper
       if (readyToMovePaper)
       {
-        step += speed * Time.deltaTime;
+        step += paperSpeed * Time.deltaTime;
         pController.moveNewPaper(step);
         pController.moveFocusPaper(step);
         if (step >= 1)
@@ -128,6 +130,17 @@ public class GameController : MonoBehaviour {
           return;
         }
 
+        if (dragging && !stampIsScaled)
+        {
+          dragStep += 0.5f * Time.deltaTime;
+          sController.ScaleStamp(dragStep);
+          if (dragStep >= 1)
+          {
+            dragStep = 0;
+            stampIsScaled = true;
+          }
+        }
+
         Touch touch = Input.touches[0];
         Vector3 pos = touch.position;
 
@@ -145,6 +158,7 @@ public class GameController : MonoBehaviour {
             offset = toDrag.position - v3;
             dragging = true;
             readyToSwipePaper = false;
+            sController.CheckStamp(toDrag.name);
           }
         }
         if (dragging && touch.phase == TouchPhase.Moved)
@@ -155,14 +169,14 @@ public class GameController : MonoBehaviour {
         }
         if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
         {
-          LayerMask mask = 1 << LayerMask.NameToLayer("Paper");
+          LayerMask mask = 1 << LayerMask.NameToLayer("Paper") | 1 << LayerMask.NameToLayer("Background");
           RaycastHit hitInfo = new RaycastHit();
           bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity, mask);
           if (hit)
           {
+            Debug.Log(hitInfo.collider.gameObject.name);
             if (hitInfo.collider.gameObject.name == "Paper")
             {
-              sController.CheckStamp(toDrag.name);
               if (sController.SelectedStamp == "number")
               {
                 inNeedForNumberInput = true;
@@ -181,6 +195,7 @@ public class GameController : MonoBehaviour {
               sController.ResetStamps();
             }
             dragging = false;
+            stampIsScaled = false;
           }
         }
       }

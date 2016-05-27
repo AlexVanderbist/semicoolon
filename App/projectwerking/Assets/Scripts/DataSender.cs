@@ -58,8 +58,9 @@ public class DataSender : MonoBehaviour {
     }
     Form.AddField("value", value);
     int projectNumber = GI.CurrentProjectNumber;
+    Debug.Log("ProjectNumber: " + projectNumber + ", QUESTION ID: " + GI.QuestionIds[projectNumber][currentQuestionNumber]);
     url += answerURL + GI.QuestionIds[projectNumber][currentQuestionNumber] + answerURLTokenPart + GI.Token;
-    Debug.Log(url);
+   
     WWW antwoordWWW = new WWW(url, Form);
 
     yield return antwoordWWW;
