@@ -9,7 +9,6 @@ public class DataSender : MonoBehaviour {
 
   StampController sController;
   GameInfo GI;
-  int currentQuestionNumber = 0;
   int numberAnswer;
   string selectedStamp;
 
@@ -58,8 +57,10 @@ public class DataSender : MonoBehaviour {
     }
     Form.AddField("value", value);
     int projectNumber = GI.CurrentProjectNumber;
-    Debug.Log("ProjectNumber: " + projectNumber + ", QUESTION ID: " + GI.QuestionIds[projectNumber][currentQuestionNumber]);
-    url += answerURL + GI.QuestionIds[projectNumber][currentQuestionNumber] + answerURLTokenPart + GI.Token;
+    int questionNumber = GI.CurrentQuestionNumber -1;
+    Debug.Log("ProjectNumber: " + projectNumber + ", QUESTION ID: " + GI.QuestionIds[projectNumber][questionNumber]);
+    Debug.Log("Projectvraag: " + GI.Questions[projectNumber][questionNumber]);
+    url += answerURL + GI.QuestionIds[projectNumber][questionNumber] + answerURLTokenPart + GI.Token;
    
     WWW antwoordWWW = new WWW(url, Form);
 
@@ -82,6 +83,5 @@ public class DataSender : MonoBehaviour {
     }
 
     //set currentQuestionNumber For Next Answer
-    currentQuestionNumber++;
   }
 }

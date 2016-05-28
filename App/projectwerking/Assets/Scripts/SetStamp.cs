@@ -48,7 +48,6 @@ public class SetStamp : MonoBehaviour {
         numberPanel.transform.position = Vector3.Lerp(numberPanel.transform.position, numberPanelShownPos, step);
         if (step >= 1)
         {
-          Debug.Log("ready");
           step = 0;
           isPanelReadyToMove = false;
           isPanelShown = true;

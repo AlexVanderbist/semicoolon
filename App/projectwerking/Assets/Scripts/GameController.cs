@@ -59,6 +59,7 @@ public class GameController : MonoBehaviour {
         firstPaperCreated = true;
         firstPaper = true;
         sController.DeActivateStamps();
+        sController.HideFirstTime();
       }
 
       //Move First Object
@@ -82,12 +83,20 @@ public class GameController : MonoBehaviour {
         step += paperSpeed * Time.deltaTime;
         pController.moveNewPaper(step);
         pController.moveFocusPaper(step);
+        if (!lastQuestionReached)
+        {
+          sController.HideUnusedStamps(step);
+        }
         if (step >= 1)
         {
           readyToMovePaper = false;
           step = 0;
           pController.DestroyCurrentPaper();
           pController.setCurrentPaper();
+          if (!lastQuestionReached)
+          {
+            sController.DeActivateStamps();
+          }
           readyToCheckStamps = true;
         }
       }
@@ -243,7 +252,6 @@ public class GameController : MonoBehaviour {
               {
                 if (pController.createNewPaper())
                 {
-                  sController.DeActivateStamps();
                   readyToCheckStamps = false;
                   readyToSwipePaper = false;
                 }
