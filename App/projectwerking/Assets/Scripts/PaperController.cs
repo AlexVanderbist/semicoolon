@@ -7,25 +7,29 @@ using UnityEngine.UI;
 
 public class PaperController : MonoBehaviour
 {
+
+  // MOVES AND LOADS TEXT OF EACH PAPER
+  // DOES NOT LISTEN TO ACTUAL INPUT, GAME CONTROLLER DOES THAT
+
   public GameObject tMeshNormalText, tMeshTitleText, tMeshPrefab;
   public Sprite goodNotGoodSprite, numberSprite;
   public Transform startposition, focusposition, endposition;
-  public bool ListIsReady = false;
+  public bool ListIsReady = false; //PUBLIC BECAUSE GAMECONTROLLER NEEDS TO KNOW IF IT IS READY
   public Text testTextBox;
   public GameObject donePaperPrefab;
 
   TextMesh tMeshText, tMeshTitle;
   GameObject currentPaper, newPaper;
-  int currentQuestionNr = 0;
-  //string url = "http://semicolon.multimediatechnology.be/projecten";
 
   string titleText = "Vraag: ";
   string[] QuestionList;
 
+  int currentQuestionNr = 0; // DOES NOT USE GI CURRENT QUESTION NUMBER BECAUSE IT WOULD NEED TO ACCESS IT TOO OFTEN
   int numberOfQuestions = 0;
   int currentProjectNumber = 0;
   GameInfo GI;
   
+  // LOAD VARIABLES NEEDED
   void Awake() {
     tMeshText = tMeshNormalText.GetComponent<TextMesh>();
     tMeshTitle = tMeshTitleText.GetComponent<TextMesh>();
@@ -40,14 +44,15 @@ public class PaperController : MonoBehaviour
     Debug.Log("Aantal vragen: " + numberOfQuestions);
   }
 
+  // SET FIRST PAPER TEXT
   public void SetBeginValues() {
     tMeshText.text = ResolveTextSize(QuestionList[currentQuestionNr], 24);
     tMeshTitle.text = titleText + (currentQuestionNr + 1).ToString();
   }
 
- private string ResolveTextSize(string input, int lineLength)
+  // CHECKS IF A LINE IS NOT TOO LONG, SPLITS THE STRING UP IN LINES, NEEDED BECAUSE OF 3D TEXT
+  private string ResolveTextSize(string input, int lineLength)
   {
-
     // Split string by char " "         
     string[] words = input.Split(" "[0]);
 
@@ -66,7 +71,6 @@ public class PaperController : MonoBehaviour
       // If line length is bigger than lineLength
       if (temp.Length > lineLength)
       {
-
         // Append current line into result
         result += line + "\n";
         // Remain word append into new line
@@ -77,7 +81,6 @@ public class PaperController : MonoBehaviour
         line = temp;
       }
     }
-
     // Append last line into result        
     result += line;
 
@@ -85,7 +88,7 @@ public class PaperController : MonoBehaviour
     return result.Substring(1, result.Length - 1);
   }
 
-
+  // SET TEXT FOR EACH PANEL
   void setText() {
     Debug.Log("QuestionNr: " + currentQuestionNr);
     string temp = ResolveTextSize(GI.Questions[currentProjectNumber][currentQuestionNr-1],24);
@@ -98,10 +101,12 @@ public class PaperController : MonoBehaviour
     Destroy(currentPaper);
   }
 
+  // SETS THE NEW PAPER AS CURRENT PAPER BECAUSE THE OLD ONE IS DELETED
   public void setCurrentPaper() {
     currentPaper = newPaper;
   }
 
+  // BOOLEAN BECAUSE IT CHECKS IF THE LAST QUESTION IS REACHED, IF SO GAME CONTROLLER KNOWS ABOUT IT
   public bool createNewPaper()
   {
     bool questionPaperCreated = false;
@@ -119,9 +124,9 @@ public class PaperController : MonoBehaviour
       }
       else if(type == 2)
       {
+        // NUMBERS
         newPaper.transform.FindChild("Paper").GetComponent<SpriteRenderer>().sprite = numberSprite;
       }
-
       questionPaperCreated = true;
     }
     else

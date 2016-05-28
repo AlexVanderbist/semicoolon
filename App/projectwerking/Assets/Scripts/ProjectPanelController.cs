@@ -4,8 +4,10 @@ using UnityEngine.UI;
 
 public class ProjectPanelController : MonoBehaviour {
 
-  public GameObject panelDone, panelToDo, panelProfile, buttonToDoGO, buttonDoneGO;
+  // LISTENS TO THESE 3 BUTTONS
   public Button buttonToDo, buttonDone, buttonUserBack;
+
+  public GameObject panelDone, panelToDo, panelProfile, buttonToDoGO, buttonDoneGO;
   public string hexStringBlue, hexStringGrey;
   public Sprite iconBack, iconUser;
   public Text titleText;
@@ -20,7 +22,7 @@ public class ProjectPanelController : MonoBehaviour {
     ColorUtility.TryParseHtmlString(hexStringGrey, out greyColor);
   }
 
-  // set profile panel active and other panels off
+  // SET PROFILE PANEL ACTIVE, DEACTIVATES ALL THE REST
   public void ShowProfile()
   {
     if (isProfilePanelShown)
@@ -59,6 +61,7 @@ public class ProjectPanelController : MonoBehaviour {
     }
   }
 
+  // SWITCHES PANEL BETWEEN TO DO AND DONE
   public void ChangePanel()
   {
     if (isPanelToDoActive)
