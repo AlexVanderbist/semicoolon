@@ -4,6 +4,7 @@
 
 public class SetRenderQueue : MonoBehaviour
 {
+  // USED TO MASK STAMP SPRITES
 
   [SerializeField]
   protected int[] m_queues = new int[] { 3000 };

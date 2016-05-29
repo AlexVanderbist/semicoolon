@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DontDestroy : MonoBehaviour {
 
+  // USED SO GAME DATA IS KNOWN IN ALL SCENES
+
   private static DontDestroy instance;
   void Awake()
   {
@@ -15,6 +17,5 @@ public class DontDestroy : MonoBehaviour {
     else {
       DestroyObject(gameObject);
     }
-
   }
 }

@@ -7,9 +7,9 @@ public class TokenReceiver : MonoBehaviour {
   // THIS CLASS IS USED TO GET A NEW TOKEN WHEN THE OLD ONE EXPIRED
 
   public string loginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
-  string email = "";
-  string password = "";
 
+  private string email = "";
+  private string password = "";
   private string invalidString = "invalid_credentials";
 
   JsonData textData;
@@ -20,7 +20,7 @@ public class TokenReceiver : MonoBehaviour {
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
   }
 
-
+  //LISTENS TO DATA SENDER OR DATA OBTAINER
   public void StartReceivingNewToken(string methodToActivate)
   {
     StartCoroutine(ReceiveToken(methodToActivate));

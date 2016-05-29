@@ -4,20 +4,44 @@ using System.Collections.Generic;
 
 public class GameInfo : MonoBehaviour {
 
+  // THIS CLASS HOLDS ALL DATA THAT RETURNS FROM API
+  // THIS DATA IS USED BY MANY CLASSES, ALWAYS REFERRED AS "GI"
+  // ABLE TO ACCES THIS DATA BY : "GameInfo GI; GI = GameObject.Find("GameData").GetComponent<GameInfo>();"
+  // GAMEDATA IS KNOWN IN ALL SCENES (DONT DESTROY ON LOAD)
+
   private static string token;
   private static int currentProjectNumber;
-  private static string namePerson;
+  private static string firstNamePerson;
+  private static string lastNamePerson;
+  private static string email;
   private static string numberOfStampsDone;
   private static int currentQuestionNumber;
 
-  static List<int> projectIds = new List<int>();
-  static int[][] questionIds;
-  static List<string> projectNameList = new List<string>();
-  static List<string> placeNameList = new List<string>();
-  static string[][] questionArray;
-  static int[][] questionTypes;
+  private static List<int> projectIds = new List<int>();
+  private static List<string> projectNameList = new List<string>();
+  private static List<string> placeNameList = new List<string>();
+  private static List<string> projectDescriptions = new List<string>();
+  private static string[][] questionArray;
+  private static int[][] questionTypes;
+  private static int[][] questionIds;
 
-  private List<string> projectDescriptions;
+  public string Email
+  {
+    get { return email; }
+    set { email = value; }
+  }
+
+  public string FirstNamePerson
+  {
+    get { return firstNamePerson; }
+    set { firstNamePerson = value; }
+  }
+
+  public string LastNamePerson
+  {
+    get { return lastNamePerson; }
+    set { lastNamePerson = value; }
+  }
 
   public int CurrentQuestionNumber
   {

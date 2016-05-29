@@ -6,9 +6,13 @@ using LitJson;
 
 public class DataObtainer : MonoBehaviour {
 
+  // APART FROM "LOGIN" AND "TOKENRECEIVER", 
+  // THIS CLASS OBTAINS ALL DATA FROM API AND GIVES IT TO GAMEINFO
+
   public string urlProjects = "http://semicolon.multimediatechnology.be/api/v1/projects?token=";
   public string urlProposalsPartOne = "http://semicolon.multimediatechnology.be/api/v1/projects/";
   public string urlProposalsPartTwo = "/proposals/user?token=";
+  public string urlAuthenticateUser = "http://semicolon.multimediatechnology.be/api/v1/authenticate/user?token=";
 
   static int numberOfProjects = 0;
   static int numberOfProposals = 0;
@@ -67,7 +71,6 @@ public class DataObtainer : MonoBehaviour {
         gameObject.SendMessage("StartReceivingNewToken", "ReObtainData");
       }
     }
-   
   }
 
   IEnumerator GetProposals()
@@ -110,6 +113,37 @@ public class DataObtainer : MonoBehaviour {
     GI.QuestionIds = questionsIDArray;
     GI.QuestionTypes = questionsTypeArray;
     gameObject.SendMessage("SpawnButtons");
+    StartCoroutine(GetUserData());
+  }
+
+  IEnumerator GetUserData()
+  {
+    string tempUrl = urlAuthenticateUser;
+
+    tempUrl += GI.Token;
+    www = new WWW(tempUrl);
+    yield return www;
+
+    textData = JsonMapper.ToObject(www.text);
+    if (www.error == null)
+    {
+      GI.FirstNamePerson = textData["user"]["firstname"].ToString();
+      GI.LastNamePerson = textData["user"]["lastname"].ToString();
+      GI.Email = textData["user"]["email"].ToString();
+      gameObject.SendMessage("LoadProfileData"); //ProfileLoader
+    }
+    else
+    {
+      if (textData["error"].ToString() == "token_expired")
+      {
+        gameObject.SendMessage("StartReceivingNewToken", "ReObtainUserInfo");
+      }
+    }
+  }
+
+  public void ReObtainUserInfo()
+  {
+    StartCoroutine(GetUserData());
   }
 
   public void ReObtainData()
@@ -122,6 +156,7 @@ public class DataObtainer : MonoBehaviour {
     StartCoroutine(GetProposals());
   }
 
+  // GET RID OF < > FROM HTML TEXT
   public static string StripTagsRegex(string source)
   {
     return Regex.Replace(source, "<.*?>", string.Empty);

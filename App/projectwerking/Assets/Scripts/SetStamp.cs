@@ -3,6 +3,9 @@ using System.Collections;
 
 public class SetStamp : MonoBehaviour {
 
+  // GIVES A SPRITE STAMP TO THE PAPER
+  // INPUT OF STAMPS IS FOUND IN GAME CONTROLLER SCRIPT
+
   public GameObject gameManager, goodStampParticle, badStampParticle, numberStampParticle;
   public GameObject[] numberStampPrefabs, goodStampPrefabs, badStampPrefabs;
   public GameObject numberPanel;
@@ -21,13 +24,7 @@ public class SetStamp : MonoBehaviour {
   private Vector3 numberPanelHiddenPos;
   private Vector3 numberPanelShownPos;
 
-  public int Number
-  {
-    get { return number; }
-    set { number = value; }
-  }
-
-  // Use this for initialization
+  // LOAD VARIABLES NEEDED
   void Start () {
     stamps = gameManager.GetComponent<StampController>();
     paper = gameManager.GetComponent<PaperController>();
@@ -38,6 +35,7 @@ public class SetStamp : MonoBehaviour {
     source.playOnAwake = false;
   }
 
+  //MOVES THE PANEL WITH NUMBERS
   void Update()
   {
     if (isPanelReadyToMove)
@@ -68,6 +66,7 @@ public class SetStamp : MonoBehaviour {
     }
   }
 
+  // A DELAY OF ONE SECOND BECAUSE THE STAMP SPRITE IS OTHERWISE TOO FAST
   IEnumerator WaitSecondsForStamp(int seconds, RaycastHit hit)
   {
     yield return new WaitForSeconds(seconds);
@@ -75,6 +74,8 @@ public class SetStamp : MonoBehaviour {
     GameObject printedStamp = null;
     PlaySound();
     randomStampPrint = Random.Range(0, 3);
+
+    //CHECK FOR THE SELECTED STAMP
     if (selectedStamp == "green")
     {
         goodStampParticle.GetComponentInChildren<ParticleSystem>().Play();
@@ -116,42 +117,48 @@ public class SetStamp : MonoBehaviour {
     printedStamp.transform.rotation = Quaternion.AngleAxis(10, Vector3.right);
   }
 
-    public void PrintStamp(RaycastHit hit)
+  //RECEIVES A MESSAGE FROM GAME CONTROLLER, CHECKS IF THERE IS A SPRITE CHILD AND DELETES IT
+  public void PrintStamp(RaycastHit hit)
     {
-      
       foreach (Transform child in paper.getCurrentPaper.transform)
       {
         if (child.name == (badStampPrefabs[(int)randomStampPrint].name + "(Clone)") || child.name == (goodStampPrefabs[(int)randomStampPrint].name + "(Clone)"))
         {
-        Destroy(child.gameObject);
+          Destroy(child.gameObject);
         }
         for (int i = 0; i < numberStampPrefabs.Length; i++)
         {
         if (child.name == numberStampPrefabs[i].name + "(Clone)")
-          {
-            Destroy(child.gameObject);
-          }
+        {
+          Destroy(child.gameObject);
         }
       }
-
+    }
     StartCoroutine(WaitSecondsForStamp(1, hit));
-      
     }
-    void PlaySound()
-    {
-        source.PlayOneShot(sound);
-    }
+
+  void PlaySound()
+  {
+    source.PlayOneShot(sound);
+  }
 
   public void ShowPanel()
   {
     isPanelReadyToMove = true;
   }
-
+  
+  //SETS NUMBER AND SENDS TO GAME CONTROLLER THAT IT MAY CONTINUE
   public void SetNumber(int initnumber)
   {
     Number = initnumber;
     isNumberSet = true;
     isPanelReadyToMove = true;
     gameObject.SendMessage("StopNumberInput");
+  }
+
+  public int Number
+  {
+    get { return number; }
+    set { number = value; }
   }
 }

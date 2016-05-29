@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class MenuButtonController : MonoBehaviour {
 
+  //SCRIPT THAT HANDLES THE MENU BUTTON AND THE PANEL THAT NEEDS TO BE SHOWN
+
   public GameObject menuContainer;
   public float maxHeightShown;
   Vector3 menuContainerSlided, menuRestPosition;
@@ -18,6 +20,7 @@ public class MenuButtonController : MonoBehaviour {
     menuContainerSlided = new Vector3(menuContainer.transform.position.x, menuContainer.transform.position.y - maxHeightShown, menuContainer.transform.position.z);
   }
 
+  // LISTENS TO BUTTON
   public void ShowMenu()
   {
     if (isMenuShown)
@@ -32,6 +35,7 @@ public class MenuButtonController : MonoBehaviour {
     }
   }
 
+  // MOVES THE PANEL DEPENDING ON STATE
   void Update()
   {
     if (isMenuReadyToMove)
@@ -57,6 +61,5 @@ public class MenuButtonController : MonoBehaviour {
         }
       }
     }
-    
   }
 }

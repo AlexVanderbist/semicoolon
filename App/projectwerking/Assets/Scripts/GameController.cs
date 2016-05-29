@@ -6,64 +6,68 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(StampController))]
 public class GameController : MonoBehaviour {
 
+  // THIS SCRIPT CONTROLS ALL INPUT AND ACTIVATES OTHER SCRIPTS WHEN NEEDED
+
   public float minSwipeDistY;
   public float minSwipeDistX;
   public float paperSpeed = 0.8f;
   public float stampSpeed = 0.7f;
 
+  // USED TO CHECK SWIPING INPUT
   private Vector2 startPos;
+
+  // MAIN SCRIPTS THAT WILL BE USED BY THIS SCRIPT
   private PaperController pController;
   private StampController sController;
 
-  //ALL BOOLEANS THAT CONTROL THE INPUT AND MOVEMENT OF OBJECTS
+  // ALL BOOLEANS THAT CONTROL THE INPUT AND MOVEMENT OF OBJECTS
+  // THESE BOOLEANS ARE STATES OF THE UPDATE
   private bool readyToMovePaper = false;
-  private bool firstPaper = false;
+  private bool isFirstPaper = false;
   private bool firstPaperCreated = false;
   private bool readyToSwipePaper = false;
   private bool readyToCheckStamps = false;
   private bool readyToMoveStampToPaperAndBack = false;
   private bool readyWithStampToPaper = false;
-  private bool lastQuestionReached = false;
-  private bool inNeedForNumberInput = false;
-  private bool numberIsSet = false;
-  private bool stampIsScaled = false;
+  private bool islastQuestionReached = false;
+  private bool isStampScaled = false;
   private bool needToResetStamps = false;
 
-  //MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
+  // MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
+  // USED FOR LERPS 
   private float step = 0f;
-  private float dragStep = 0f; // EXTRA STEP BECAUSE OF CONFLICTS
+  private float dragStep = 0f; // EXTRA STEP BECAUSE OF CONFLICTS WITH MAIN STEP
 
   //DRAGING OBJECTS
   private float dist;
   private bool dragging = false;
   private Vector3 offset;
   private Transform toDrag;
-  private RaycastHit stampPoint; // Used to remember stamppoint if there is a need of number input.
+  private RaycastHit stampPoint; // USED TO REMEMBER STAMP POINT, WHEN IN NEED OF NUMBER INPUT, SO IT CAN BE PASSED AS PARAMETER AT LAST
 
-  // Use this for initialization
   void Start () {
     pController = GetComponent<PaperController>();
     sController = GetComponent<StampController>();
 	}
 
-  // Update is called once per frame
+  // THE MAIN INPUT METHOD
   void Update()
   {
-    //Wait till questions are loaded
+    //WAIT TILL QUESTIONS ARE LOADED
     if (pController.ListIsReady)
     {
-      //Spawn First Object
+      //SPAWN FIRST OBJECT
       if (!firstPaperCreated)
       {
         pController.createNewPaper();
         firstPaperCreated = true;
-        firstPaper = true;
+        isFirstPaper = true;
         sController.DeActivateStamps();
         sController.HideFirstTime();
       }
 
-      //Move First Object
-      if (firstPaper)
+      //MOVE FIRST OBJECT
+      if (isFirstPaper)
       {
         step += paperSpeed * Time.deltaTime;
         pController.moveNewPaper(step);
@@ -71,19 +75,20 @@ public class GameController : MonoBehaviour {
 
         if (step >= 1f)
         {
-          firstPaper = false;
+          isFirstPaper = false;
           step = 0f;
           readyToCheckStamps = true;
         }
       }
 
-      //Move New and Focused Paper
+      // MOVE NEW AND FOCUSED PAPER
+      // ALSO THE STAMPS DEPENDING ON QUESTION TYPE GET HIDED
       if (readyToMovePaper)
       {
         step += paperSpeed * Time.deltaTime;
         pController.moveNewPaper(step);
         pController.moveFocusPaper(step);
-        if (!lastQuestionReached)
+        if (!islastQuestionReached)
         {
           sController.HideUnusedStamps(step);
         }
@@ -93,7 +98,7 @@ public class GameController : MonoBehaviour {
           step = 0;
           pController.DestroyCurrentPaper();
           pController.setCurrentPaper();
-          if (!lastQuestionReached)
+          if (!islastQuestionReached)
           {
             sController.DeActivateStamps();
           }
@@ -101,7 +106,7 @@ public class GameController : MonoBehaviour {
         }
       }
 
-      //Move selected stamp when paper has been hit
+      //MOVE SELECTED STAMP WHEN PAPER HAS BEEN HIT BY RAYCAST
       if (readyToMoveStampToPaperAndBack)
       {
         if (!readyWithStampToPaper)
@@ -140,20 +145,22 @@ public class GameController : MonoBehaviour {
           return;
         }
 
-        if (dragging && !stampIsScaled)
+        // SCALE WHILE DRAGGING
+        if (dragging && !isStampScaled)
         {
           dragStep += 0.5f * Time.deltaTime;
           sController.ScaleStamp(dragStep);
           if (dragStep >= 1)
           {
             dragStep = 0;
-            stampIsScaled = true;
+            isStampScaled = true;
           }
         }
 
         Touch touch = Input.touches[0];
         Vector3 pos = touch.position;
 
+        // STATE 1
         if (touch.phase == TouchPhase.Began)
         {
           RaycastHit hit;
@@ -171,12 +178,14 @@ public class GameController : MonoBehaviour {
             sController.CheckStamp(toDrag.name);
           }
         }
+        // STATE 2
         if (dragging && touch.phase == TouchPhase.Moved)
         {
           v3 = new Vector3(Input.mousePosition.x, Input.mousePosition.y, dist);
           v3 = Camera.main.ScreenToWorldPoint(v3);
           toDrag.position = v3 + offset;
         }
+        // STATE 3
         if (dragging && (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled))
         {
           LayerMask mask = 1 << LayerMask.NameToLayer("Paper") | 1 << LayerMask.NameToLayer("Background");
@@ -189,7 +198,8 @@ public class GameController : MonoBehaviour {
             {
               if (sController.SelectedStamp == "number")
               {
-                inNeedForNumberInput = true;
+                // TELLS SET STAMP THAT THE NUMBER PANEL NEEDS TO BE SHOWN
+                gameObject.SendMessage("ShowPanel");
                 stampPoint = hitInfo;
               }
               else
@@ -197,7 +207,6 @@ public class GameController : MonoBehaviour {
                 readyToMoveStampToPaperAndBack = sController.setRaycastHit(hitInfo);
                 gameObject.SendMessage("PrintStamp", hitInfo);
               }
-
               readyToCheckStamps = false;
             }
             else
@@ -206,12 +215,13 @@ public class GameController : MonoBehaviour {
               readyToCheckStamps = false;
             }
             dragging = false;
-            stampIsScaled = false;
+            isStampScaled = false;
           }
         }
       }
     }
 
+    // IF THE PAPER HAS NOT BEEN HIT, THE STAMPS NEED TO GO BACK TO THEIR DEFAULT POSITION AND SCALE
     if (needToResetStamps)
     {
       step += stampSpeed * Time.deltaTime;
@@ -224,7 +234,7 @@ public class GameController : MonoBehaviour {
       }
     }
 
-    //RightSwipe when stampController is ready
+    //SWIPE WHEN STAMP IS READY, ABLE TO STAMP AGAIN WHEN ALREADY ABLE TO SWIPE
     if (readyToSwipePaper)
     {
       if (Input.touchCount > 0)
@@ -233,22 +243,18 @@ public class GameController : MonoBehaviour {
 
         switch (touch.phase)
         {
-
           case TouchPhase.Began:
-
             startPos = touch.position;
             break;
 
           case TouchPhase.Ended:
-
             float swipeDistHorizontal = (new Vector3(touch.position.x, 0, 0) - new Vector3(startPos.x, 0, 0)).magnitude;
 
             if (swipeDistHorizontal > minSwipeDistX)
             {
-
               float swipeHValue = Mathf.Sign(touch.position.x - startPos.x);
 
-              if (swipeHValue > 0)//right swipe
+              if (swipeHValue > 0) //RIGHT SWIPE DETECTED
               {
                 if (pController.createNewPaper())
                 {
@@ -257,11 +263,11 @@ public class GameController : MonoBehaviour {
                 }
                 else
                 {
-                  lastQuestionReached = true;
+                  islastQuestionReached = true;
                   readyToSwipePaper = false;
                   readyToCheckStamps = false;
                 }
-                gameObject.SendMessage("StartSendingAnswer");
+                gameObject.SendMessage("StartSendingAnswer"); // SENDS TO DATASENDER
                 readyToMovePaper = true;
               }
             }
@@ -270,21 +276,8 @@ public class GameController : MonoBehaviour {
       }
     }
 
-    if (inNeedForNumberInput)
-    {
-      gameObject.SendMessage("ShowPanel");
-      inNeedForNumberInput = false;
-    }
-
-    if (numberIsSet)
-    {
-      readyToMoveStampToPaperAndBack = sController.setRaycastHit(stampPoint);
-      gameObject.SendMessage("PrintStamp", stampPoint);
-      readyToMoveStampToPaperAndBack = true;
-      numberIsSet = false;
-    }
-
-    if (lastQuestionReached)
+    // WHEN LAST QUESTION IS REACHED, AN OTHER TYPE OF PANEL IS SHOWN WHICH NEEDS TO CHECK IF THE DONE SIGN HAS BEEN HIT
+    if (islastQuestionReached)
     {
       if (Input.touchCount > 0)
       {
@@ -303,9 +296,11 @@ public class GameController : MonoBehaviour {
     }
   }
 
+  // AS LONG THIS NOT GETS ACTIVATED BY SET STAMP, EVERYTHING IN GAMECONTROLLER IS PAUSED
   public void StopNumberInput()
   {
-    Debug.Log("stop number input");
-    numberIsSet = true;
+    readyToMoveStampToPaperAndBack = sController.setRaycastHit(stampPoint);
+    gameObject.SendMessage("PrintStamp", stampPoint);
+    readyToMoveStampToPaperAndBack = true;
   }
 }

@@ -4,6 +4,8 @@ using LitJson;
 
 public class DataSender : MonoBehaviour {
 
+  // SENDS THE ANSWER OF THE USER WHEN A PAPER IS SWIPED
+
   public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
   public string answerURLTokenPart = "?token=";
 
@@ -17,21 +19,19 @@ public class DataSender : MonoBehaviour {
     sController = GetComponent<StampController>();
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
   }
-  
+
+  // METHOD LISTENS TO SENDMESSAGE, FROM GAME CONTROLLER
+  // IF TOKEN IS EXPIRED, TOKENRECEIVER SCRIPT RECEIVES A SENDMESSAGE
+  // TOKENRECEIVER SEND A MESSAGE BACK WHEN ITS READY TO THIS METHOD SO THE PROCESS CAN START AGAIN
   public void StartSendingAnswer()
   {
-    Debug.Log("send");
     StartCoroutine(SendAnswer());
   }
 
+  // SET WHEN A NUMBER IS CHOSEN FROM NUMBER PANEL
   public void numberReceiver(int initnumber)
   {
     numberAnswer = initnumber;
-  }
-
-  public void ReSendAnswer()
-  {
-    StartCoroutine(SendAnswer());
   }
 
   IEnumerator SendAnswer()
@@ -71,7 +71,7 @@ public class DataSender : MonoBehaviour {
     {
         if (textData["error"].ToString() == "token_expired")
         {
-          gameObject.SendMessage("StartReceivingNewToken", "ReSendAnswer");
+          gameObject.SendMessage("StartReceivingNewToken", "StartSendingAnswer");
         }
     }
     else
@@ -81,7 +81,5 @@ public class DataSender : MonoBehaviour {
         Debug.Log("In orde");
       }
     }
-
-    //set currentQuestionNumber For Next Answer
   }
 }

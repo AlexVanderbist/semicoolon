@@ -4,32 +4,28 @@ using LitJson;
 
 public class StampController : MonoBehaviour {
 
+  // MOVES THE STAMPS, DOES NOT CHECK FOR INPUT
+  // GAME CONTROLLER PROVIDES THE INPUT
+
   public GameObject redStamp, greenStamp, numberStamp;
   public int maxScaleToAdd = 30;
   public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
   public string answerURLTokenPart = "?token=";
-
+  
+  //POSITIONS AND SCALES TO REMEMBER TO MOVE/SCALE TO
   Vector3 restPosRedStamp, restPosGreenStamp, restPosNumberStamp, redPosHide, greenPosHide, numberPosHide;
   Vector3 restPos, maxScale, restScale, positionToStamp;
   GameObject stampToMove;
 
-  int previousQuestionType = 0;
+  int previousQuestionType = 0; //NEED TO KNOW BECAUSE OTHERWISE THE HIDING OF STAMPS STARTS FOR NOTHING
   float rotationZ = 0;
   float beginRotation = 0;
   RaycastHit hitInfo;
   GameInfo GI;
 
+  private string selectedStamp = ""; // SOME CLASSES NEED TO KNOW ABOUT THIS SO A PROPERTY IS DECLARED
 
-  private string selectedStamp = "";
-
-  public string SelectedStamp
-  {
-    get { return selectedStamp; }
-    set { selectedStamp = value; }
-  }
-
-
-  // Use this for initialization
+  // VALUES THAT NEED TO BE SET AND USED THROUGH THE PROCES
   void Start () {
     restPosRedStamp = redStamp.transform.position;
     restPosGreenStamp = greenStamp.transform.position;
@@ -45,6 +41,7 @@ public class StampController : MonoBehaviour {
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
 	}
 
+  // RECEIVES FROM GAME CONTROLLER THE NAME OF THE CURRENT STAMP HOLDING, STAMP CONTROLLER NEEDS THIS TO MOVE THE RIGHT STAMPS 
   public bool CheckStamp(string hit) {
     bool readyChecking = false;
     if (hit == redStamp.name)
@@ -73,18 +70,14 @@ public class StampController : MonoBehaviour {
     }
     return readyChecking;
   }
-
-  /*
-  public void ResetStamps(float step) {
-    stampToMove.transform.position = restPos;
-    stampToMove.transform.localScale = restScale;
-  }*/
-
+  
+  // USED WHEN WE ARE HOLDING A STAMP
   public void ScaleStamp(float step)
   {
     stampToMove.transform.localScale = Vector3.Lerp(stampToMove.transform.localScale, maxScale, step);
   }
 
+  // DEACTIVATES STAMPS DEPENDING ON QUESTION TYPE AND SAVES WHICH QUESTION TYPE WAS THE PREVIOUS ONE
   public void DeActivateStamps()
   {
     if (GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber] == 1)
@@ -103,6 +96,7 @@ public class StampController : MonoBehaviour {
     }
   }
 
+  // MOVES STAMPS OUT OF IN THE SCREEN TO BE USED
   public void HideUnusedStamps(float step)
   {
     if (GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber] != previousQuestionType)
@@ -123,6 +117,8 @@ public class StampController : MonoBehaviour {
     
   }
 
+  // STAMPS ARE DEACTIVATED IN THE BEGINNING AND NOT IN THEIR HIDING POS IF NEEDED, THIS METHOD FIXES THAT
+  // DEACTIVATED BECAUSE OTHERWISE IT WOULD LOOK AWFULL
   public void HideFirstTime()
   {
     if (GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber] == 1)
@@ -139,12 +135,7 @@ public class StampController : MonoBehaviour {
     numberStamp.SetActive(true);
   }
 
-  // STAMPS ARE AT BEGIN DEACTIVATED TO HIDE THE UNUSED STAMPS;
-  public void setStampsActive()
-  {
-
-  }
-
+  // CHECKS HARDCODED HOW HIGH THE STAMP IS, WITHOUT THIS SOME ROTATIONS WOULD LOOK AWFULL ON A SPECIFIC HEIGHT
   private float getRotation(GameObject stamp)
   {
     float height = stamp.transform.position.y;
@@ -184,9 +175,16 @@ public class StampController : MonoBehaviour {
     stampToMove.transform.localScale = Vector3.Lerp(stampToMove.transform.localScale, restScale, step);
   }
 
+  // SETS THE POINT WHERE THE STAMP NEEDS TO MOVE TO
   public bool setRaycastHit(RaycastHit hit) {
     hitInfo = hit;
     positionToStamp = new Vector3(hit.point.x, hit.point.y, hit.point.z - 20f);
     return true;
+  }
+
+  public string SelectedStamp
+  {
+    get { return selectedStamp; }
+    set { selectedStamp = value; }
   }
 }
