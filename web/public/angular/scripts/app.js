@@ -102,9 +102,9 @@
             $httpProvider.interceptors.push('redirectWhenLoggedOut');
 
             uiGmapGoogleMapApiProvider.configure({
-                //    key: 'your api key',
-                v: '3.20', //defaults to latest 3.X anyhow
-                libraries: 'weather,geometry,visualization'
+                key: 'AIzaSyDhTfQGWyjyP7vj3t_GFtOrF7-mbGsVLAY',
+                //v: '3.20', //defaults to latest 3.X anyhow
+                libraries: 'places'
             });
         })
 

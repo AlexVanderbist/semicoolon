@@ -10,7 +10,7 @@
     <body ng-app="antwerpApp">
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default" id="antwerp-menu">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -52,11 +52,12 @@
       </div>
     </nav>
 
-    <div ui-view></div>
+    <div ui-view class="full-height"></div>
            
     </body>
 
     <!-- Application Dependencies - Dont forget to add .min in production build -->
+    <script src="{!! asset('node_modules/lodash/lodash.js') !!}"></script>
     <script src="{!! asset('node_modules/angular/angular.js') !!}"></script>
     <script src="{!! asset('node_modules/angular-ui-router/release/angular-ui-router.js') !!}"></script>
     <script src="{!! asset('node_modules/satellizer/satellizer.js') !!}"></script>
@@ -70,8 +71,9 @@
     <script src="{!! asset('angular/scripts/userService.js') !!}"></script>
     <script src="{!! asset('angular/scripts/projectService.js') !!}"></script>
 
-    <script src="{!! asset('angular/scripts/authController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/logoutController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/projectController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/projectListController.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/controllers/authController.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/controllers/logoutController.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/controllers/projectController.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/controllers/projectListController.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/controllers/projectMapController.js') !!}"></script>
 </html>

@@ -1,9 +1,10 @@
-<div class="row">
-	<div class="col-sm-6">
-		<div ui-view></div>
-	</div>
+
+
+<div class="row full-height">
+	<div class="col-sm-6 full-height" ui-view></div>
 	<div class="col-sm-6">	
 	        <h3>Thema's</h3>
+	        <pre>{{projectsFiltered}}</pre>
 	        <pre>{{filter}}</pre>
 	        <label ng-repeat="theme in themes">
 	        	<input type="checkbox" ng-model="filter[theme.id]">

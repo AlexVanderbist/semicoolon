@@ -1,1 +1,64 @@
+body,html {
+	width: 100%;
+	height: 100%;
+}
+
+/* Angular fix */
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.angular-google-map,
+.angular-google-map-container {
+  width: 100%;
+  height: 100%;
+}
+
+.full-height { 
+	height: 100%;
+}
+
+
+/* Navigation */
+#antwerp-menu .navbar-brand,
+#antwerp-menu .navbar-nav li a {
+    line-height: 70px;
+    height: 70px;
+    padding-top: 0;
+}
+
+#antwerp-menu.navbar-default .navbar-brand {
+    color: rgba(255, 255, 255, 1);
+}
+#antwerp-menu.navbar-default {
+    font-size: 21px;
+    background-color: rgba(207, 0, 57, 1);
+    border-bottom-width: 0px;
+}
+#antwerp-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(207, 0, 57, 1);
+}
+#antwerp-menu.navbar-default .navbar-nav>li>a:hover,
+#antwerp-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(184, 0, 49, 1);
+}
+#antwerp-menu.navbar-default .navbar-nav>.active>a,
+#antwerp-menu.navbar-default .navbar-nav>.active>a:hover,
+#antwerp-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(184, 0, 49, 1);
+}
+#antwerp-menu.navbar-default .navbar-toggle {
+    border-color: #b80031;
+}
+#antwerp-menu.navbar-default .navbar-toggle:hover,
+#antwerp-menu.navbar-default .navbar-toggle:focus {
+    background-color: #b80031;
+}
+#antwerp-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #b80031;
+}
+#antwerp-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#antwerp-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #cf0039;
+}

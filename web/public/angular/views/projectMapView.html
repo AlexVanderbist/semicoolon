@@ -1,0 +1,19 @@
+<ul class="list-group" ng-if="projectsFiltered">
+	Project list
+	<li class="list-group-item" ng-repeat="project in projectsFiltered">
+		<h4>{{project.name}}</h4>
+		<div ng-bind-html="project.description"></div>
+	</li>
+</ul>
+
+<button ng-click="projects.pop()">Test</button>
+
+<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+	<ui-gmap-markers
+        models='projectsFiltered'
+        coords="'self'"
+        dorebuildall="true"
+        modelsbyref="false"
+		>
+	</ui-gmap-markers>
+</ui-gmap-google-map>
