@@ -10,10 +10,10 @@
     <body ng-app="antwerpApp">
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-default" id="antwerp-menu">
+    <nav class="navbar navbar-default navbar-fixed-top" id="antwerp-menu">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">
             <span class="sr-only">Navigatie</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -21,12 +21,13 @@
           </button>
 
           <!-- Branding -->
-          <a class="navbar-brand" ui-sref="projects">
+          <a ui-sref="projects" class="pull-left"><img src="{!! asset('angular/images/logo.svg') !!}" class="grid-height"></a>
+          <!-- <a class="navbar-brand" ui-sref="projects">
             {!! config('cms.sitename') !!}
-          </a>
+          </a> -->
 
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" uib-collapse="isCollapsed">
           <!-- Left Side Of Navbar -->
           <ul class="nav navbar-nav">
             <li><a ui-sref="projects">Projecten</a></li>
@@ -38,7 +39,7 @@
               <li ng-hide="authenticated"><a ui-sref="login">Inloggen</a></li>
               <li ng-hide="authenticated"><a href="{{ url('/register') }}">Registreer (old)</a></li>
 
-              <li class="btn-group" uib-dropdown>
+              <li class="btn-group" uib-dropdown ng-show="authenticated">
                 <a href uib-dropdown-toggle>
                   @{{ currentUser.full_name }} <span class="caret"></span>
                 </a>

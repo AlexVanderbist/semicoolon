@@ -1,6 +1,35 @@
+@font-face {
+  font-family: 'SunAntwerpen';
+  src: url('../fonts/SunAntwerpen_500.eot');
+  src: url('../fonts/SunAntwerpen_500.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/SunAntwerpen_500.woff') format('woff'),
+  url('../fonts/SunAntwerpen_500.svg#proxima_nova_rgitalic') format('svg');
+}
+
 body,html {
 	width: 100%;
 	height: 100%;
+    font-family: 'SunAntwerpen', sans-serif;
+}
+
+.grid-height {
+    height: 70px;
+}
+
+.no-padding /*> [class*="col-"]*/ {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.sidebar {
+    padding-top: 105px;
+}
+
+.project-list {
+    padding-top: 105px;
+}
+.project-list .project {
+    background-color: grey;
 }
 
 /* Angular fix */
@@ -14,6 +43,13 @@ body,html {
 
 .full-height { 
 	height: 100%;
+}
+
+
+/* Bootstrap buttons */
+.btn {
+    border-radius: 0;
+    border:none;
 }
 
 
@@ -32,6 +68,8 @@ body,html {
     font-size: 21px;
     background-color: rgba(207, 0, 57, 1);
     border-bottom-width: 0px;
+    border-radius: 0;
+    border: none;
 }
 #antwerp-menu.navbar-default .navbar-nav>li>a {
     color: rgba(255, 255, 255, 1);
@@ -61,4 +99,54 @@ body,html {
 #antwerp-menu.navbar-default .navbar-toggle:hover .icon-bar,
 #antwerp-menu.navbar-default .navbar-toggle:focus .icon-bar {
     background-color: #cf0039;
+}
+#antwerp-menu .navbar-collapse {
+    border: none;
+}
+
+/* Custom btn */
+.btn-antwerp-blue { 
+  color: #FFFFFF; 
+  background-color: #1964B2; 
+  border-color: #4E4A61; 
+} 
+ 
+.btn-antwerp-blue:hover, 
+.btn-antwerp-blue:focus, 
+.btn-antwerp-blue:active, 
+.btn-antwerp-blue.active, 
+.open .dropdown-toggle.btn-antwerp-blue { 
+  color: #FFFFFF; 
+  background-color: #003F72; 
+  border-color: #4E4A61; 
+} 
+ 
+.btn-antwerp-blue:active, 
+.btn-antwerp-blue.active, 
+.open .dropdown-toggle.btn-antwerp-blue { 
+  background-image: none; 
+} 
+ 
+.btn-antwerp-blue.disabled, 
+.btn-antwerp-blue[disabled], 
+fieldset[disabled] .btn-antwerp-blue, 
+.btn-antwerp-blue.disabled:hover, 
+.btn-antwerp-blue[disabled]:hover, 
+fieldset[disabled] .btn-antwerp-blue:hover, 
+.btn-antwerp-blue.disabled:focus, 
+.btn-antwerp-blue[disabled]:focus, 
+fieldset[disabled] .btn-antwerp-blue:focus, 
+.btn-antwerp-blue.disabled:active, 
+.btn-antwerp-blue[disabled]:active, 
+fieldset[disabled] .btn-antwerp-blue:active, 
+.btn-antwerp-blue.disabled.active, 
+.btn-antwerp-blue[disabled].active, 
+fieldset[disabled] .btn-antwerp-blue.active { 
+  background-color: #1964B2; 
+  border-color: #4E4A61; 
+} 
+ 
+.btn-antwerp-blue .badge { 
+  color: #1964B2; 
+  background-color: #FFFFFF; 
 }

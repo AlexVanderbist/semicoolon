@@ -1,8 +1,11 @@
-<ul class="list-group" ng-if="$parent.projects">
-	Project list
-	<pre>{{ $parent.projects | filter:$parent.filterByTheme }}</pre>
-	<li class="list-group-item" ng-repeat="project in $parent.projects | filter:$parent.filterByTheme">
-		<h4>{{project.name}}</h4>
-		<div ng-bind-html="project.description"></div>
-	</li>
-</ul>
+<div class="row project-list">
+    <div ng-repeat="project in $parent.projects | filter:$parent.filterByTheme">
+        <div class="clearfix" ng-if="$index % 3 == 0"></div>
+        <div class="col-sm-4" style="border:1px dashed black">
+        	<div class="project">
+	            <h2>{{project.name}}</h2>
+				<div ng-bind-html="project.description"></div>
+        	</div>
+        </div>
+    </div>
+</div>
