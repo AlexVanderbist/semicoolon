@@ -1,9 +1,21 @@
 <div class="row full-height no-padding">
 	<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+
+	      <ui-gmap-window 
+	        show="map.window.show" 
+	        coords="map.window.model" 
+	        options="map.window.options" 
+	        closeClick="map.window.closeClick()">
+	        {{map.window.model.name}}
+	      </ui-gmap-window>
+
 		<ui-gmap-markers
 	        models='projectsFiltered'
 	        coords="'self'"
+        	events="map.markersEvents"
+        	icon="'icon'"
 			>
 		</ui-gmap-markers>
+
 	</ui-gmap-google-map>
 </div>
