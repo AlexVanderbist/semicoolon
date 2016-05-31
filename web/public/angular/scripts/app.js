@@ -48,10 +48,20 @@
                     templateUrl: templateUrlPrefix + 'logoutView.html',
                     controller: 'logoutController'
                 })
-                .state('projects', {
-                    url: '/projects',
+                .state('project', {
+                    url: '/project/{id:int}',
                     templateUrl: templateUrlPrefix + 'projectView.html',
                     controller: 'projectController',
+                    resolve: {
+                        project: function (projectService, $stateParams) {
+                            return projectService.get($stateParams.id);
+                        }
+                    }
+                })
+                .state('projects', {
+                    url: '/projects',
+                    templateUrl: templateUrlPrefix + 'projectsView.html',
+                    controller: 'projectsController',
                     resolve: {
                         projects: function (projectService) {
                             return projectService.getAll();
@@ -144,6 +154,10 @@
                         $state.go('projects');
                     }       
                 }
+            });
+
+            $rootScope.$on('$stateChangeError', function(event) {
+                $state.go('projects');
             });
         });
 })();

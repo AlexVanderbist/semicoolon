@@ -1,24 +1,18 @@
+<div class="map-header">
+	<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+	</ui-gmap-google-map>
+</div>
 
-		<div class="col-sm-8 full-height" ui-view></div>
-		<div class="col-sm-4 sidebar">
-			<div class="row">
-				<div class="col-xs-4 col-xs-offset-2 no-padding">
-					<button ui-sref="projects.list" ui-sref-active="active" class="btn btn-antwerp-blue btn-lg btn-block">
-						<span class="glyphicon glyphicon-th" aria-hidden="true"></span> lijst
-					</button>
-				</div>
-				<div class="col-xs-4 no-padding">
-					<button ui-sref="projects.map" ui-sref-active="active" class="btn btn-antwerp-blue btn-lg btn-block">
-						<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> kaart
-					</button>
-				</div>
-			</div>
-		        <h3>Thema's</h3>
-		        <div class="checkbox" ng-repeat="theme in themes">
-		        	<label>
-		        		<input type="checkbox" ng-model="filter[theme.id]">
-		        		{{theme.name}}
-		        	</label>
-		        <div class="checkbox">
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+			<h1>{{project.name}}</h1>
+			<div ng-bind-html="project.description"></div>
+		</div>
+		<div class="col-md-4">
+			<div ng-if="project.youtube_id" class="embed-responsive embed-responsive-16by9">
+				<iframe frameborder="0" scrolling="no" seamless="seamless" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen" id="okplayer" width="640" height="360" src="http://youtube.com/embed/{{project.youtube_id}}?hd=1&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&rel=0"></iframe>
 			</div>
 		</div>
+	</div>
+</div>

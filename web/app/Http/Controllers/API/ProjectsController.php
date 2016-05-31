@@ -24,10 +24,22 @@ class ProjectsController extends Controller
 
     public function index() 
     {
-		$projects = $this->projects->with('theme', 'creator', 'images', 'stages')->get();
-	    //$projects = [];
+        $projects = $this->projects->with('theme', 'creator', 'images', 'stages')->get();
+        //$projects = [];
 
-    	return response()->json(compact('projects'));
+        return response()->json(compact('projects'));
+    }
+
+    public function view($project) 
+    {
+        $project = $this->projects->with('theme', 'creator', 'images', 'stages')->find($project);
+        if(! $project) {
+            return response()->json([
+                'error' => 'Project not found',
+            ], 404);
+        }
+
+        return response()->json(compact('project'));
     }
 
     public function getThemes(Theme $themes) 

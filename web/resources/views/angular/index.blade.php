@@ -78,6 +78,7 @@
     <script src="{!! asset('angular/scripts/controllers/authController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/controllers/logoutController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/controllers/projectController.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/controllers/projectsController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/controllers/projectListController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/controllers/projectMapController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/controllers/modalController.js') !!}"></script>

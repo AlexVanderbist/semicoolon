@@ -20,6 +20,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
     
     // GET Projects
 	Route::get('projects', 'API\ProjectsController@index');
+	Route::get('projects/{project}', 'API\ProjectsController@view');
+
     // GET Themes
 	Route::get('themes', 'API\ProjectsController@getThemes');
 

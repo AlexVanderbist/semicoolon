@@ -1,0 +1,24 @@
+
+		<div class="col-sm-8 full-height" ui-view></div>
+		<div class="col-sm-4 sidebar">
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-2 no-padding">
+					<button ui-sref="projects.list" ui-sref-active="active" class="btn btn-antwerp-blue btn-lg btn-block">
+						<span class="glyphicon glyphicon-th" aria-hidden="true"></span> lijst
+					</button>
+				</div>
+				<div class="col-xs-4 no-padding">
+					<button ui-sref="projects.map" ui-sref-active="active" class="btn btn-antwerp-blue btn-lg btn-block">
+						<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> kaart
+					</button>
+				</div>
+			</div>
+		        <h3>Thema's</h3>
+		        <div class="checkbox" ng-repeat="theme in themes">
+		        	<label>
+		        		<input type="checkbox" ng-model="filter[theme.id]">
+		        		{{theme.name}}
+		        	</label>
+		        <div class="checkbox">
+			</div>
+		</div>

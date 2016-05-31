@@ -65,9 +65,13 @@ h1,h2,h3,h4 {
     background-color: grey;
 }
 
+/* Custom modal */
+
 .modal-container {
     position: absolute;
-    top: 120px;
+    top: 0;
+    bottom: 0;
+    padding: 120px;
     width: 100%;
 }
 .custom-modal {
@@ -87,6 +91,9 @@ h1,h2,h3,h4 {
 .custom-modal.big .content {
     padding: 30px 60px;
 }
+.custom-modal.big > .header {
+    height: 240px;
+}
 .custom-modal h1 {
     margin: 30px 0;
 }
@@ -94,6 +101,11 @@ h1,h2,h3,h4 {
     position: absolute;
     bottom: 0;
     left: 60px;
+}
+
+/* Project */
+.map-header {
+    height: 240px;
 }
 
 /* Angular fix */
