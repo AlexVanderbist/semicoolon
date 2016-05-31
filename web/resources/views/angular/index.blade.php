@@ -22,21 +22,24 @@
 
           <!-- Branding -->
           <a ui-sref="projects" class="pull-left"><img src="{!! asset('angular/images/logo.svg') !!}" class="grid-height"></a>
-          <!-- <a class="navbar-brand" ui-sref="projects">
+          <a class="navbar-brand" ui-sref="home.intro">
             {!! config('cms.sitename') !!}
-          </a> -->
+          </a>
 
         </div>
         <div class="navbar-collapse collapse" uib-collapse="isCollapsed">
           <!-- Left Side Of Navbar -->
-          <ul class="nav navbar-nav">
-            <li><a ui-sref="projects">Projecten</a></li>
-          </ul>
+          <!-- <ul class="nav navbar-nav">
+            <li><a ui-sref="projects.map">Projecten</a></li>
+          </ul> -->
 
           <!-- Right Side Of Navbar -->
           <ul class="nav navbar-nav navbar-right">
+
+            <li><a ui-sref="projects.map">Projecten</a></li>
+
             <!-- Authentication Links -->
-              <li ng-hide="authenticated"><a ui-sref="login">Inloggen</a></li>
+              <li ng-hide="authenticated"><a ui-sref="user.login">Inloggen</a></li>
               <li ng-hide="authenticated"><a href="{{ url('/register') }}">Registreer (old)</a></li>
 
               <li class="btn-group" uib-dropdown ng-show="authenticated">
@@ -45,7 +48,7 @@
                 </a>
                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                   <li ng-show="currentUser.admin == 1"><a href="{{ route('backend.dashboard') }}"><i class="fa fa-btn fa-gear"></i>Backend</a></li>
-                  <li><a ui-sref="logout"><i class="fa fa-btn fa-sign-out"></i>Log uit</a></li>
+                  <li><a ui-sref="user.logout"><i class="fa fa-btn fa-sign-out"></i>Log uit</a></li>
                 </ul>
               </li>
           </ul>
@@ -77,4 +80,5 @@
     <script src="{!! asset('angular/scripts/controllers/projectController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/controllers/projectListController.js') !!}"></script>
     <script src="{!! asset('angular/scripts/controllers/projectMapController.js') !!}"></script>
+    <script src="{!! asset('angular/scripts/controllers/modalController.js') !!}"></script>
 </html>

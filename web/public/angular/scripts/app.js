@@ -18,18 +18,32 @@
             $authProvider.loginUrl = '/api/v1/authenticate';
 
             // Default route when something else is requested other than the states bellow
-            $urlRouterProvider.otherwise('/projects/map');
+            $urlRouterProvider.otherwise('/');
             $urlRouterProvider.when('/projects', '/projects/map');
             
             // States in ui-router
             var templateUrlPrefix = '../angular/views/';
             $stateProvider
-                .state('login', {
+                .state('home', {
+                    templateUrl: templateUrlPrefix + 'modalBigView.html',
+                    controller: 'modalController',
+                    abstract: true
+                })
+                .state('home.intro', {
+                    url: '/',
+                    templateUrl: templateUrlPrefix + 'introView.html'
+                })
+                .state('user', {
+                    templateUrl: templateUrlPrefix + 'modalView.html',
+                    controller: 'modalController',
+                    abstract: true
+                })
+                .state('user.login', {
                     url: '/login',
                     templateUrl: templateUrlPrefix + 'loginView.html',
                     controller: 'authController'
                 })
-                .state('logout', {
+                .state('user.logout', {
                     url: '/logout',
                     templateUrl: templateUrlPrefix + 'logoutView.html',
                     controller: 'logoutController'
