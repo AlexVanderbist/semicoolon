@@ -252,6 +252,7 @@ fieldset[disabled] .btn-primary.active {
 .timeline {
   position: relative;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 .timeline:before {
   position: absolute;
@@ -372,6 +373,9 @@ fieldset[disabled] .btn-primary.active {
 
 
 /* PROJECTS */
+.ytvideo {
+  margin: 20px 0 10px 0;
+}
 .ytpreview {
   margin-top: 2%;
 }
