@@ -27,7 +27,7 @@
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top" id="antwerp-menu">
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">
             <span class="sr-only">Navigatie</span>
