@@ -3,7 +3,7 @@
 @section('title', 'Projecten')
 
 @section('content')
-    <a href="{{ route('backend.projects.create') }}" class="btn btn-primary">Nieuw project maken</a>
+    <a href="{{ route('backend.projects.create') }}" class="marginbtn btn btn-primary">Nieuw project maken</a>
     
     
     @foreach($projects->chunk(3) as $projectChunk)
@@ -11,10 +11,11 @@
             @foreach($projectChunk as $project)
                 <div class="col-md-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading projectheading">{{$project->name}} 
+                        <div class="panel-heading projectheading"> 
                             <a class="pull-right projectlink" data-toggle="tooltip" title="Verwijderen" href="{{ route('backend.projects.confirm', $project->id) }}">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>
+                            {{$project->name}}
                         </div>
                         @if($project->header_image)
                         <div class="projectimg">

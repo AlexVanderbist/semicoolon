@@ -39,10 +39,12 @@
                     {!! Form::label('enddate','Einddatum') !!}
                     {!! Form::date('enddate', \Carbon\Carbon::now(), ['class' => 'form-control']) !!}
                 </div>
+                <div class="form-group pull-right">
+                    {!! Form::submit($stage->exists ? 'Fase wijzigen' : 'Fase toevoegen', ['class' => 'btn btn-primary']) !!}
+                </div>
             </div>
 
-            {!! Form::submit($stage->exists ? 'Fase wijzigen' : 'Fase toevoegen', ['class' => 'btn btn-primary']) !!}
-
+            
 
             {!! Form::close() !!}
         </div>
