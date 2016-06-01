@@ -35,9 +35,13 @@ body,html {
 	height: 100%;
     font-family: 'SunAntwerpen', sans-serif;
     font-size: 13pt;
-  padding-top: 30px;
+  
 }
-
+#app-layout{
+  height: auto;
+  min-height: 100%;
+  padding: 60px 0 60px 0;
+}
 
 h1,h2,h3,h4 {
     font-family: 'Antwerpen', 'Georgia', serif;
@@ -382,7 +386,6 @@ fieldset[disabled] .btn-primary.active {
 }
 .marginbtn{
   margin-bottom: 10px;
-  margin-top: 10px;
 }
 
 /* File upload */
