@@ -160,5 +160,11 @@
             $rootScope.$on('$stateChangeError', function(event) {
                 $state.go('projects');
             });
+        })
+        .filter('dateToISO', function() {
+            return function(input) {
+                input = new Date(input).toISOString();
+                return input;
+            };
         });
 })();

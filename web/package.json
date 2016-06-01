@@ -10,5 +10,7 @@
     "test": "haha no"
   },
   "author": "Alex Vanderbist & Ruben De Swaef",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+  }
 }

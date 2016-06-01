@@ -245,10 +245,11 @@ fieldset[disabled] .btn-primary.active {
 .fasedate {
   text-align: right;
 }
-.frontstages {
+.timeline {
   position: relative;
+  overflow: hidden;
 }
-.frontstages:before {
+.timeline:before {
   position: absolute;
   left: 34%;
   top: 20px;
@@ -268,7 +269,7 @@ fieldset[disabled] .btn-primary.active {
 }
 .fasedescription:before { /* RED ORB */
   position: absolute;
-  left: -10px;
+  left: -9px;
   content: ' ';
   display: block;
   width: 25px;
@@ -281,7 +282,8 @@ fieldset[disabled] .btn-primary.active {
 .enddate:after { /* TRIANGLE */
   content: "";
   position: absolute;
-  left: 5px;
+  left: 7px;
+  margin-top: 4px;
   height: 0;
   width: 0;
   border: solid transparent;
@@ -304,7 +306,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 @media screen and (max-width: 700px) {
-  .frontstages:before{
+  .timeline:before{
     left: 35.5%;
     top: 40px;
   }
@@ -312,26 +314,26 @@ fieldset[disabled] .btn-primary.active {
 
 /* IMAGES WITH LIGHTBOX */
 
-.imagediv {
-  width: 21%;
-  margin-left: 2%;
-  margin-right: 2%;
-  margin-bottom: 2%;
-  float:left;
-  height: 200px;
-  overflow: hidden;
-  position: relative;
+.imagecontainer {
+  margin: 0 -25px;
 }
+
+.imagediv {
+  padding: 10px;
+  overflow: hidden;
+  text-align: center;
+}
+
 .imagediv img {
   width: 100%;
-  position: absolute;
-  top:-100%; left:0; right: 0; bottom:-100%;
-  margin: auto;
-  -webkit-transition: width 0.5s;
-  transition: width 0.5s;
+
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+
+  transform: scale(1);
 }
 .imagediv:hover img{
-  width: 105%;
+  transform: scale(1.2);
 }
 
 
