@@ -9,7 +9,8 @@
             'ui.bootstrap',
             'ngSanitize',
             'uiGmapgoogle-maps',
-            'nemLogging'
+            'nemLogging',
+            'youtube-embed'
         ])
 
         .config(function($stateProvider, $urlRouterProvider, $authProvider, $provide, $httpProvider,uiGmapGoogleMapApiProvider) {

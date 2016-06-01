@@ -14,6 +14,11 @@
         $scope.projectsFiltered = [];
         $scope.filter = [];
 
+        angular.forEach($scope.themes, function(value,key) {
+            $scope.filter[value.id] = true;
+            //$scope.$apply();
+        });
+
         // returns google maps icon object with symbol in given color
         var iconSymbol = function (color) {
             return {
@@ -31,11 +36,9 @@
             value.latitude = value.lat;
             value.longitude = value.lng;
             value.icon = iconSymbol(value.theme.hex_color);
-            console.log(value);
         });
 
         $scope.$watchCollection('filter', function(newValue) {
-            console.log('dddd');
             $scope.projectsFiltered = filterFilter($scope.projects, $scope.filterByTheme);
         });
 
@@ -52,7 +55,6 @@
                     return false;
                 }
             }
-
             // No checkbox was found to be checked
             return true;
         }

@@ -27,7 +27,7 @@
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top" id="antwerp-menu">
-      <div class="container">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">
             <span class="sr-only">Navigatie</span>
@@ -77,14 +77,16 @@
     </body>
 
     <!-- Application Dependencies - Dont forget to add .min in production build -->
-    <script src="{!! asset('node_modules/lodash/lodash.js') !!}"></script>
+    <script src="{!! asset('node_modules/lodash/lodash.min.js') !!}"></script>
     <script src="{!! asset('node_modules/angular/angular.js') !!}"></script>
     <script src="{!! asset('node_modules/angular-ui-router/release/angular-ui-router.js') !!}"></script>
-    <script src="{!! asset('node_modules/satellizer/satellizer.js') !!}"></script>
+    <script src="{!! asset('node_modules/satellizer/satellizer.min.js') !!}"></script>
     <script src="{!! asset('node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js') !!}"></script>
-    <script src="{!! asset('node_modules/angular-sanitize/angular-sanitize.js') !!}"></script>
-    <script src="{!! asset('node_modules/angular-simple-logger/dist/angular-simple-logger.js') !!}"></script>
-    <script src="{!! asset('node_modules/angular-google-maps/dist/angular-google-maps.js') !!}"></script>
+    <script src="{!! asset('node_modules/angular-sanitize/angular-sanitize.min.js') !!}"></script>
+    <script src="{!! asset('node_modules/angular-simple-logger/dist/angular-simple-logger.min.js') !!}"></script>
+    <script src="{!! asset('node_modules/angular-google-maps/dist/angular-google-maps.min.js') !!}"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="{!! asset('node_modules/angular-youtube-embed/dist/angular-youtube-embed.min.js') !!}"></script>
 
     <!-- Application Scripts -->
     <script src="{!! asset('angular/scripts/app.js') !!}"></script>

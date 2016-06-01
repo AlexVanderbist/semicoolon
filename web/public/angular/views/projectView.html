@@ -1,5 +1,11 @@
 <div class="map-header">
 	<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+		<ui-gmap-marker
+	        idKey='project.id'
+	        coords='project'
+	        options='{icon:project.icon}'
+	        >
+		</ui-gmap-marker>
 	</ui-gmap-google-map>
 </div>
 
@@ -10,9 +16,18 @@
 			<div ng-bind-html="project.description"></div>
 		</div>
 		<div class="col-md-4">
-			<div ng-if="project.youtube_id" class="embed-responsive embed-responsive-16by9">
-				<iframe frameborder="0" scrolling="no" seamless="seamless" webkitallowfullscreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen" id="okplayer" width="640" height="360" src="http://youtube.com/embed/{{project.youtube_id}}?hd=1&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&rel=0"></iframe>
+			<div ng-show="project.youtube_id" class="embed-responsive embed-responsive-16by9">
+				<youtube-video class="embed-responsive-item" video-id="project.youtube_id"></youtube-video>
 			</div>
+
+			<div class="projectpictures row">
+	            <div class="imagediv" ng-repeat="image in project.images">
+	                <a href="#">
+	                	<img ng-src="/{{image.filename}}" alt="{{project.name}}" class="image">
+	                </a>
+	            </div>
+	        </div>
+
 		</div>
 	</div>
 </div>
