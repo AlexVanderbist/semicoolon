@@ -5,6 +5,7 @@
         <title>Project Antwerpen</title>
         <link rel="stylesheet" href="{!! asset('node_modules/bootstrap/dist/css/bootstrap.css') !!}">
         <link rel="stylesheet" href="{!! asset('/css/style.css') !!}">
+        <link href="{!! asset('node_modules/lightbox2/dist/css/lightbox.min.css') !!}" rel="stylesheet">
 
 
         <!-- Favicons -->
@@ -79,6 +80,7 @@
     <!-- Application Dependencies - Dont forget to add .min in production build -->
     <script src="{!! asset('node_modules/lodash/lodash.min.js') !!}"></script>
     <script src="{!! asset('node_modules/angular/angular.js') !!}"></script>
+    <script src="{!! asset('node_modules/angular-i18n/angular-locale_nl-be.js') !!}"></script>
     <script src="{!! asset('node_modules/angular-ui-router/release/angular-ui-router.js') !!}"></script>
     <script src="{!! asset('node_modules/satellizer/satellizer.min.js') !!}"></script>
     <script src="{!! asset('node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js') !!}"></script>
@@ -87,6 +89,7 @@
     <script src="{!! asset('node_modules/angular-google-maps/dist/angular-google-maps.min.js') !!}"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="{!! asset('node_modules/angular-youtube-embed/dist/angular-youtube-embed.min.js') !!}"></script>
+    <script src="{!! asset('node_modules/lightbox2/dist/js/lightbox-plus-jquery.min.js') !!}"></script>
 
     <!-- Application Scripts -->
     <script src="{!! asset('angular/scripts/app.js') !!}"></script>
