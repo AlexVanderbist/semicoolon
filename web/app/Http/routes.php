@@ -50,36 +50,42 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
 
+	/* Link to angular front-end */
+	Route::get('/', function () {
+		return view('angular.index');
+	});
+
+
     /* FRONTEND */
 
-	Route::get('/', [
-		'as' => 'frontend.projects.map',
-		'uses' => 'Frontend\ProjectsController@map'
-	]);
+	// Route::get('/', [
+	// 	'as' => 'frontend.projects.map',
+	// 	'uses' => 'Frontend\ProjectsController@map'
+	// ]);
 
-	Route::get('projecten', [
-		'as' => 'frontend.projects.index',
-		'uses' => 'Frontend\ProjectsController@index'
-	]);
+	// Route::get('projecten', [
+	// 	'as' => 'frontend.projects.index',
+	// 	'uses' => 'Frontend\ProjectsController@index'
+	// ]);
 
-	Route::get('projecten/{project}', [
-		'as' => 'frontend.projects.info',
-		'uses' => 'Frontend\ProjectsController@info'
-	]);
+	// Route::get('projecten/{project}', [
+	// 	'as' => 'frontend.projects.info',
+	// 	'uses' => 'Frontend\ProjectsController@info'
+	// ]);
 
-	Route::post('projecten/{project}/react', [
-		'as' => 'frontend.projects.opinionstore',
-		'uses' => 'Frontend\ProjectsController@opinionstore'
-	]);
+	// Route::post('projecten/{project}/react', [
+	// 	'as' => 'frontend.projects.opinionstore',
+	// 	'uses' => 'Frontend\ProjectsController@opinionstore'
+	// ]);
 
-	Route::get('projecten/{project}/deletereaction/{opinion}', [
-		'as' => 'frontend.projects.opiniondestroy',
-		'uses' => 'Frontend\ProjectsController@opiniondestroy'
-	]);
+	// Route::get('projecten/{project}/deletereaction/{opinion}', [
+	// 	'as' => 'frontend.projects.opiniondestroy',
+	// 	'uses' => 'Frontend\ProjectsController@opiniondestroy'
+	// ]);
 
 
 
-	/* BACKEND */ // add middleware around this instead of on the parent constructor?
+	/* BACKEND */ 
 	Route::group(['middleware' => 'admin', 'prefix' => 'backend'], function() {
 
 		Route::get('/', [
@@ -127,10 +133,4 @@ Route::group(['middleware' => 'web'], function () {
 		]);
 	});
 
-});
-
-
-/* Link to angular front-end */
-Route::get('angular-test', function () {
-	return view('angular.index');
 });
