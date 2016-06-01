@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Project Antwerpen</title>
         <link rel="stylesheet" href="{!! asset('node_modules/bootstrap/dist/css/bootstrap.css') !!}">
-        <link rel="stylesheet" href="{!! asset('angular/css/style.css') !!}">
+        <link rel="stylesheet" href="{!! asset('/css/style.css') !!}">
 
 
         <!-- Favicons -->

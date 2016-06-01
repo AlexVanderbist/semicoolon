@@ -43,7 +43,7 @@
 
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top" id="antwerp-menu">
         <div class="container">
             <div class="navbar-header">
 
@@ -56,11 +56,9 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand logobrand" href="{{ url('/backend') }}">
-                  <img src="{!! asset('images/A_logo_RGB_123x123.jpg') !!}" alt="logo" class="headerlogo">
-                </a>
-                <a class="navbar-brand namebrand" href="{{ url('/backend') }}">
-                <p>{!! config('cms.sitename') !!}</p>
+                <a href="{{ url('/backend') }}" class="pull-left"><img src="{!! asset('images/logo.svg') !!}" alt="logo" class="grid-height"></a>
+                <a class="navbar-brand" href="{{ url('/backend') }}">
+                  {!! config('cms.sitename') !!}
                 </a>
             </div>
 
