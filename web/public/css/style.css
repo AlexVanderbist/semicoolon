@@ -353,10 +353,6 @@ fieldset[disabled] .btn-primary.active {
   /*height: 200px;
   overflow-y: hidden;*/
 }
-.vertEllipsis {
-  max-height: 200px;
-  overflow-y: hidden;
-}
 .project-list h2{
   margin-top: 0;
   padding-top: 20px;

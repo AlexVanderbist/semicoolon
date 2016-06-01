@@ -8,7 +8,7 @@
         		</div>
         		<div class="projList">
 		            <h2>{{project.name}}</h2>
-					<div ng-bind-html="project.description" class="vertEllipsis"></div>
+					<div ng-bind-html="project.description | htmlToPlaintext | truncate:200"></div>
 				</div>
 				<button class="btn btn-primary btn-lg btn-block" ui-sref="project({id:project.id})"><h3>Bekijk project</h3></button>
         	</div>
