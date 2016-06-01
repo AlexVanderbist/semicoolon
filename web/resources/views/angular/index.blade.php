@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="{!! asset('css/style.css') !!}">
         <link href="{!! asset('node_modules/lightbox2/dist/css/lightbox.min.css') !!}" rel="stylesheet">
 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Favicons -->
         <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
