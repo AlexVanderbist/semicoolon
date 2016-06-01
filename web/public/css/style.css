@@ -339,7 +339,33 @@ fieldset[disabled] .btn-primary.active {
 }
 
 
-
+/* LISTVIEW */
+.project-list .project{
+  background-color: #F3F3F5;
+  min-height: 500px;
+  position: relative;
+  margin-bottom: 30px;
+}
+.projList {
+  padding:0 20px 0 20px;
+  /*height: 200px;
+  overflow-y: hidden;*/
+}
+.vertEllipsis {
+  max-height: 200px;
+  overflow-y: hidden;
+}
+.project-list h2{
+  margin-top: 0;
+  padding-top: 20px;
+}
+.project-list h3{
+  margin: 5px 0 5px 0;
+}
+.project-list button{
+  position: absolute;
+  bottom:0;
+}
 /* GENERAL BACKEND */
 
 .thumbnail.active {
@@ -370,7 +396,7 @@ fieldset[disabled] .btn-primary.active {
   transition: all 0.5s;
 }
 .projectimg{
-    height: 200px;
+    height: 175px;
     overflow: hidden;
     position: relative;
 }
