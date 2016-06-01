@@ -23,7 +23,7 @@
             $urlRouterProvider.when('/projects', '/projects/map');
             
             // States in ui-router
-            var templateUrlPrefix = '../angular/views/';
+            var templateUrlPrefix = 'views/';
             $stateProvider
                 .state('home', {
                     templateUrl: templateUrlPrefix + 'modalBigView.html',

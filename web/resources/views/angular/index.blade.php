@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Project Antwerpen</title>
         <link rel="stylesheet" href="{!! asset('node_modules/bootstrap/dist/css/bootstrap.css') !!}">
-        <link rel="stylesheet" href="{!! asset('/css/style.css') !!}">
+        <link rel="stylesheet" href="{!! asset('css/style.css') !!}">
         <link href="{!! asset('node_modules/lightbox2/dist/css/lightbox.min.css') !!}" rel="stylesheet">
 
 
@@ -38,7 +38,7 @@
           </button>
 
           <!-- Branding -->
-          <a ui-sref="projects" class="pull-left"><img src="{!! asset('angular/images/logo.svg') !!}" class="grid-height"></a>
+          <a ui-sref="projects" class="pull-left"><img src="{!! asset('images/logo.svg') !!}" class="grid-height"></a>
           <a class="navbar-brand" ui-sref="home.intro">
             {!! config('cms.sitename') !!}
           </a>
@@ -92,15 +92,15 @@
     <script src="{!! asset('node_modules/lightbox2/dist/js/lightbox-plus-jquery.min.js') !!}"></script>
 
     <!-- Application Scripts -->
-    <script src="{!! asset('angular/scripts/app.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/userService.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/projectService.js') !!}"></script>
+    <script src="{!! asset('scripts/app.js') !!}"></script>
+    <script src="{!! asset('scripts/userService.js') !!}"></script>
+    <script src="{!! asset('scripts/projectService.js') !!}"></script>
 
-    <script src="{!! asset('angular/scripts/controllers/authController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/controllers/logoutController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/controllers/projectController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/controllers/projectsController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/controllers/projectListController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/controllers/projectMapController.js') !!}"></script>
-    <script src="{!! asset('angular/scripts/controllers/modalController.js') !!}"></script>
+    <script src="{!! asset('scripts/controllers/authController.js') !!}"></script>
+    <script src="{!! asset('scripts/controllers/logoutController.js') !!}"></script>
+    <script src="{!! asset('scripts/controllers/projectController.js') !!}"></script>
+    <script src="{!! asset('scripts/controllers/projectsController.js') !!}"></script>
+    <script src="{!! asset('scripts/controllers/projectListController.js') !!}"></script>
+    <script src="{!! asset('scripts/controllers/projectMapController.js') !!}"></script>
+    <script src="{!! asset('scripts/controllers/modalController.js') !!}"></script>
 </html>
