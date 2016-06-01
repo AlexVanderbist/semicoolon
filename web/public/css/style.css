@@ -344,9 +344,9 @@ fieldset[disabled] .btn-primary.active {
 /* LISTVIEW */
 .project-list .project{
   background-color: #F3F3F5;
-  min-height: 500px;
   position: relative;
   margin-bottom: 30px;
+  padding-bottom: 68px;
 }
 .projList {
   padding:0 20px 0 20px;
