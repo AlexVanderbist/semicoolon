@@ -1,10 +1,16 @@
-<div class="row project-list">
+<div class="col-xs-offset-1 row project-list">
     <div ng-repeat="project in $parent.projects | filter:$parent.filterByTheme">
         <div class="clearfix" ng-if="$index % 3 == 0"></div>
-        <div class="col-sm-4" style="border:1px dashed black">
+        <div class="col-md-4">
         	<div class="project">
-	            <h2>{{project.name}}</h2>
-				<div ng-bind-html="project.description"></div>
+        		<div class="projectimg" ng-if="project.header_image">
+        			<img ng-src="/{{project.header_image.filename}}" alt="{{project.name}}" />
+        		</div>
+        		<div class="projList">
+		            <h2>{{project.name}}</h2>
+					<div ng-bind-html="project.description" class="vertEllipsis"></div>
+				</div>
+				<button class="btn btn-primary btn-lg btn-block"><h3>Bekijk project</h3></button>
         	</div>
         </div>
     </div>
