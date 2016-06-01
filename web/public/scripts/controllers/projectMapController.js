@@ -26,7 +26,7 @@
                     closeClick: function() {
                         this.show = false;
                     },
-                    options: {} // defined when map is loaded
+                    options: {maxWidth:400} // defined when map is loaded
                 }
             };
 

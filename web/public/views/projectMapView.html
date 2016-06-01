@@ -5,8 +5,10 @@
 	        show="map.window.show" 
 	        coords="map.window.model" 
 	        options="map.window.options" 
-	        closeClick="map.window.closeClick()">
-	        {{map.window.model.name}}
+	        closeClick="map.window.closeClick()"
+	        templateUrl="'views/mapWindowView.html'"
+	        templateParameter="{project:map.window.model}">
+        	
 	      </ui-gmap-window>
 
 		<ui-gmap-markers
