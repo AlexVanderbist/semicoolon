@@ -14,9 +14,10 @@
 				</div>
 			</div>
 		        <h3>Thema's</h3>
+
 		        <div class="checkbox" ng-repeat="theme in themes">
 		        	<label>
-		        		<input type="checkbox" ng-model="filter[theme.id]">
+		        		<input type="checkbox" name="filter" ng-model="filter[theme.id]">
 		        		{{theme.name}}
 		        	</label>
 		        <div class="checkbox">
