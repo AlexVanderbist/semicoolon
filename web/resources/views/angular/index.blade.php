@@ -62,11 +62,19 @@
 
               <li class="btn-group" uib-dropdown ng-show="authenticated">
                 <a href uib-dropdown-toggle>
-                  @{{ currentUser.full_name }} <span class="caret"></span>
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @{{ currentUser.full_name }}
                 </a>
                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                  <li ng-show="currentUser.admin == 1"><a href="{{ route('backend.dashboard') }}"><i class="fa fa-btn fa-gear"></i>Backend</a></li>
-                  <li><a ui-sref="user.logout"><i class="fa fa-btn fa-sign-out"></i>Log uit</a></li>
+
+					<li ng-show="currentUser.admin == 1">
+					  <a href="{{ route('backend.dashboard') }}">
+						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Back-end
+					  </a>
+					</li>
+
+					<li>
+						  <a ui-sref="user.logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log uit</a>
+					</li>
                 </ul>
               </li>
           </ul>
@@ -75,7 +83,7 @@
     </nav>
 
     <div ui-view class="full-height"></div>
-           
+
     </body>
 
     <!-- Application Dependencies - Dont forget to add .min in production build -->

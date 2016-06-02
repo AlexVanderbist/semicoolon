@@ -142,7 +142,7 @@ h1,h2,h3,h4 {
 }
 
 #antwerp-menu .navbar-brand,
-#antwerp-menu .navbar-nav li a {
+#antwerp-menu .navbar-nav > li > a {
     line-height: 60px;
     height: 60px;
     padding-top: 0;
@@ -152,7 +152,7 @@ h1,h2,h3,h4 {
     color: rgba(255, 255, 255, 1);
 }
 #antwerp-menu.navbar-default {
-    font-size: 21px;
+    /*font-size: 21px;*/
     background-color: rgba(207, 0, 57, 1);
     border-bottom-width: 0px;
     border-radius: 0;
