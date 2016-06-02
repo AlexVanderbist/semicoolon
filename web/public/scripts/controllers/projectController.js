@@ -19,13 +19,6 @@
             };
             
             // bind some scope stuff
-            $scope.map = { 
-                center: { 
-                    latitude: $scope.project.lat, 
-                    longitude: $scope.project.lng 
-                }, 
-                zoom: 15
-            };
 
             $scope.project = project.data.project;
             $scope.project.latitude = $scope.project.lat;
@@ -33,6 +26,13 @@
             $scope.project.icon = iconSymbol($scope.project.theme.hex_color);
             $scope.project.opinions = [];
             $scope.opinionsInitLoading = true;
+            $scope.map = { 
+                center: { 
+                    latitude: $scope.project.lat, 
+                    longitude: $scope.project.lng 
+                }, 
+                zoom: 15
+            };
 
             console.log($scope.project);
 
