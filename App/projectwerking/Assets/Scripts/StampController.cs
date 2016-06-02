@@ -19,7 +19,6 @@ public class StampController : MonoBehaviour {
 
   int previousQuestionType = 0; //NEED TO KNOW BECAUSE OTHERWISE THE HIDING OF STAMPS STARTS FOR NOTHING
   float rotationZ = 0;
-  float beginRotation = 0;
   RaycastHit hitInfo;
   GameInfo GI;
 
@@ -30,7 +29,6 @@ public class StampController : MonoBehaviour {
     restPosRedStamp = redStamp.transform.position;
     restPosGreenStamp = greenStamp.transform.position;
     restPosNumberStamp = numberStamp.transform.position;
-    beginRotation = redStamp.transform.rotation.z;
 
     redPosHide = new Vector3(redStamp.transform.position.x - 250f, redStamp.transform.position.y, redStamp.transform.position.z);
     greenPosHide = new Vector3(greenStamp.transform.position.x - 250f, greenStamp.transform.position.y, greenStamp.transform.position.z);

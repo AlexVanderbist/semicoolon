@@ -1,0 +1,5 @@
+user: test@host.local
+
+pass: secret
+
+BELANGRIJK: alle scenes moeten vanaf login scene getest worden! Anders werkt er niets.

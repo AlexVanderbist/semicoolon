@@ -8,7 +8,7 @@ public class TokenReceiver : MonoBehaviour {
 
   public string loginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
 
-  private string email = "";
+  //private string email = "";
   private string password = "";
   private string invalidString = "invalid_credentials";
 
@@ -31,8 +31,8 @@ public class TokenReceiver : MonoBehaviour {
     GI.Token = null;
     WWWForm Form = new WWWForm();
 
-    Form.AddField("email", PlayerPrefs.GetString("username"));
-    Form.AddField("password", PlayerPrefs.GetString("password"));
+    Form.AddField("email", GI.Email);
+    Form.AddField("password", GI.Password);
 
     WWW LoginAccountWWW = new WWW(loginUrl, Form);
 

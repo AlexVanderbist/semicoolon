@@ -14,6 +14,7 @@ public class GameInfo : MonoBehaviour {
   private static string firstNamePerson;
   private static string lastNamePerson;
   private static string email;
+  private static string password;
   private static string numberOfStampsDone;
   private static int currentQuestionNumber;
 
@@ -24,6 +25,12 @@ public class GameInfo : MonoBehaviour {
   private static string[][] questionArray;
   private static int[][] questionTypes;
   private static int[][] questionIds;
+
+  public string Password
+  {
+    get { return password; }
+    set { password = value; }
+  }
 
   public string Email
   {

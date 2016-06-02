@@ -89,7 +89,9 @@ public class Login : MonoBehaviour {
             if (rememberMeCheckbox.isOn)
             {
                 PlayerPrefs.SetString("username", email);
+                GI.Email = email;
                 PlayerPrefs.SetString("password", password);
+                GI.Password = password;
             }
             errorMessage.enabled = false;
             GI.Token = textData["token"].ToString();
