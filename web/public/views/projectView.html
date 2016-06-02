@@ -15,7 +15,7 @@
 			<h1>{{project.name}}</h1>
 			<div ng-bind-html="project.description"></div>
 
-			<div ng-if="project.stages">
+			<div ng-if="project.stages.length">
 			    <h2>Fases</h2>
 			    <div class="timeline">
 		            <div class="fase" ng-repeat="stage in project.stages">
@@ -44,8 +44,13 @@
 	            </div>
 	        </div>
 
-	        <div class="row opinions">
-	        	
+	        <div class="row opinions" ng-if="project.opinions.length">
+	        	<h2>Reacties</h2>
+	        	<div class="row opinion" ng-repeat="opinion in project.opinions">
+	        		<span>{{opinion.created_at}}</span>
+	        		<strong>{{opinion.posted_by.full_name}}</strong>
+	        		<p>{{opinion.opinion}}</p>
+	        	</div>
 	        </div>
 
 		</div>
