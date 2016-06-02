@@ -44,7 +44,9 @@
 	            </div>
 	        </div>
 
-	        <div class="row opinions" ng-if="project.opinions.length">
+	        {{project.opinions}}
+
+	        <div class="row opinions" ng-show="project.opinions.length">
 	        	<h2>Reacties</h2>
 	        	<div class="row opinion" ng-repeat="opinion in project.opinions">
 	        		<span>{{opinion.created_at}}</span>

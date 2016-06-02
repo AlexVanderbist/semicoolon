@@ -39,9 +39,11 @@
             projectService.opinions($stateParams.id).then(function(response){
                 // opinions loaded
                 $scope.project.opinions = response.data.opinions;
+                console.log('opinions loaded');
             }, function(response){
                 // loading opinions failed
                 // do nothing for now
+                console.log('w?');
             });
         });
     
