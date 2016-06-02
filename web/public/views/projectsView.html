@@ -14,14 +14,13 @@
 			</div>
 		    
 		    <div class="row">
-			    <div class="col-xs-offset-2 col-xs-8 no-padding">
+			    <div class="col-xs-offset-2 col-xs-8 no-padding themecol">
 				    <h3>Thema's</h3>
 
 			        <div class="checkbox" ng-repeat="theme in themes">
-			        	<label>
-			        		<input type="checkbox" name="filter" ng-model="filter[theme.id]">
-			        		{{theme.name}}
-			        	</label>
+			        	<input type="checkbox" name="filter" id="check{{theme.name}}" ng-model="filter[theme.id]" class="themebox">
+			        	<label class="wink" for="check{{theme.name}}"></label>
+			        	<label for="check{{theme.name}}"><p>{{theme.name}}</p></label>
 					</div>
 				</div>
 			</div>
