@@ -21,6 +21,10 @@
                 return $http.get(apiUrl + 'themes');
             };
 
+            projectService.opinions = function (id) {
+                return $http.get(apiUrl + 'projects/' + id + '/opinions');
+            };
+
             return projectService;
         });
 })();

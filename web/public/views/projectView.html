@@ -15,21 +15,23 @@
 			<h1>{{project.name}}</h1>
 			<div ng-bind-html="project.description"></div>
 
-		    <h2>Fases</h2>
-		    <div class="timeline">
-	            <div class="fase" ng-repeat="stage in project.stages">
-	                <div class="fasedate col-md-4 col-xs-4"><h4>{{stage.startdate | dateToISO | date : 'longDate'}}</h4></div> <!-- in right format and Dutch -->
-	                <div class="fasedescription col-md-8 col-xs-8">
-	                    <h3>{{stage.name}}</h3>
-	                    <div ng-bind-html="stage.description"></div>
-	                    <p class="enddate">Eindigd op {{stage.enddate | dateToISO | date : 'longDate' }}</p>
-	                </div>
-	            </div>
+			<div ng-if="project.stages.length">
+			    <h2>Fases</h2>
+			    <div class="timeline">
+		            <div class="fase" ng-repeat="stage in project.stages">
+		                <div class="fasedate col-md-4 col-xs-4"><h4>{{stage.startdate | dateToISO | date : 'longDate'}}</h4></div> <!-- in right format and Dutch -->
+		                <div class="fasedescription col-md-8 col-xs-8">
+		                    <h3>{{stage.name}}</h3>
+		                    <div ng-bind-html="stage.description"></div>
+		                    <p class="enddate">Eindigd op {{stage.enddate | dateToISO | date : 'longDate' }}</p>
+		                </div>
+		            </div>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="row">
-				<div ng-show="project.youtube_id" class="embed-responsive embed-responsive-16by9">
+				<div ng-show="project.youtube_id" class="embed-responsive embed-responsive-16by9 ytvideo">
 					<youtube-video class="embed-responsive-item" video-id="project.youtube_id"></youtube-video>
 				</div>
 			</div>
@@ -40,6 +42,17 @@
 	                	<img ng-src="/{{image.filename}}" alt="{{project.name}}" class="image">
 	                </a>
 	            </div>
+	        </div>
+
+	        {{project.opinions}}
+
+	        <div class="row opinions" ng-show="project.opinions.length">
+	        	<h2>Reacties</h2>
+	        	<div class="row opinion" ng-repeat="opinion in project.opinions">
+	        		<span>{{opinion.created_at}}</span>
+	        		<strong>{{opinion.posted_by.full_name}}</strong>
+	        		<p>{{opinion.opinion}}</p>
+	        	</div>
 	        </div>
 
 		</div>

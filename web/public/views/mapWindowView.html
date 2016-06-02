@@ -1,0 +1,10 @@
+<div class="project">
+    <div class="projectimg" ng-if="parameter.project.header_image">
+        <img ng-src="/{{parameter.project.header_image.filename}}" alt="{{parameter.project.name}}" />
+    </div>
+    <div class="projList">
+		<h2>{{parameter.project.name}}</h2>
+		<p>{{parameter.project.description | htmlToPlaintext | truncate:200}}</p>
+	</div>
+	<button class="btn btn-primary btn-lg btn-block" ui-sref="project({id:parameter.project.id})"><h3>Bekijk project</h3></button>
+</div>

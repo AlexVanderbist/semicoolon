@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
         Carbon::setLocale('nl');
         setlocale(LC_TIME, 'Dutch');
         view()->composer(
-            ['layouts.auth', 'layouts.backend'], 'App\ViewComposers\AddStatusMessage'
+            ['layouts.auth', 'layouts.backend', 'layouts.login'], 'App\ViewComposers\AddStatusMessage'
         );
         view()->composer(
             ['layouts.*'], 'App\ViewComposers\AddUser'
