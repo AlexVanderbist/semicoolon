@@ -5,6 +5,7 @@ public class SetStamp : MonoBehaviour {
 
   // GIVES A SPRITE STAMP TO THE PAPER
   // INPUT OF STAMPS IS FOUND IN GAME CONTROLLER SCRIPT
+  // ALSO, SHOWS NUMBER PANEL
 
   public GameObject gameManager, goodStampParticle, badStampParticle, numberStampParticle;
   public GameObject[] numberStampPrefabs, goodStampPrefabs, badStampPrefabs;

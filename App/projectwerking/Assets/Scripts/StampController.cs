@@ -8,7 +8,7 @@ public class StampController : MonoBehaviour {
   // GAME CONTROLLER PROVIDES THE INPUT
 
   public GameObject redStamp, greenStamp, numberStamp;
-  public int maxScaleToAdd = 30;
+  public int maxScaleToAdd = 25;
   public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
   public string answerURLTokenPart = "?token=";
   
@@ -19,7 +19,6 @@ public class StampController : MonoBehaviour {
 
   int previousQuestionType = 0; //NEED TO KNOW BECAUSE OTHERWISE THE HIDING OF STAMPS STARTS FOR NOTHING
   float rotationZ = 0;
-  float beginRotation = 0;
   RaycastHit hitInfo;
   GameInfo GI;
 
@@ -30,7 +29,6 @@ public class StampController : MonoBehaviour {
     restPosRedStamp = redStamp.transform.position;
     restPosGreenStamp = greenStamp.transform.position;
     restPosNumberStamp = numberStamp.transform.position;
-    beginRotation = redStamp.transform.rotation.z;
 
     redPosHide = new Vector3(redStamp.transform.position.x - 250f, redStamp.transform.position.y, redStamp.transform.position.z);
     greenPosHide = new Vector3(greenStamp.transform.position.x - 250f, greenStamp.transform.position.y, greenStamp.transform.position.z);
@@ -144,21 +142,21 @@ public class StampController : MonoBehaviour {
     {
       rotation = -65f;
     }
-    else if (height >= -110f && height < -65f)
+    if (height >= -110f && height < -65f)
     {
       rotation = -70f;
     }
-    else if (height >= -65f && height < 0)
-    {
-      rotation = -75f;
-    }
-    else if (height >= 0f && height < 50)
+    if (height >= -65f && height < 0)
     {
       rotation = -80f;
     }
-    else if (height >= 50f)
+    if (height >= 0f && height < 50)
     {
-      rotation = -85f;
+      rotation = -90f;
+    }
+    if (height >= 50f)
+    {
+      rotation = -180f;
     }
     return rotation;
   }

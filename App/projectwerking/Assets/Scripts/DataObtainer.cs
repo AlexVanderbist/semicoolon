@@ -42,9 +42,10 @@ public class DataObtainer : MonoBehaviour {
     www = new WWW(tempUrl);
     yield return www;
 
-    textData = JsonMapper.ToObject(www.text);
+
     if (www.error == null)
     {
+      textData = JsonMapper.ToObject(www.text);
       numberOfProjects = textData["projects"].Count;
       questionsArray = new string[numberOfProjects][];
       questionsIDArray = new int[numberOfProjects][];
@@ -81,9 +82,9 @@ public class DataObtainer : MonoBehaviour {
       www = new WWW(urlProposals);
       yield return www;
 
-      textData = JsonMapper.ToObject(www.text);
       if (www.error == null)
       {
+        textData = JsonMapper.ToObject(www.text);
         numberOfProposals = textData["proposals"].Count;
         string[] tempProposals = new string[numberOfProposals];
         int[] tempProposalsIds = new int[numberOfProposals];
@@ -124,9 +125,9 @@ public class DataObtainer : MonoBehaviour {
     www = new WWW(tempUrl);
     yield return www;
 
-    textData = JsonMapper.ToObject(www.text);
     if (www.error == null)
     {
+      textData = JsonMapper.ToObject(www.text);
       GI.FirstNamePerson = textData["user"]["firstname"].ToString();
       GI.LastNamePerson = textData["user"]["lastname"].ToString();
       GI.Email = textData["user"]["email"].ToString();
