@@ -12,9 +12,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 
+        'firstname',
         'lastname',
-        'email', 
+        'email',
         'admin',
         'password',
         'sex',
@@ -32,7 +32,16 @@ class User extends Authenticatable
     ];
 
     // Custom attributes also added to the array
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'num_opinions'];
+
+    public function opinions()
+    {
+        return $this->hasMany(Opinion::class);
+    }
+
+	public function getNumOpinionsAttribute() {
+		return $this->opinions->count();
+	}
 
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = bcrypt($value);
