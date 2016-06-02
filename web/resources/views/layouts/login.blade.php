@@ -51,10 +51,12 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="{{ url('/') }}">
-                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                    Front=end</a>
-                  </li>
+					<li>
+						<a href="{{ url('/') }}">
+							<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+							Terug naar front-end
+						</a>
+					</li>
                 </ul>
             </div>
         </div>
@@ -131,13 +133,13 @@
             },
 
             createForm: function(link) {
-              var form = 
+              var form =
               $('<form>', {
                 'method': 'POST',
                 'action': link.attr('href')
               });
 
-              var token = 
+              var token =
               $('<input>', {
                 'type': 'hidden',
                 'name': '_token',

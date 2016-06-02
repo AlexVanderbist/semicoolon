@@ -37,10 +37,11 @@ body,html {
     font-size: 13pt;
 
 }
-#app-layout{
+/* Backend body */
+body#app-layout{
   height: auto;
   min-height: 100%;
-  padding: 60px 0 60px 0;
+  padding: 120px 0 60px 0;
 }
 
 h1,h2,h3,h4 {
