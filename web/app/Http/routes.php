@@ -51,7 +51,19 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 Route::group(['middleware' => 'web'], function () {
 
 	/* AUTH */
-	Route::auth();
+	// Authentication Routes...
+	$this->get('login', 'Auth\AuthController@showLoginForm');
+	$this->post('login', 'Auth\AuthController@login');
+	$this->get('logout', 'Auth\AuthController@logout');
+
+	// Registration Routes...
+	// $this->get('register', 'Auth\AuthController@showRegistrationForm');
+	// $this->post('register', 'Auth\AuthController@register');
+
+	// Password Reset Routes...
+	$this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+	$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+	$this->post('password/reset', 'Auth\PasswordController@reset');
 
 
 	/* Link to angular front-end */

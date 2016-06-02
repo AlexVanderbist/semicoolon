@@ -404,21 +404,25 @@ fieldset[disabled] .btn-primary.active {
     position: relative;
 }
 
-table {
+table.opinions-table {
 	width: 100%;
 }
-thead, tbody, tr, td, th { display: block; }
-tr:after {
+.opinions-table thead,
+.opinions-table tbody,
+.opinions-table tr,
+.opinions-table td,
+.opinions-table th { display: block; }
+.opinions-table tr:after {
 	content: ' ';
 	display: block;
 	visibility: hidden;
 	clear: both;
 }
-tbody {
+.opinions-table tbody {
 	height: 400px;
 	overflow-y: auto;
 }
-tbody td {
+.opinions-table tbody td {
 	width: 100%;
 	float: left;
 }
