@@ -46,8 +46,10 @@
 
 	        {{project.opinions}}
 
-	        <div class="row opinions" ng-show="project.opinions.length">
+	        <div class="row opinions">
 	        	<h2>Reacties</h2>
+					<input type="text" class="form-control" ng-model="newOpinion.opinion" ng-enter="postOpinion()">
+					<small>Duw op enter om te versturen.</small>
 	        	<div class="row opinion" ng-repeat="opinion in project.opinions">
 	        		<span>{{opinion.created_at}}</span>
 	        		<strong>{{opinion.posted_by.full_name}}</strong>

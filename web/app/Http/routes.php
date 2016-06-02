@@ -17,11 +17,12 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 {
 	// Authenticate
 	Route::post('authenticate', 'API\AuthenticateController@authenticate');
-    
+
     // GET Projects
 	Route::get('projects', 'API\ProjectsController@index');
 	Route::get('projects/{project}', 'API\ProjectsController@view');
 	Route::get('projects/{project}/opinions', 'API\ProjectsController@opinions');
+	Route::post('projects/{project}/opinions', 'API\ProjectsController@postOpinions');
 
     // GET Themes
 	Route::get('themes', 'API\ProjectsController@getThemes');
@@ -46,9 +47,9 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 
 /* Laravel front end */
 Route::group(['middleware' => 'web'], function () {
-    
-    /* AUTH */
-    Route::auth();
+
+  /* AUTH */
+  Route::auth();
 
 
 	/* Link to angular front-end */
@@ -86,7 +87,7 @@ Route::group(['middleware' => 'web'], function () {
 
 
 
-	/* BACKEND */ 
+	/* BACKEND */
 	Route::group(['middleware' => 'admin', 'prefix' => 'backend'], function() {
 
 		Route::get('/', [

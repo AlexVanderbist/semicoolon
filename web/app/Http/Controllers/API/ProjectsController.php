@@ -25,7 +25,7 @@ class ProjectsController extends Controller
         $this->opinions = $opinions;
 	}
 
-    public function index() 
+    public function index()
     {
         $projects = $this->projects->with('theme', 'creator', 'images', 'stages')->get();
         //$projects = [];
@@ -33,7 +33,7 @@ class ProjectsController extends Controller
         return response()->json(compact('projects'));
     }
 
-    public function view($project) 
+    public function view($project)
     {
         $project = $this->projects->with('theme', 'creator', 'images', 'stages')->find($project);
         if(! $project) {
@@ -45,7 +45,7 @@ class ProjectsController extends Controller
         return response()->json(compact('project'));
     }
 
-    public function opinions($project_id) 
+    public function opinions($project_id)
     {
         $opinions = $this->opinions->with('posted_by')->find($project_id);
         if(! $opinions) {
@@ -57,7 +57,22 @@ class ProjectsController extends Controller
         return response()->json(compact('opinions'));
     }
 
-    public function getThemes(Theme $themes) 
+    public function postOpinion(Requests\StoreOpinionRequest $request, $id)
+    {
+        $this->opinions->create(
+            ['user_id' =>  auth()->check() ? auth()->user()->id : '0', 'project_id' => $id] + $request->only('opinion')
+        );
+				return response()->json(['status' => 'Opinion sent']);
+    }
+
+    public function destroyOpinion(Requests\DeleteOpinionRequest $request, Project $project, Opinion $opinion)
+    {
+        $opinion->delete();
+
+				return response()->json(['status' => 'Opinion destroyed']);
+    }
+
+    public function getThemes(Theme $themes)
     {
     	$themes = $themes->all();
     	return response()->json(compact('themes'));

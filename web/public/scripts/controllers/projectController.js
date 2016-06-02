@@ -16,8 +16,8 @@
                     strokeWeight: 2,
                     scale: 1,
                };
-            };
-            
+      			};
+
             // bind some scope stuff
 
             $scope.project = project.data.project;
@@ -26,11 +26,12 @@
             $scope.project.icon = iconSymbol($scope.project.theme.hex_color);
             $scope.project.opinions = [];
             $scope.opinionsInitLoading = true;
-            $scope.map = { 
-                center: { 
-                    latitude: $scope.project.lat, 
-                    longitude: $scope.project.lng 
-                }, 
+            $scope.newOpinion = {};
+            $scope.map = {
+                center: {
+                    latitude: $scope.project.lat,
+                    longitude: $scope.project.lng
+                },
                 zoom: 15
             };
 
@@ -45,6 +46,10 @@
                 // do nothing for now
                 console.log('w?');
             });
+
+			$scope.postOpinion = function () {
+				alert('ffs');
+			};
         });
-    
+
 })();
