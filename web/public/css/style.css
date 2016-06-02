@@ -41,7 +41,12 @@ body,html {
 body#app-layout{
   height: auto;
   min-height: 100%;
-  padding: 120px 0 60px 0;
+  padding: 60px 0 60px 0;
+}
+.login-layout{
+  padding-top: 120px !important;
+  /*background:-webkit-linear-gradient(left,rgb(222, 222, 222),rgba(255,0,0,0),rgb(222, 222, 222));*/
+  background: url("/images/background.jpg");
 }
 
 h1,h2,h3,h4 {
@@ -244,21 +249,21 @@ fieldset[disabled] .btn-primary.active {
   background-color: #FFFFFF;
 }
 
-.checkbox p{
+.custombox p{
   font-size: 150%;
   margin-left: 12px;
 }
-.checkbox input[type="checkbox"]{
+.custombox input[type="checkbox"]{
   display:none;
 }
-.checkbox .wink {
+.custombox .wink {
   cursor: pointer;
   height: 22px;
   position: absolute;
   top: 8px;
   border:1px solid #ddd;
 }
-.checkbox .wink:after {
+.custombox .wink:after {
   opacity: 0.2;
   content: '';
   position: absolute;
@@ -273,14 +278,14 @@ fieldset[disabled] .btn-primary.active {
   transition: all 0.2s;
   transform: rotate(-45deg);
 }
-.checkbox .wink:hover::after{
+.custombox .wink:hover::after{
   opacity: 0.5;
   width: 18px;
   height: 11px;
   top: 1px;
   left: 2px;
 }
-.checkbox input[type=checkbox]:checked + .wink:after {
+.custombox input[type=checkbox]:checked + .wink:after {
   opacity: 1;
 }
 /* TIMELINE */
@@ -480,6 +485,9 @@ table.opinions-table {
   font-size:110%;
   font-family: 'Antwerpen', 'Georgia', serif;
   padding:15px;
+}
+.panel-default {
+  border: none;
 }
 .marginbtn{
   margin-bottom: 10px;
