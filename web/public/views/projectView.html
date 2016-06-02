@@ -44,17 +44,29 @@
 	            </div>
 	        </div>
 
-	        {{project.opinions}}
-
 	        <div class="row opinions">
 	        	<h2>Reacties</h2>
-					<input type="text" class="form-control" ng-model="newOpinion.opinion" ng-enter="postOpinion()">
-					<small>Duw op enter om te versturen.</small>
-	        	<div class="row opinion" ng-repeat="opinion in project.opinions">
-	        		<span>{{opinion.created_at}}</span>
-	        		<strong>{{opinion.posted_by.full_name}}</strong>
-	        		<p>{{opinion.opinion}}</p>
-	        	</div>
+
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Uw reactie" ng-model="newOpinion.opinion" ng-keypress="($event.which === 13) && postOpinion()" />
+						<span class="input-group-btn">
+							<button class="btn btn-primary" type="button" ng-click="postOpinion()">Toevoegen</button>
+						</span>
+					</div><!-- /input-group -->
+					<small>of duw op enter om te versturen.</small>
+
+					<table class="opinions-table table table-condensed table-striped">
+					    <tbody>
+					        <tr ng-repeat="opinion in project.opinions | orderBy: '-'">
+					            <td>
+					        		<strong><small>{{opinion.posted_by.full_name}}</small></strong>
+					        		<div>{{opinion.opinion}}</div>
+						        	<small>Op {{opinion.created_at | dateToISO | date : 'medium'}}</small>
+								</td>
+					        </tr>
+					    </tbody>
+					</table>
+
 	        </div>
 
 		</div>

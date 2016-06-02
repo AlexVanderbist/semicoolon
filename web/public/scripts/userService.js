@@ -37,7 +37,7 @@
                     console.log("Login error: ", request);
                 });
             });
-        }
+        };
 
         userService.logout = function() {
             return $q(function(resolve) {

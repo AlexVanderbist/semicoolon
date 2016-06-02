@@ -111,13 +111,13 @@
                             localStorage.removeItem('user');
 
                             // Send the user to the auth state so they can login
-                            $state.go('login');
+                            $state.go('user.login');
                         }
                     });
 
                     return $q.reject(rejection);
                 }
-            }
+            };
         }
 
         // Setup for the $httpInterceptor

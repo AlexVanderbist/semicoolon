@@ -4,7 +4,7 @@
 
     angular
         .module('antwerpApp')
-        .controller('projectController', function ($scope, $rootScope, $stateParams, project, projectService) {
+        .controller('projectController', function ($scope, $rootScope, $stateParams, project, projectService, $interval) {
 
             // returns google maps icon object with symbol in given color
             var iconSymbol = function (color) {
@@ -37,18 +37,24 @@
 
             console.log($scope.project);
 
-            projectService.opinions($stateParams.id).then(function(response){
-                // opinions loaded
-                $scope.project.opinions = response.data.opinions;
-                console.log('opinions loaded');
-            }, function(response){
-                // loading opinions failed
-                // do nothing for now
-                console.log('w?');
-            });
+			function loadOpinions () {
+	            projectService.opinions($stateParams.id).then(function(response){
+	                // opinions loaded; if there are any add them
+	                if(response.data.opinions.length) {
+						$scope.project.opinions = response.data.opinions;
+		                console.log('opinions loaded', $scope.project.opinions);
+					}
+	            });
+			}
+			loadOpinions();
+			$interval(loadOpinions, 5000);
 
 			$scope.postOpinion = function () {
-				alert('ffs');
+				projectService.postOpinion($stateParams.id, $scope.newOpinion).then(function(response) {
+					// posted, now add to object and reload to get new comments as well
+					$scope.project.opinions = response.data.opinions;
+					$scope.newOpinion = {};
+				});
 			};
         });
 

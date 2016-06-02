@@ -22,7 +22,6 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 	Route::get('projects', 'API\ProjectsController@index');
 	Route::get('projects/{project}', 'API\ProjectsController@view');
 	Route::get('projects/{project}/opinions', 'API\ProjectsController@opinions');
-	Route::post('projects/{project}/opinions', 'API\ProjectsController@postOpinions');
 
     // GET Themes
 	Route::get('themes', 'API\ProjectsController@getThemes');
@@ -42,14 +41,17 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 	    // POST Project proposals opinion by user
 	    Route::post('proposals/{proposal}', 'API\ProposalsController@postProposalOpinionForUser');
 
+		// POST Project opinion (comment) by user
+		Route::post('projects/{project}/opinions', 'API\ProjectsController@postOpinion');
+
 	});
 });
 
 /* Laravel front end */
 Route::group(['middleware' => 'web'], function () {
 
-  /* AUTH */
-  Route::auth();
+	/* AUTH */
+	Route::auth();
 
 
 	/* Link to angular front-end */

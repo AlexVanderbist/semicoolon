@@ -47,7 +47,7 @@ class ProjectsController extends Controller
 
     public function opinions($project_id)
     {
-        $opinions = $this->opinions->with('posted_by')->find($project_id);
+        $opinions = $this->opinions->find($project_id)->with('posted_by')->get();
         if(! $opinions) {
             return response()->json([
                 'error' => 'Project not found',
@@ -59,17 +59,20 @@ class ProjectsController extends Controller
 
     public function postOpinion(Requests\StoreOpinionRequest $request, $id)
     {
-        $this->opinions->create(
-            ['user_id' =>  auth()->check() ? auth()->user()->id : '0', 'project_id' => $id] + $request->only('opinion')
+        $opinion = $this->opinions->create(
+            ['user_id' =>  auth()->user()->id, 'project_id' => $id] + $request->only('opinion')
         );
-				return response()->json(['status' => 'Opinion sent']);
+
+		// we need poster by as well
+		$opinions = $this->opinions->find($id)->with('posted_by')->get();
+		return response()->json(compact('opinions'));
     }
 
     public function destroyOpinion(Requests\DeleteOpinionRequest $request, Project $project, Opinion $opinion)
     {
         $opinion->delete();
 
-				return response()->json(['status' => 'Opinion destroyed']);
+		return response()->json(['status' => 'Opinion destroyed']);
     }
 
     public function getThemes(Theme $themes)

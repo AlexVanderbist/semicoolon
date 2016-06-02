@@ -35,7 +35,7 @@ body,html {
 	height: 100%;
     font-family: 'SunAntwerpen', sans-serif;
     font-size: 13pt;
-  
+
 }
 #app-layout{
   height: auto;
@@ -124,7 +124,7 @@ h1,h2,h3,h4 {
   padding-top: 60px;
 }
 
-.full-height { 
+.full-height {
 	height: 100%;
 }
 
@@ -199,50 +199,50 @@ h1,h2,h3,h4 {
     text-transform: uppercase;
 }
 
-.btn-primary { 
-  color: #FFFFFF; 
-  background-color: #1964B2; 
-  border-color: #4E4A61; 
-} 
- 
-.btn-primary:hover, 
-.btn-primary:focus, 
-.btn-primary:active, 
-.btn-primary.active, 
-.open .dropdown-toggle.btn-primary { 
-  color: #FFFFFF; 
-  background-color: #003F72; 
-  border-color: #4E4A61; 
-} 
- 
-.btn-primary:active, 
-.btn-primary.active, 
-.open .dropdown-toggle.btn-primary { 
-  background-image: none; 
-} 
- 
-.btn-primary.disabled, 
-.btn-primary[disabled], 
-fieldset[disabled] .btn-primary, 
-.btn-primary.disabled:hover, 
-.btn-primary[disabled]:hover, 
-fieldset[disabled] .btn-primary:hover, 
-.btn-primary.disabled:focus, 
-.btn-primary[disabled]:focus, 
-fieldset[disabled] .btn-primary:focus, 
-.btn-primary.disabled:active, 
-.btn-primary[disabled]:active, 
-fieldset[disabled] .btn-primary:active, 
-.btn-primary.disabled.active, 
-.btn-primary[disabled].active, 
-fieldset[disabled] .btn-primary.active { 
-  background-color: #1964B2; 
-  border-color: #4E4A61; 
-} 
- 
-.btn-primary .badge { 
-  color: #1964B2; 
-  background-color: #FFFFFF; 
+.btn-primary {
+  color: #FFFFFF;
+  background-color: #1964B2;
+  border-color: #4E4A61;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #FFFFFF;
+  background-color: #003F72;
+  border-color: #4E4A61;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #1964B2;
+  border-color: #4E4A61;
+}
+
+.btn-primary .badge {
+  color: #1964B2;
+  background-color: #FFFFFF;
 }
 
 /* TIMELINE */
@@ -402,6 +402,26 @@ fieldset[disabled] .btn-primary.active {
     overflow: hidden;
     position: relative;
 }
+
+table {
+	width: 100%;
+}
+thead, tbody, tr, td, th { display: block; }
+tr:after {
+	content: ' ';
+	display: block;
+	visibility: hidden;
+	clear: both;
+}
+tbody {
+	height: 400px;
+	overflow-y: auto;
+}
+tbody td {
+	width: 100%;
+	float: left;
+}
+
 .panel-heading{
   background-color: #CF0039 !important;
   border-color: #CF0039 !important;

@@ -25,6 +25,10 @@
                 return $http.get(apiUrl + 'projects/' + id + '/opinions');
             };
 
+            projectService.postOpinion = function (id, opinionObject) {
+                return $http.post(apiUrl + 'projects/' + id + '/opinions', opinionObject);
+            };
+
             return projectService;
         });
 })();
