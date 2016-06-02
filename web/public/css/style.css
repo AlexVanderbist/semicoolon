@@ -109,11 +109,10 @@ h1,h2,h3,h4 {
     bottom: 0;
     left: 60px;
 }
-
-/* Project */
-.map-header {
-    height: 240px;
+.themecol{
+  padding-top: 4%;
 }
+
 
 /* Angular fix */
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
@@ -187,7 +186,6 @@ h1,h2,h3,h4 {
     border: none;
 }
 
-
 /* Custom Bootstrap buttons */
 
 .btn {
@@ -246,6 +244,45 @@ fieldset[disabled] .btn-primary.active {
   background-color: #FFFFFF;
 }
 
+.checkbox p{
+  font-size: 150%;
+  margin-left: 12px;
+}
+.checkbox input[type="checkbox"]{
+  display:none;
+}
+.checkbox .wink {
+  cursor: pointer;
+  height: 22px;
+  position: absolute;
+  top: 8px;
+  border:1px solid #ddd;
+}
+.checkbox .wink:after {
+  opacity: 0.2;
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 8px;
+  background: transparent;
+  top: 4px;
+  left: 5px;
+  border: 3px solid #1964B2;
+  border-top: none;
+  border-right: none;
+  transition: all 0.2s;
+  transform: rotate(-45deg);
+}
+.checkbox .wink:hover::after{
+  opacity: 0.5;
+  width: 18px;
+  height: 11px;
+  top: 1px;
+  left: 2px;
+}
+.checkbox input[type=checkbox]:checked + .wink:after {
+  opacity: 1;
+}
 /* TIMELINE */
 .fasedate {
   text-align: right;
@@ -265,12 +302,12 @@ fieldset[disabled] .btn-primary.active {
   height: 100%;
   margin-left: -3px;
   background: rgb(80,80,80);
-  background: -moz-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -moz-linear-gradient(top, rgb(80,80,80) 0%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
-  background: -webkit-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-  background: -o-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-  background: -ms-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-  background: linear-gradient(to bottom, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -webkit-linear-gradient(top, rgb(80,80,80) 0%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -o-linear-gradient(top, rgb(80,80,80) 0%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: -ms-linear-gradient(top, rgb(80,80,80) 0%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
+  background: linear-gradient(to bottom, rgb(80,80,80) 0%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
   z-index: 5;
 }
 .fasedescription:before { /* RED ORB */
@@ -374,6 +411,15 @@ fieldset[disabled] .btn-primary.active {
 
 
 /* PROJECTS */
+.map-header {
+    height: 240px;
+}
+.projectcontainer{
+  padding-top: 2%;
+}
+.projectcontainer h1 {
+  color: #CF0039;
+}
 .ytvideo {
   margin: 20px 0 10px 0;
 }
