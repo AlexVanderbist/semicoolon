@@ -7,6 +7,8 @@
 
     <title>Login | {!! config('cms.sitename') !!}</title>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="{!! asset('/css/style.css') !!}" rel="stylesheet">
@@ -27,7 +29,7 @@
     <meta name="theme-color" content="#cf0039">
 
 </head>
-<body id="app-layout">
+<body id="app-layout" class="login-layout">
     <nav class="navbar navbar-default navbar-fixed-top" id="antwerp-menu">
         <div class="container">
             <div class="navbar-header">
@@ -61,7 +63,6 @@
             </div>
         </div>
     </nav>
-
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -87,10 +88,16 @@
             </div>
         </div>
     </div>
-
     <script>
         (function() {
-
+          /*var defaultMap = JSON.parse('{!! json_encode(config('cms.defaultmap')) !!}');
+          var map;
+          window.initMap = function(){
+            map = new google.maps.Map(document.getElementById('map'), {
+              center: new google.maps.LatLng(defaultMap.lat, defaultMap.lng),
+              zoom: parseInt(defaultMap.zoom)
+            });
+          }*/
           // JS code to create anchor tags with a specific Anguler method
 
           var laravel = {
@@ -162,5 +169,7 @@
 
         })();
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhTfQGWyjyP7vj3t_GFtOrF7-mbGsVLAY&callback=initMap"
+    async defer></script>
 </body>
 </html>
