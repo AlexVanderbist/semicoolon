@@ -8,7 +8,7 @@ public class StampController : MonoBehaviour {
   // GAME CONTROLLER PROVIDES THE INPUT
 
   public GameObject redStamp, greenStamp, numberStamp;
-  public int maxScaleToAdd = 30;
+  public int maxScaleToAdd = 25;
   public string answerURL = "http://semicolon.multimediatechnology.be/api/v1/";
   public string answerURLTokenPart = "?token=";
   
