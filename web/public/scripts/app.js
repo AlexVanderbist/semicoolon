@@ -44,6 +44,11 @@
                 templateUrl: templateUrlPrefix + 'loginView.html',
                 controller: 'authController'
             })
+            .state('user.register', {
+                url: '/register',
+                templateUrl: templateUrlPrefix + 'registrationView.html',
+                controller: 'registrationController'
+            })
             .state('user.logout', {
                 url: '/logout',
                 templateUrl: templateUrlPrefix + 'logoutView.html',

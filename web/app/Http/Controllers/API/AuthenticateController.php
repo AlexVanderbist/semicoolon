@@ -72,4 +72,14 @@ class AuthenticateController extends Controller
         // the token is valid and we have found the user via the sub claim
         return response()->json(compact('user'));
     }
+
+	public function registerUser (Requests\StoreUserRequest $request) {
+		User::create([
+			'firstname' => $request->firstname,
+			'lastname' => $request->lastname,
+			'email' => $request->email,
+			'password' => bcrypt($request->password),
+		]);
+		return response()->json(['status' => 'success']);
+	}
 }

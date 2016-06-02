@@ -39,6 +39,10 @@
             });
         };
 
+		userService.register = function(newUser) {
+			return $http.post(apiUrl + 'authenticate/register', newUser);
+		};
+
         userService.logout = function() {
             return $q(function(resolve) {
                 $auth.logout().then(function() {
@@ -49,7 +53,7 @@
                     resolve();
                 });
             });
-        }
+        };
 
         return userService;
     });

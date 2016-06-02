@@ -46,38 +46,43 @@
 
         </div>
         <div class="navbar-collapse collapse" uib-collapse="isCollapsed">
-          <!-- Left Side Of Navbar -->
-          <!-- <ul class="nav navbar-nav">
-            <li><a ui-sref="projects.map">Projecten</a></li>
-          </ul> -->
+			<!-- Left Side Of Navbar -->
+			<!-- <ul class="nav navbar-nav">
+				<li><a ui-sref="projects.map">Projecten</a></li>
+			</ul> -->
 
-          <!-- Right Side Of Navbar -->
-          <ul class="nav navbar-nav navbar-right">
+			<!-- Right Side Of Navbar -->
+	        <ul class="nav navbar-nav navbar-right">
 
-            <li><a ui-sref="projects.map">Projecten</a></li>
+	            <li>
+					<a ui-sref="projects.map">
+						<span class="icon-StampIcon"></span>
+						Projecten
+					</a>
+				</li>
 
-            <!-- Authentication Links -->
-              <li ng-hide="authenticated"><a ui-sref="user.login">Inloggen</a></li>
-              <li ng-hide="authenticated"><a href="{{ url('/register') }}">Registreer (old)</a></li>
+	            <!-- Authentication Links -->
+				<li ng-hide="authenticated"><a ui-sref="user.login">Inloggen</a></li>
+					<li ng-hide="authenticated"><a href="{{ url('/register') }}">Registreer (old)</a></li>
 
-              <li class="btn-group" uib-dropdown ng-show="authenticated">
-                <a href uib-dropdown-toggle>
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> @{{ currentUser.full_name }}
-                </a>
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+					<li class="btn-group" uib-dropdown ng-show="authenticated">
+						<a href uib-dropdown-toggle>
+							<span class="glyphicon glyphicon-user" aria-hidden="true"></span> @{{ currentUser.full_name }}
+						</a>
+						<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 
-					<li ng-show="currentUser.admin == 1">
-					  <a href="{{ route('backend.dashboard') }}">
-						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Back-end
-					  </a>
+							<li ng-show="currentUser.admin == 1">
+								<a href="{{ route('backend.dashboard') }}">
+									<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Back-end
+								</a>
+							</li>
+
+							<li>
+								<a ui-sref="user.logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log uit</a>
+							</li>
+						</ul>
 					</li>
-
-					<li>
-						  <a ui-sref="user.logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log uit</a>
-					</li>
-                </ul>
-              </li>
-          </ul>
+	        </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -107,6 +112,7 @@
 
     <script src="{!! asset('scripts/controllers/authController.js') !!}"></script>
     <script src="{!! asset('scripts/controllers/logoutController.js') !!}"></script>
+    <script src="{!! asset('scripts/controllers/registrationController.js') !!}"></script>
     <script src="{!! asset('scripts/controllers/projectController.js') !!}"></script>
     <script src="{!! asset('scripts/controllers/projectsController.js') !!}"></script>
     <script src="{!! asset('scripts/controllers/projectListController.js') !!}"></script>

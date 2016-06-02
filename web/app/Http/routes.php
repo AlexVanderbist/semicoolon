@@ -17,6 +17,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 {
 	// Authenticate
 	Route::post('authenticate', 'API\AuthenticateController@authenticate');
+	Route::post('authenticate/register', 'API\AuthenticateController@registerUser');
 
     // GET Projects
 	Route::get('projects', 'API\ProjectsController@index');

@@ -1,0 +1,29 @@
+<form>
+	<div class="content">
+		<h3>Registreren</h3>
+		<div class="alert alert-danger" ng-show="errors">
+			<strong>Er waren een aantal fouten:</strong>
+			<ul>
+				<li ng-repeat="error in errors">{{error[0]}}</li>
+			</ul>
+		</div>
+		<div class="form-group">
+	    	<input type="text" class="form-control" placeholder="Voornaam" ng-model="newUser.firstname">
+	  	</div>
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="Achternaam" ng-model="newUser.lastname">
+		</div>
+		<div class="form-group">
+	    	<input type="email" class="form-control" placeholder="E-mail" ng-model="newUser.email">
+	  	</div>
+	  	<div class="form-group">
+	    	<input type="password" class="form-control" placeholder="Wachtwoord" ng-model="newUser.password">
+	  	</div>
+	  	<div class="form-group">
+	    	<input type="password" class="form-control" placeholder="Wachtwoord" ng-model="newUser.password_confirmation">
+	  	</div>
+	</div>
+
+	<button class="btn btn-lg btn-primary pull-right" ng-click="register()">Registreren</button>
+	<div class="clearfix"></div>
+</form>

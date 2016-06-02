@@ -59,8 +59,10 @@ class ProjectsController extends Controller
 
     public function postOpinion(Requests\StoreOpinionRequest $request, $id)
     {
-        $opinion = $this->opinions->create(
-            ['user_id' =>  auth()->user()->id, 'project_id' => $id] + $request->only('opinion')
+        $opinion = $this->opinions->create([
+			'user_id' =>  auth()->user()->id,
+			'project_id' => $id
+			] + $request->only('opinion')
         );
 
 		// we need poster by as well
