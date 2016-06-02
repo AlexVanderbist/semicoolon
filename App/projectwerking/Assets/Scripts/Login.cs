@@ -79,12 +79,12 @@ public class Login : MonoBehaviour {
 
       WWW LoginAccountWWW = new WWW(loginUrl, Form);
       yield return LoginAccountWWW;
-      textData = JsonMapper.ToObject(LoginAccountWWW.text);
 
       if (LoginAccountWWW.error == null)
       {
-        //SAVE TOKEN
-        if (textData["token"].ToString() != "")
+      textData = JsonMapper.ToObject(LoginAccountWWW.text);
+      //SAVE TOKEN
+      if (textData["token"].ToString() != "")
         {
             if (rememberMeCheckbox.isOn)
             {

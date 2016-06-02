@@ -142,21 +142,21 @@ public class StampController : MonoBehaviour {
     {
       rotation = -65f;
     }
-    else if (height >= -110f && height < -65f)
+    if (height >= -110f && height < -65f)
     {
       rotation = -70f;
     }
-    else if (height >= -65f && height < 0)
-    {
-      rotation = -75f;
-    }
-    else if (height >= 0f && height < 50)
+    if (height >= -65f && height < 0)
     {
       rotation = -80f;
     }
-    else if (height >= 50f)
+    if (height >= 0f && height < 50)
     {
-      rotation = -85f;
+      rotation = -90f;
+    }
+    if (height >= 50f)
+    {
+      rotation = -180f;
     }
     return rotation;
   }
