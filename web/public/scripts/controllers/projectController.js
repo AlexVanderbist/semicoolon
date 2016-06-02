@@ -4,7 +4,7 @@
 
     angular
         .module('antwerpApp')
-        .controller('projectController', function ($scope, $rootScope, $state, project) {
+        .controller('projectController', function ($scope, $rootScope, $stateParams, project, projectService) {
 
             // returns google maps icon object with symbol in given color
             var iconSymbol = function (color) {
@@ -19,13 +19,6 @@
             };
             
             // bind some scope stuff
-            $scope.project = project.data.project;
-            $scope.project.latitude = $scope.project.lat;
-            $scope.project.longitude = $scope.project.lng;
-            $scope.project.icon = iconSymbol($scope.project.theme.hex_color);
-
-            console.log($scope.project);
-
             $scope.map = { 
                 center: { 
                     latitude: $scope.project.lat, 
@@ -33,6 +26,23 @@
                 }, 
                 zoom: 15
             };
+
+            $scope.project = project.data.project;
+            $scope.project.latitude = $scope.project.lat;
+            $scope.project.longitude = $scope.project.lng;
+            $scope.project.icon = iconSymbol($scope.project.theme.hex_color);
+            $scope.project.opinions = [];
+            $scope.opinionsInitLoading = true;
+
+            console.log($scope.project);
+
+            projectService.opinions($stateParams.id).then(function(response){
+                // opinions loaded
+                $scope.project.opinions = response.data.opinions;
+            }, function(response){
+                // loading opinions failed
+                // do nothing for now
+            });
         });
     
 })();

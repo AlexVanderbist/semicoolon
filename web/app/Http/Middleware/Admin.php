@@ -21,6 +21,6 @@ class Admin
             return $next($request);
         }
 
-        return redirect('');
+        return redirect('/auth/login');
     }
 }
