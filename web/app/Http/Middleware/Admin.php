@@ -15,12 +15,12 @@ class Admin
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {    
+    {
         if ( Auth::check() && Auth::user()->admin )
         {
             return $next($request);
         }
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

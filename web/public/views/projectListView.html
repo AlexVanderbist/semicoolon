@@ -1,17 +1,14 @@
 <div class="col-md-offset-1 row project-list">
-    <div ng-repeat="project in $parent.projects | filter:$parent.filterByTheme">
-        <div class="clearfix" ng-if="$index % 3 == 0"></div>
-        <div class="col-md-4">
-        	<div class="project">
-        		<div class="projectimg" ng-if="project.header_image">
-        			<img ng-src="/{{project.header_image.filename}}" alt="{{project.name}}" />
-        		</div>
-        		<div class="projList">
-		            <h2>{{project.name}}</h2>
-					<div ng-bind-html="project.description | htmlToPlaintext | truncate:200"></div>
-				</div>
-				<button class="btn btn-primary btn-lg btn-block" ui-sref="project({id:project.id})"><h3>Bekijk project</h3></button>
-        	</div>
-        </div>
+    <div ng-repeat="project in $parent.projects | filter:$parent.filterByTheme" class="project-container">
+		<div class="project-box">
+			<div class="projectimg" ng-if="project.header_image">
+				<img ng-src="/{{project.header_image.filename}}" alt="{{project.name}}" />
+			</div>
+			<div class="project-content">
+	            <h2>{{project.name}}</h2>
+				<div class="project-description" ng-bind-html="project.description | htmlToPlaintext | truncate:200"></div>
+			</div>
+			<button class="btn btn-primary btn-lg btn-block" ui-sref="project({id:project.id})"><h3>Bekijk project</h3></button>
+		</div>
     </div>
 </div>

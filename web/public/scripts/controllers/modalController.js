@@ -4,10 +4,10 @@
 
     angular
         .module('antwerpApp')
-        .controller('modalController', function ($scope, mapOptions) {
-        	
-            $scope.map = { 
-                center: mapOptions.center, 
+        .controller('modalController', function ($scope, mapOptions, $stateParams) {
+
+            $scope.map = {
+                center: mapOptions.center,
                 zoom: mapOptions.zoom,
                 options: {styles: mapOptions.styleArray}
             };
