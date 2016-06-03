@@ -37,7 +37,10 @@
             .state('user', {
                 templateUrl: templateUrlPrefix + 'modalView.html',
                 controller: 'modalController',
-                abstract: true
+                abstract: true,
+				params: {
+					status: null
+				}
             })
             .state('user.login', {
                 url: '/login',
