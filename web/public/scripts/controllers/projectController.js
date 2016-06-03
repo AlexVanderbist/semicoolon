@@ -4,7 +4,7 @@
 
     angular
         .module('antwerpApp')
-        .controller('projectController', function ($scope, $rootScope, $stateParams, project, projectService, $interval) {
+        .controller('projectController', function ($scope, $rootScope, $stateParams, project, projectService, $interval, mapOptions) {
 
             // returns google maps icon object with symbol in given color
             var iconSymbol = function (color) {
@@ -32,7 +32,8 @@
                     latitude: $scope.project.lat,
                     longitude: $scope.project.lng
                 },
-                zoom: 15
+                zoom: 15,
+                options: {styles: mapOptions.styleArray}
             };
 
             console.log($scope.project);

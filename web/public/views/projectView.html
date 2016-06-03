@@ -1,5 +1,5 @@
 <div class="map-header">
-	<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+	<ui-gmap-google-map center='map.center' zoom='map.zoom' options="map.options">
 		<ui-gmap-marker
 	        idKey='project.id'
 	        coords='project'
@@ -8,8 +8,10 @@
 		</ui-gmap-marker>
 	</ui-gmap-google-map>
 </div>
-
 <div class="container projectcontainer">
+	<a ui-sref="projects.map" href="#/projects/map" class="btn btn-default">
+		        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Terug naar projecten
+	</a>
 	<div class="row">
 		<div class="col-md-8">
 			<h1>{{project.name}}</h1>
