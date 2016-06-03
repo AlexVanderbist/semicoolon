@@ -234,9 +234,11 @@
                     },
                     options: {maxWidth:400} // defined when map is loaded
                 },
-                styles: styleArray
+                options: {
+                    styles: styleArray
+                }
             };
-
+            
             uiGmapGoogleMapApi.then(function(maps) {
                 // offset to fit the custom icon
                 $scope.map.window.options.pixelOffset = new google.maps.Size(0, -35, 'px', 'px');
