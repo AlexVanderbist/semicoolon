@@ -4,14 +4,12 @@
 
     angular
         .module('antwerpApp')
-        .controller('modalController', function ($scope, $stateParams) {
-
-            $scope.map = {
-                center: {
-                    latitude: 51.218686,
-                    longitude: 4.417458
-                },
-                zoom: 14
+        .controller('modalController', function ($scope, mapOptions) {
+        	
+            $scope.map = { 
+                center: mapOptions.center, 
+                zoom: mapOptions.zoom,
+                options: {styles: mapOptions.styleArray}
             };
 
 			$scope.status = $stateParams.status;
