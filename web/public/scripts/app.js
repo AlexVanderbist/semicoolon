@@ -203,9 +203,9 @@
     .factory('mapOptions', function() {
         return {
             zoom : 14,
-            center: { 
-                latitude: 51.218686, 
-                longitude: 4.417458 
+            center: {
+                latitude: 51.218686,
+                longitude: 4.417458
             },
             styleArray: [
                 {

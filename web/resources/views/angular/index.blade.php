@@ -42,6 +42,7 @@
           <a ui-sref="projects" class="pull-left"><img src="{!! asset('images/logo.svg') !!}" class="grid-height"></a>
           <a class="navbar-brand" ui-sref="home.intro">
             {!! config('cms.sitename') !!}
+			<span>Zet je stempel op de kaart.</span>
           </a>
 
         </div>

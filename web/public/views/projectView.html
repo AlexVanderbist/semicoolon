@@ -10,7 +10,7 @@
 </div>
 <div class="container projectcontainer">
 	<a ui-sref="projects.map" href="#/projects/map" class="btn btn-default">
-		        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Terug naar projecten
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Terug naar projecten
 	</a>
 	<div class="row">
 		<div class="col-md-8">
@@ -39,11 +39,13 @@
 			</div>
 
 			<div class="row imagecontainer">
-	            <div class="col-sm-4 imagediv" ng-repeat="image in project.images">
-	                <a href="/{{image.filename}}" data-lightbox="{{project.name}}" data-title="{{project.name}}">
-	                	<img ng-src="/{{image.filename}}" alt="{{project.name}}" class="image">
-	                </a>
-	            </div>
+	            <div class="imagediv-container" ng-repeat="image in project.images">
+		            <div class="imagediv">
+		                <a href="/{{image.filename}}" data-lightbox="{{project.name}}" data-title="{{project.name}}">
+		                	<img ng-src="/{{image.filename}}" alt="{{project.name}}" class="image">
+		                </a>
+		            </div>
+				</div>
 	        </div>
 
 	        <div class="row opinions">
