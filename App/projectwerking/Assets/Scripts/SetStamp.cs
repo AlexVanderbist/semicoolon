@@ -9,112 +9,72 @@ public class SetStamp : MonoBehaviour {
 
   public GameObject gameManager, goodStampParticle, badStampParticle, numberStampParticle;
   public GameObject[] numberStampPrefabs, goodStampPrefabs, badStampPrefabs;
-  public GameObject numberPanel;
+  public GameObject checkmarkPrefab;
   public AudioClip sound;
   public float showPanelSpeed = 0.7f, randomStampPrint;
+  public Transform hashtagPos;
 
   StampController stamps;
   PaperController paper;
 
   private AudioSource source { get { return GetComponent<AudioSource>(); } }
-  private bool isNumberSet = false;
-  private bool isPanelReadyToMove = false;
-  private bool isPanelShown = false;
-  private int number;
-  private float step;
-  private Vector3 numberPanelHiddenPos;
-  private Vector3 numberPanelShownPos;
 
   // LOAD VARIABLES NEEDED
   void Start () {
     stamps = gameManager.GetComponent<StampController>();
     paper = gameManager.GetComponent<PaperController>();
-    numberPanelHiddenPos = numberPanel.transform.position;
-    numberPanelShownPos = new Vector3(numberPanel.transform.position.x, (Screen.height/ 854) / 2, numberPanel.transform.position.z); // 854 IS FOR ASPECT RATIO
     gameObject.AddComponent<AudioSource>();
     source.clip = sound;
     source.playOnAwake = false;
-  }
-
-  //MOVES THE PANEL WITH NUMBERS
-  void Update()
-  {
-    if (isPanelReadyToMove)
-    {
-      if (!isPanelShown)
-      {
-        step += showPanelSpeed * Time.deltaTime;
-        numberPanel.transform.position = Vector3.Lerp(numberPanel.transform.position, numberPanelShownPos, step);
-        if (step >= 1)
-        {
-          step = 0;
-          isPanelReadyToMove = false;
-          isPanelShown = true;
-        }
-      }
-      else
-      {
-        step += showPanelSpeed * Time.deltaTime;
-        numberPanel.transform.position = Vector3.Lerp(numberPanel.transform.position, numberPanelHiddenPos, step);
-        if (step >= 1)
-        {
-          Debug.Log("Move back");
-          step = 0;
-          isPanelReadyToMove = false;
-          isPanelShown = false;
-        }
-      }
-    }
   }
 
   // A DELAY OF ONE SECOND BECAUSE THE STAMP SPRITE IS OTHERWISE TOO FAST
   IEnumerator WaitSecondsForStamp(int seconds, RaycastHit hit)
   {
     yield return new WaitForSeconds(seconds);
+    PlaySound();
     string selectedStamp = stamps.SelectedStamp;
     GameObject printedStamp = null;
-    PlaySound();
+    GameObject checkmarkStamp = null;
+    
     randomStampPrint = Random.Range(0, 3);
 
     //CHECK FOR THE SELECTED STAMP
     if (selectedStamp == "green")
     {
-        goodStampParticle.GetComponentInChildren<ParticleSystem>().Play();
         printedStamp = (GameObject)Instantiate(goodStampPrefabs[(int)randomStampPrint], hit.point, transform.rotation);
-        printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
     else if (selectedStamp == "red")
     {
-        badStampParticle.GetComponentInChildren<ParticleSystem>().Play();
         printedStamp = (GameObject)Instantiate(badStampPrefabs[(int)randomStampPrint], hit.point, transform.rotation);
-        printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     }
     else if (selectedStamp == "number")
     {
-      isPanelReadyToMove = true;
-      switch (Number)
+      switch (hit.collider.gameObject.name)
       {
-        case 1:
-          printedStamp = (GameObject)Instantiate(numberStampPrefabs[0], hit.point, transform.rotation);
+        case "1":
+          printedStamp = (GameObject)Instantiate(numberStampPrefabs[0], hashtagPos.position, transform.rotation);
           break;
-        case 2:
-          printedStamp = (GameObject)Instantiate(numberStampPrefabs[1], hit.point, transform.rotation);
+        case "2":
+          printedStamp = (GameObject)Instantiate(numberStampPrefabs[1], hashtagPos.position, transform.rotation);
           break;
-        case 3:
-          printedStamp = (GameObject)Instantiate(numberStampPrefabs[2], hit.point, transform.rotation);
+        case "3":
+          printedStamp = (GameObject)Instantiate(numberStampPrefabs[2], hashtagPos.position, transform.rotation);
           break;
-        case 4:
-          printedStamp = (GameObject)Instantiate(numberStampPrefabs[3], hit.point, transform.rotation);
+        case "4":
+          printedStamp = (GameObject)Instantiate(numberStampPrefabs[3], hashtagPos.position, transform.rotation);
           break;
-        case 5:
-          printedStamp = (GameObject)Instantiate(numberStampPrefabs[4], hit.point, transform.rotation);
+        case "5":
+          printedStamp = (GameObject)Instantiate(numberStampPrefabs[4], hashtagPos.position, transform.rotation);
           break;
         default:
           break;
       }
-      numberStampParticle.GetComponentInChildren<ParticleSystem>().Play();
-      printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
+      checkmarkStamp = (GameObject)Instantiate(checkmarkPrefab, hit.point, transform.rotation);
+      checkmarkStamp.transform.SetParent(paper.getCurrentNumberPaper.transform, true);
+      checkmarkStamp.transform.rotation = Quaternion.AngleAxis(10, Vector3.right);   
     }
+    printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
     printedStamp.transform.rotation = Quaternion.AngleAxis(10, Vector3.right);
   }
 
@@ -136,30 +96,10 @@ public class SetStamp : MonoBehaviour {
       }
     }
     StartCoroutine(WaitSecondsForStamp(1, hit));
-    }
+  }
 
   void PlaySound()
   {
     source.PlayOneShot(sound);
-  }
-
-  public void ShowPanel()
-  {
-    isPanelReadyToMove = true;
-  }
-  
-  //SETS NUMBER AND SENDS TO GAME CONTROLLER THAT IT MAY CONTINUE
-  public void SetNumber(int initnumber)
-  {
-    Number = initnumber;
-    isNumberSet = true;
-    isPanelReadyToMove = true;
-    gameObject.SendMessage("StopNumberInput");
-  }
-
-  public int Number
-  {
-    get { return number; }
-    set { number = value; }
   }
 }

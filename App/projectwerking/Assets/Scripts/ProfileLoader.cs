@@ -12,5 +12,6 @@ public class ProfileLoader : MonoBehaviour {
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
     userName.text = userName.text + " " + GI.FirstNamePerson + " " + GI.LastNamePerson;
     email.text = email.text + " " + GI.Email;
+    numberOfStamps.text = numberOfStamps.text + " " + GI.NumberOfTimesStamped;
   }
 }

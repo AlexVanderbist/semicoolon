@@ -23,6 +23,7 @@ public class StampController : MonoBehaviour {
   GameInfo GI;
 
   private string selectedStamp = ""; // SOME CLASSES NEED TO KNOW ABOUT THIS SO A PROPERTY IS DECLARED
+  private int stampNumber; // DATA SENDER NEEDS TO KNOW, IS SET WITH METHOD SET RAYCAST HIT
 
   // VALUES THAT NEED TO BE SET AND USED THROUGH THE PROCES
   void Start () {
@@ -156,7 +157,7 @@ public class StampController : MonoBehaviour {
     }
     if (height >= 50f)
     {
-      rotation = -180f;
+      rotation = -100f;
     }
     return rotation;
   }
@@ -177,6 +178,10 @@ public class StampController : MonoBehaviour {
   public bool setRaycastHit(RaycastHit hit) {
     hitInfo = hit;
     positionToStamp = new Vector3(hit.point.x, hit.point.y, hit.point.z - 20f);
+    if (selectedStamp == "number")
+    {
+      stampNumber = int.Parse(hit.collider.gameObject.name);
+    }
     return true;
   }
 
@@ -184,5 +189,11 @@ public class StampController : MonoBehaviour {
   {
     get { return selectedStamp; }
     set { selectedStamp = value; }
+  }
+
+  public int StampNumber
+  {
+    get { return stampNumber; }
+    set { stampNumber = value; }
   }
 }

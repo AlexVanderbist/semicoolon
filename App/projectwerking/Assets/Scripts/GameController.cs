@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+
 [RequireComponent(typeof(PaperController))]
 [RequireComponent(typeof(StampController))]
 public class GameController : MonoBehaviour {
@@ -12,6 +13,8 @@ public class GameController : MonoBehaviour {
   public float minSwipeDistX;
   public float paperSpeed = 0.8f;
   public float stampSpeed = 0.7f;
+  public float speedMultiplier = 1.5f;
+  public GameObject[] numberHoverPrefabs;
 
   // USED TO CHECK SWIPING INPUT
   private Vector2 startPos;
@@ -32,18 +35,21 @@ public class GameController : MonoBehaviour {
   private bool islastQuestionReached = false;
   private bool isStampScaled = false;
   private bool needToResetStamps = false;
+  private bool readyToMoveNumberPaper = false;
+  private bool readyToRemoveNumberPaper = false;
+  private bool isNumberStampSelected = false;
 
   // MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
   // USED FOR LERPS 
   private float step = 0f;
-  private float dragStep = 0f; // EXTRA STEP BECAUSE OF CONFLICTS WITH MAIN STEP
+  private float dragStep = 0f; // EXTRA SIDE STEPS BECAUSE OF CONFLICTS WITH MAIN STEP
+  private float numberPaperStep = 0f;
 
   //DRAGING OBJECTS
   private float dist;
   private bool dragging = false;
   private Vector3 offset;
   private Transform toDrag;
-  private RaycastHit stampPoint; // USED TO REMEMBER STAMP POINT, WHEN IN NEED OF NUMBER INPUT, SO IT CAN BE PASSED AS PARAMETER AT LAST
 
   void Start () {
     pController = GetComponent<PaperController>();
@@ -69,8 +75,8 @@ public class GameController : MonoBehaviour {
       //MOVE FIRST OBJECT
       if (isFirstPaper)
       {
-        step += paperSpeed * Time.deltaTime;
-        pController.moveNewPaper(step);
+        step += paperSpeed * Time.deltaTime * speedMultiplier;
+        pController.moveNewPaper(step, "normalPaper");
         pController.setCurrentPaper();
 
         if (step >= 1f)
@@ -85,9 +91,9 @@ public class GameController : MonoBehaviour {
       // ALSO THE STAMPS DEPENDING ON QUESTION TYPE GET HIDED
       if (readyToMovePaper)
       {
-        step += paperSpeed * Time.deltaTime;
-        pController.moveNewPaper(step);
-        pController.moveFocusPaper(step);
+        step += paperSpeed * Time.deltaTime * speedMultiplier;
+        pController.moveNewPaper(step, "normalPaper");
+        pController.moveFocusPaper(step, "currentPaper");
         if (!islastQuestionReached)
         {
           sController.HideUnusedStamps(step);
@@ -111,7 +117,7 @@ public class GameController : MonoBehaviour {
       {
         if (!readyWithStampToPaper)
         {
-          step += stampSpeed * Time.deltaTime;
+          step += stampSpeed * Time.deltaTime * speedMultiplier;
           sController.MoveStampToPaper(step);
           if (step >= 1)
           {
@@ -121,7 +127,7 @@ public class GameController : MonoBehaviour {
         }
         else
         {
-          step += stampSpeed * Time.deltaTime;
+          step += stampSpeed * Time.deltaTime * speedMultiplier;
           sController.MoveStampBackToRestPosition(step);
           if (step >= 1)
           {
@@ -130,6 +136,78 @@ public class GameController : MonoBehaviour {
             readyToCheckStamps = true;
             readyToMoveStampToPaperAndBack = false;
             readyWithStampToPaper = false;
+            if (isNumberStampSelected)
+            {
+              readyToRemoveNumberPaper = true;
+            }
+          }
+        }
+      }
+
+      if (isNumberStampSelected)
+      {
+        if (readyToMoveNumberPaper)
+        {
+          step += paperSpeed * Time.deltaTime * speedMultiplier;
+          pController.moveNewPaper(step, "numberPaper");
+          if (step >= 1)
+          {
+            step = 0;
+            readyToMoveNumberPaper = false;
+          }
+        }
+
+        if (readyToRemoveNumberPaper)
+        {
+          numberPaperStep += paperSpeed * Time.deltaTime * speedMultiplier;
+          pController.moveFocusPaper(numberPaperStep, "numberPaper");
+          if (numberPaperStep >= 1)
+          {
+            numberPaperStep = 0;
+            readyToRemoveNumberPaper = false;
+            isNumberStampSelected = false;
+            pController.DestroyCurrentNumberPaper();
+          }
+        }
+      }
+
+      if (dragging && !readyToRemoveNumberPaper)
+      {
+        if (sController.SelectedStamp == "number")
+        {
+          LayerMask mask = 1 << LayerMask.NameToLayer("Paper");
+          RaycastHit hitInfo = new RaycastHit();
+          bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity, mask);
+          if (hit)
+          {
+            bool isInteger = false;
+            int numberName = 0;
+            isInteger = int.TryParse(hitInfo.collider.gameObject.name, out numberName);
+            if (isInteger && 1 <= numberName && numberName <= 5)
+            {
+              for (int i = 0; i < numberHoverPrefabs.Length; i++)
+              {
+
+                if (numberHoverPrefabs[i].name == ("Hover" + hitInfo.collider.gameObject.name))
+                {
+                  numberHoverPrefabs[i].SetActive(true);
+                  pController.getCurrentNumberPaper.transform.FindChild(numberHoverPrefabs[i].name).gameObject.SetActive(true);
+                }
+                else
+                {
+                  numberHoverPrefabs[i].SetActive(false);
+                  pController.getCurrentNumberPaper.transform.FindChild(numberHoverPrefabs[i].name).gameObject.SetActive(false);
+                }
+              }
+            }
+            else
+            {
+              for (int i = 0; i < numberHoverPrefabs.Length; i++)
+              {
+                numberHoverPrefabs[i].SetActive(false);
+                pController.getCurrentNumberPaper.transform.FindChild(numberHoverPrefabs[i].name).gameObject.SetActive(false);
+              }
+            }
           }
         }
       }
@@ -167,7 +245,6 @@ public class GameController : MonoBehaviour {
           Ray ray = Camera.main.ScreenPointToRay(pos);
           if (Physics.Raycast(ray, out hit) && (hit.collider.tag == "Stamp"))
           {
-            Debug.Log("Here");
             toDrag = hit.transform;
             dist = hit.transform.position.z - Camera.main.transform.position.z;
             v3 = new Vector3(pos.x, pos.y, dist);
@@ -176,6 +253,12 @@ public class GameController : MonoBehaviour {
             dragging = true;
             readyToSwipePaper = false;
             sController.CheckStamp(toDrag.name);
+            if (sController.SelectedStamp == "number" && !readyToRemoveNumberPaper)
+            {
+              pController.createNumbersPaper();
+              readyToMoveNumberPaper = true;
+              isNumberStampSelected = true;
+            }
           }
         }
         // STATE 2
@@ -193,30 +276,42 @@ public class GameController : MonoBehaviour {
           bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, Mathf.Infinity, mask);
           if (hit)
           {
-            Debug.Log(hitInfo.collider.gameObject.name);
-            if (hitInfo.collider.gameObject.name == "Paper")
+            if (sController.SelectedStamp != "number")
             {
-              if (sController.SelectedStamp == "number")
-              {
-                // TELLS SET STAMP THAT THE NUMBER PANEL NEEDS TO BE SHOWN
-                gameObject.SendMessage("ShowPanel");
-                stampPoint = hitInfo;
-              }
-              else
+              if (hitInfo.collider.gameObject.name == "Paper")
               {
                 readyToMoveStampToPaperAndBack = sController.setRaycastHit(hitInfo);
                 gameObject.SendMessage("PrintStamp", hitInfo);
               }
-              readyToCheckStamps = false;
+              else
+              {
+                needToResetStamps = true;
+              }
             }
             else
             {
-              needToResetStamps = true;
-              readyToCheckStamps = false;
+              bool isInteger = false;
+              int numberName = 0;
+              isInteger = int.TryParse(hitInfo.collider.gameObject.name, out numberName);
+              if (isInteger && 1 <= numberName && numberName <= 5)
+              {
+                readyToMoveStampToPaperAndBack = sController.setRaycastHit(hitInfo);
+                gameObject.SendMessage("PrintStamp", hitInfo);
+              }
+              else
+              {
+                needToResetStamps = true;
+                readyToRemoveNumberPaper = true;
+              }
             }
+          }
+          else
+          {
+            needToResetStamps = true;
+          }
+            readyToCheckStamps = false;
             dragging = false;
             isStampScaled = false;
-          }
         }
       }
     }
@@ -224,7 +319,7 @@ public class GameController : MonoBehaviour {
     // IF THE PAPER HAS NOT BEEN HIT, THE STAMPS NEED TO GO BACK TO THEIR DEFAULT POSITION AND SCALE
     if (needToResetStamps)
     {
-      step += stampSpeed * Time.deltaTime;
+      step += stampSpeed * Time.deltaTime * speedMultiplier;
       sController.MoveStampBackToRestPosition(step);
       if (step >= 1)
       {
@@ -294,13 +389,5 @@ public class GameController : MonoBehaviour {
         }
       }
     }
-  }
-
-  // AS LONG THIS NOT GETS ACTIVATED BY SET STAMP, EVERYTHING IN GAMECONTROLLER IS PAUSED
-  public void StopNumberInput()
-  {
-    readyToMoveStampToPaperAndBack = sController.setRaycastHit(stampPoint);
-    gameObject.SendMessage("PrintStamp", stampPoint);
-    readyToMoveStampToPaperAndBack = true;
   }
 }

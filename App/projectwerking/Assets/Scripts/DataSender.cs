@@ -12,7 +12,6 @@ public class DataSender : MonoBehaviour {
   StampController sController;
   GameInfo GI;
   int numberAnswer;
-  string selectedStamp;
 
   void Start()
   {
@@ -49,7 +48,7 @@ public class DataSender : MonoBehaviour {
         value = 2;
         break;
       case "number":
-        value = numberAnswer;
+        value = sController.StampNumber;
         Debug.Log(value);
         break;
       default:

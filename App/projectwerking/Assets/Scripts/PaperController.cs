@@ -12,14 +12,15 @@ public class PaperController : MonoBehaviour
   // DOES NOT LISTEN TO ACTUAL INPUT, GAME CONTROLLER DOES THAT
 
   public GameObject tMeshNormalText, tMeshTitleText, tMeshPrefab;
+  public GameObject[] maskPlanes;
   public Sprite goodNotGoodSprite, numberSprite;
   public Transform startposition, focusposition, endposition;
   public bool ListIsReady = false; //PUBLIC BECAUSE GAMECONTROLLER NEEDS TO KNOW IF IT IS READY
   public Text testTextBox;
-  public GameObject donePaperPrefab;
+  public GameObject donePaperPrefab, numberPaperPrefab;
 
   TextMesh tMeshText, tMeshTitle;
-  GameObject currentPaper, newPaper;
+  GameObject currentPaper, newPaper, numberPaper;
 
   string titleText = "Vraag: ";
   string[] QuestionList;
@@ -41,7 +42,6 @@ public class PaperController : MonoBehaviour
     QuestionList = GI.Questions[currentProjectNumber];
     numberOfQuestions = QuestionList.Length;
     ListIsReady = true;
-    Debug.Log("Aantal vragen: " + numberOfQuestions);
   }
 
   // SET FIRST PAPER TEXT
@@ -90,11 +90,15 @@ public class PaperController : MonoBehaviour
 
   // SET TEXT FOR EACH PANEL
   void setText() {
-    Debug.Log("QuestionNr: " + currentQuestionNr);
     string temp = ResolveTextSize(GI.Questions[currentProjectNumber][currentQuestionNr-1],24);
     tMeshText.text = temp;
     tMeshTitle.text = titleText + (currentQuestionNr).ToString() + "/" + numberOfQuestions;
  
+  }
+
+  public void DestroyCurrentNumberPaper()
+  {
+    Destroy(numberPaper);
   }
 
   public void DestroyCurrentPaper() {
@@ -121,11 +125,19 @@ public class PaperController : MonoBehaviour
       {
         // GOOD / NOT GOOD
         newPaper.transform.FindChild("Paper").GetComponent<SpriteRenderer>().sprite = goodNotGoodSprite;
+        for (int i = 0; i < maskPlanes.Length; i++)
+        {
+          newPaper.transform.FindChild(maskPlanes[i].name).gameObject.SetActive(true);
+        }
       }
       else if(type == 2)
       {
         // NUMBERS
         newPaper.transform.FindChild("Paper").GetComponent<SpriteRenderer>().sprite = numberSprite;
+        for (int i = 0; i < maskPlanes.Length; i++)
+        {
+          newPaper.transform.FindChild(maskPlanes[i].name).gameObject.SetActive(false);
+        }
       }
       questionPaperCreated = true;
     }
@@ -134,17 +146,48 @@ public class PaperController : MonoBehaviour
       newPaper = (GameObject)Instantiate(donePaperPrefab, startposition.position, transform.rotation);
       questionPaperCreated = false;
     }
- 
+    for (int i = 0; i < numberPaperPrefab.transform.childCount; i++)
+    {
+      if (numberPaperPrefab.transform.FindChild("Hover" + i))
+      {
+        numberPaperPrefab.transform.FindChild("Hover" + i).gameObject.SetActive(false);
+      }
+    }
+    
     return questionPaperCreated;
   }
 
-  public void moveNewPaper(float step) {
-    newPaper.transform.localPosition = Vector3.Lerp(startposition.position, focusposition.position, step);
+  public void createNumbersPaper()
+  {
+    numberPaper = (GameObject)Instantiate(numberPaperPrefab, startposition.position, transform.rotation);
   }
 
-  public void moveFocusPaper(float step)
-  {  
-    currentPaper.transform.localPosition = Vector3.Lerp(focusposition.position, endposition.position, step);
+  public void moveNewPaper(float step, string paperName) {
+    if (paperName == "normalPaper")
+    {
+      newPaper.transform.localPosition = Vector3.Lerp(startposition.position, focusposition.position, step);
+    }
+    else if(paperName == "numberPaper")
+    {
+      numberPaper.transform.localPosition = Vector3.Lerp(endposition.position, focusposition.position, step);
+    }
+  }
+
+  public void moveFocusPaper(float step, string paperName)
+  {
+    if (paperName == "currentPaper")
+    {
+      currentPaper.transform.localPosition = Vector3.Lerp(focusposition.position, endposition.position, step);
+    }
+    else if (paperName == "numberPaper")
+    {
+      numberPaper.transform.localPosition = Vector3.Lerp(focusposition.position, endposition.position, step);
+    }
+  }
+
+  public GameObject getCurrentNumberPaper
+  {
+    get { return numberPaper; }
   }
 
   public GameObject getCurrentPaper

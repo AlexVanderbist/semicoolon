@@ -131,6 +131,8 @@ public class DataObtainer : MonoBehaviour {
       GI.FirstNamePerson = textData["user"]["firstname"].ToString();
       GI.LastNamePerson = textData["user"]["lastname"].ToString();
       GI.Email = textData["user"]["email"].ToString();
+      GI.NumberOfTimesStamped = int.Parse(textData["user"]["num_opinions"].ToString());
+      Debug.Log("number of stamps : " + textData["user"]["num_opinions"].ToString());
       gameObject.SendMessage("LoadProfileData"); //ProfileLoader
     }
     else

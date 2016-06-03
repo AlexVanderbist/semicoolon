@@ -17,6 +17,7 @@ public class GameInfo : MonoBehaviour {
   private static string password;
   private static string numberOfStampsDone;
   private static int currentQuestionNumber;
+  private static int numberOfTimesStamped;
 
   private static List<int> projectIds = new List<int>();
   private static List<string> projectNameList = new List<string>();
@@ -25,6 +26,12 @@ public class GameInfo : MonoBehaviour {
   private static string[][] questionArray;
   private static int[][] questionTypes;
   private static int[][] questionIds;
+
+  public int NumberOfTimesStamped
+  {
+    get { return numberOfTimesStamped; }
+    set { numberOfTimesStamped = value; }
+  }
 
   public string Password
   {
