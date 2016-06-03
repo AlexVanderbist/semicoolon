@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Auth;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -35,8 +36,8 @@ class AuthenticateController extends Controller
     {
         $credentials = $request->only('email', 'password');
         try {
-            // verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
+            // verify the credentials and create a token for the user + login in laravel default auth
+            if (! ($token = JWTAuth::attempt($credentials)) || ! Auth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
