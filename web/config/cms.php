@@ -2,7 +2,7 @@
 
 return [
 
-    'sitename' => 'Project Antwerpen',
+    'sitename' => 'A-Project',
 
     'defaultmap' => [
     	'lat' => '51.218686',

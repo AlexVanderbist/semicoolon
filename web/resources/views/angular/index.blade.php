@@ -63,25 +63,25 @@
 
 	            <!-- Authentication Links -->
 				<li ng-hide="authenticated"><a ui-sref="user.login">Inloggen</a></li>
-					<li ng-hide="authenticated"><a href="{{ url('/register') }}">Registreer (old)</a></li>
+				<li ng-hide="authenticated"><a ui-sref="user.register">Registreer</a></li>
 
-					<li class="btn-group" uib-dropdown ng-show="authenticated">
-						<a href uib-dropdown-toggle>
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span> @{{ currentUser.full_name }}
-						</a>
-						<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+				<li class="btn-group" uib-dropdown ng-show="authenticated">
+					<a href uib-dropdown-toggle>
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span> @{{ currentUser.full_name }}
+					</a>
+					<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 
-							<li ng-show="currentUser.admin == 1">
-								<a href="{{ route('backend.dashboard') }}">
-									<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Back-end
-								</a>
-							</li>
+						<li ng-show="currentUser.admin == 1">
+							<a href="{{ route('backend.dashboard') }}">
+								<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Back-end
+							</a>
+						</li>
 
-							<li>
-								<a ui-sref="user.logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log uit</a>
-							</li>
-						</ul>
-					</li>
+						<li>
+							<a ui-sref="user.logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log uit</a>
+						</li>
+					</ul>
+				</li>
 	        </ul>
         </div><!--/.nav-collapse -->
       </div>

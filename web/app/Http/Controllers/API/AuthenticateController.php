@@ -78,7 +78,7 @@ class AuthenticateController extends Controller
 			'firstname' => $request->firstname,
 			'lastname' => $request->lastname,
 			'email' => $request->email,
-			'password' => bcrypt($request->password),
+			'password' => $request->password,
 		]);
 		return response()->json(['status' => 'success']);
 	}

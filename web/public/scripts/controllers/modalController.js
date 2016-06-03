@@ -12,6 +12,7 @@
                 options: {styles: mapOptions.styleArray}
             };
 
+			$scope.status = $stateParams.status;
         });
-    
+
 })();

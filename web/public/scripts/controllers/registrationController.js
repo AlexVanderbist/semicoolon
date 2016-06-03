@@ -14,7 +14,7 @@
 	            userService.register($scope.newUser).then(
 	                function () {
 	                    // Registered
-	                    $state.go('user.login'); // add status message
+	                    $state.go('user.login', {status: 'Registratie succesvol, gelieve in te loggen.'}); // add status message
 	                },
 	                function (error) {
 	                    // Login failed
