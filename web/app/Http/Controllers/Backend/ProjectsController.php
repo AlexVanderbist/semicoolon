@@ -82,7 +82,6 @@ class ProjectsController extends Controller
         $project = $this->projects->findOrFail($id);
 
         $project->fill($request->all())->save();
-
         return redirect(route('backend.projects.edit', $project->id))->with('status', 'Het project is geupdate!');
     }
 
