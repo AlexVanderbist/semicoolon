@@ -566,7 +566,11 @@ table.opinions-table {
     overflow: hidden;
     position: relative;
 }
-
+.sexpie {
+    width:50%;
+    margin-left: auto;
+    margin-right: auto;
+}
 /* STAGES */
 
 #stages {
