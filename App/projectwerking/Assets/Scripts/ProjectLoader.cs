@@ -9,7 +9,7 @@ public class ProjectLoader : MonoBehaviour
 
   //LOADS ALL PROJECT PANELS BASED ON GAMEINFO DATA
   public GameObject projectPanelPrefab, projectPaperDonePrefab, projectPaperToDoPrefab;
-  public GameObject containerToDo, containerDone;
+  public GameObject containerToDo, containerDone, loadScenePanel;
   public RectTransform containerRecToDo, containerRecDone , projectButtonRec;
   public string readMoreUrl = "http://semicolon.multimediatechnology.be/projecten/";
   public string basicUrl = "http://semicolon.multimediatechnology.be/";
@@ -102,6 +102,7 @@ public class ProjectLoader : MonoBehaviour
   // LOADS MAINSCENE AND UPDATES GI PROJECTNUMBER SO THE RIGHT QUESTIONS WILL BE ASKED
   private void LoadLevel(string sceneName, int projectNumber) {
     GI.CurrentProjectNumber = projectNumber;
+    loadScenePanel.SetActive(true);
     SceneManager.LoadScene(sceneName);
   }
 

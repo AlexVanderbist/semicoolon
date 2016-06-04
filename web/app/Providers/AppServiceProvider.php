@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
             ['layouts.auth', 'layouts.backend', 'layouts.login'], 'App\ViewComposers\AddStatusMessage'
         );
         view()->composer(
-            ['layouts.*'], 'App\ViewComposers\AddUser'
+            ['layouts.*', 'backend.dashboard'], 'App\ViewComposers\AddUser'
         );
     }
 

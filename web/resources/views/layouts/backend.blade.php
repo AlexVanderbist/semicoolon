@@ -19,6 +19,7 @@
     <script src="{!! asset('js/locationpicker.jquery.min.js') !!}"></script>
     <script src="{!! asset('trumbowyg/trumbowyg.min.js') !!}"></script>
     <script src="{!! asset('js/Chart.min.js') !!}"></script>
+    <script src="{!! asset('js/jquery.animateNumber.min.js') !!}"></script>
     <script src="{!! asset('js/backend.js') !!}"></script>
 
     <!-- Styles -->
