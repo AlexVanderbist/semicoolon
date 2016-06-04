@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 using System.Collections.Generic;
 
 public class ProjectLoader : MonoBehaviour
@@ -11,6 +12,7 @@ public class ProjectLoader : MonoBehaviour
   public GameObject containerToDo, containerDone;
   public RectTransform containerRecToDo, containerRecDone , projectButtonRec;
   public string readMoreUrl = "http://semicolon.multimediatechnology.be/projecten/";
+  public string basicUrl = "http://semicolon.multimediatechnology.be/";
   public string sceneToLoad = "MainScene";
   public float marge = 250;
   
@@ -18,12 +20,15 @@ public class ProjectLoader : MonoBehaviour
   public Sprite[] tempStockImages;
 
   GameInfo GI;
+  List<GameObject> bannersToChange = new List<GameObject>();
 
   void Start()
   {
     marge += 1000; // THIS IS THE LENGTH OF A PROJECT PANEL
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
   }
+
+
 
   //STARTS WHEN DATA OBTAINER IS READY (SENDMESSAGE)
   //ADDS FOR EACH PANEL THE RIGHT VALUES
@@ -37,7 +42,17 @@ public class ProjectLoader : MonoBehaviour
       panel.transform.FindChild("DoneSign").GetComponent<Image>().enabled = false;
       panel.transform.FindChild("Plaatsnaam").GetComponent<Text>().text = GI.PlaceNameList[i];
       panel.transform.FindChild("Uitleg").GetComponent<Text>().text = GI.ProjectDescriptions[i];
-      panel.transform.FindChild("Banner").GetComponent<Image>().sprite = tempStockImages[Random.Range(0, tempStockImages.Length)];
+
+
+      if (GI.ProjectBannerList[i] == "")
+      {
+        panel.transform.FindChild("Banner").GetComponent<Image>().sprite = tempStockImages[Random.Range(0, tempStockImages.Length)];
+      }
+      else
+      {
+        bannersToChange.Add(panel);
+      }
+
       panel.transform.FindChild("Title").GetComponent<Text>().text = GI.ProjectNameList[i];
       panel.transform.FindChild("MeerLezen").GetComponent<Button>().onClick.AddListener(() => ReadMoreUrls(GI.ProjectIds[tempInt]));
 
@@ -47,14 +62,8 @@ public class ProjectLoader : MonoBehaviour
         panel.transform.FindChild("DoneSign").GetComponent<Image>().enabled = true;
         panel.transform.FindChild("BeginMetStempelen").GetComponent<Button>().interactable = false;
         panel.transform.SetParent(containerDone.transform, false);
-        int numberOfChilds = 0;
 
-        // MAKE THE CONTAINER LONGER TO BE ABLE TO SCROLL
-        foreach (Transform trans in containerDone.transform)
-        {
-          numberOfChilds++;
-        }
-        if (numberOfChilds > 1)
+        if (containerDone.transform.childCount > 1)
         {
           containerRecDone.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecDone.rect.height + marge);
         }
@@ -63,14 +72,7 @@ public class ProjectLoader : MonoBehaviour
       {
         panel.transform.FindChild("BeginMetStempelen").GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
         panel.transform.SetParent(containerToDo.transform, false);
-        int numberOfChilds = 0;
-
-        // MAKE THE CONTAINER LONGER TO BE ABLE TO SCROLL
-        foreach (Transform trans in containerToDo.transform)
-        {
-          numberOfChilds++;
-        }
-        if (numberOfChilds > 1)
+        if (containerToDo.transform.childCount > 1)
         {
           containerRecToDo.sizeDelta = new Vector2(containerRecToDo.rect.width, containerRecToDo.rect.height + marge);
         }
@@ -88,6 +90,8 @@ public class ProjectLoader : MonoBehaviour
       GameObject button = Instantiate(projectPaperToDoPrefab) as GameObject;
       button.transform.SetParent(containerDone.transform, false);
     }
+
+    StartCoroutine(LoadImages());
   }
 
   //ON CLICK THE GIVEN URL NEEDS TO BE LOADED
@@ -100,5 +104,27 @@ public class ProjectLoader : MonoBehaviour
     GI.CurrentProjectNumber = projectNumber;
     SceneManager.LoadScene(sceneName);
   }
+
+  IEnumerator LoadImages()
+  {
+    int i = 0;
+    foreach (GameObject panel in bannersToChange)
+    {
+      var www = new WWW(basicUrl + GI.ProjectBannerList[i]);
+
+      // wait until the download is done
+      yield return www;
+
+      // assign the downloaded image to the main texture of the object
+      var image = bannersToChange[i].transform.FindChild("Banner").GetComponent<Image>();
+      var texture = www.texture;
+      image.sprite = Sprite.Create(texture,new Rect(0,0,texture.width,texture.height), new Vector2(0.5f,0.5f));
+      
+      Debug.Log("loaded image");
+      i++;
+    }
+  }
+
 }
+
 

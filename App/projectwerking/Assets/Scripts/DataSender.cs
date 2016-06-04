@@ -11,7 +11,6 @@ public class DataSender : MonoBehaviour {
 
   StampController sController;
   GameInfo GI;
-  int numberAnswer;
 
   void Start()
   {
@@ -25,12 +24,6 @@ public class DataSender : MonoBehaviour {
   public void StartSendingAnswer()
   {
     StartCoroutine(SendAnswer());
-  }
-
-  // SET WHEN A NUMBER IS CHOSEN FROM NUMBER PANEL
-  public void numberReceiver(int initnumber)
-  {
-    numberAnswer = initnumber;
   }
 
   IEnumerator SendAnswer()

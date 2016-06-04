@@ -21,6 +21,8 @@ public class PaperController : MonoBehaviour
 
   TextMesh tMeshText, tMeshTitle;
   GameObject currentPaper, newPaper, numberPaper;
+  Vector3 endPoint;
+  Vector3 beginPoint;
 
   string titleText = "Vraag: ";
   string[] QuestionList;
@@ -29,7 +31,7 @@ public class PaperController : MonoBehaviour
   int numberOfQuestions = 0;
   int currentProjectNumber = 0;
   GameInfo GI;
-  
+
   // LOAD VARIABLES NEEDED
   void Awake() {
     tMeshText = tMeshNormalText.GetComponent<TextMesh>();
@@ -89,11 +91,11 @@ public class PaperController : MonoBehaviour
   }
 
   // SET TEXT FOR EACH PANEL
-  void setText() {
-    string temp = ResolveTextSize(GI.Questions[currentProjectNumber][currentQuestionNr-1],24);
+  void SetText() {
+    string temp = ResolveTextSize(GI.Questions[currentProjectNumber][currentQuestionNr - 1], 24);
     tMeshText.text = temp;
     tMeshTitle.text = titleText + (currentQuestionNr).ToString() + "/" + numberOfQuestions;
- 
+
   }
 
   public void DestroyCurrentNumberPaper()
@@ -106,21 +108,21 @@ public class PaperController : MonoBehaviour
   }
 
   // SETS THE NEW PAPER AS CURRENT PAPER BECAUSE THE OLD ONE IS DELETED
-  public void setCurrentPaper() {
+  public void SetCurrentPaper() {
     currentPaper = newPaper;
   }
 
   // BOOLEAN BECAUSE IT CHECKS IF THE LAST QUESTION IS REACHED, IF SO GAME CONTROLLER KNOWS ABOUT IT
-  public bool createNewPaper()
+  public bool CreateNewPaper()
   {
     bool questionPaperCreated = false;
     currentQuestionNr++;
     GI.CurrentQuestionNumber = currentQuestionNr - 1;
     if (currentQuestionNr <= numberOfQuestions)
     {
-      setText();
+      SetText();
       newPaper = (GameObject)Instantiate(tMeshPrefab, startposition.position, transform.rotation);
-      int type = GI.QuestionTypes[GI.CurrentProjectNumber][currentQuestionNr-1];
+      int type = GI.QuestionTypes[GI.CurrentProjectNumber][currentQuestionNr - 1];
       if (type == 1)
       {
         // GOOD / NOT GOOD
@@ -130,7 +132,7 @@ public class PaperController : MonoBehaviour
           newPaper.transform.FindChild(maskPlanes[i].name).gameObject.SetActive(true);
         }
       }
-      else if(type == 2)
+      else if (type == 2)
       {
         // NUMBERS
         newPaper.transform.FindChild("Paper").GetComponent<SpriteRenderer>().sprite = numberSprite;
@@ -153,31 +155,31 @@ public class PaperController : MonoBehaviour
         numberPaperPrefab.transform.FindChild("Hover" + i).gameObject.SetActive(false);
       }
     }
-    
+
     return questionPaperCreated;
   }
 
-  public void createNumbersPaper()
+  public void CreateNumbersPaper()
   {
     numberPaper = (GameObject)Instantiate(numberPaperPrefab, startposition.position, transform.rotation);
   }
 
-  public void moveNewPaper(float step, string paperName) {
+  public void MoveNewPaper(float step, string paperName) {
     if (paperName == "normalPaper")
     {
       newPaper.transform.localPosition = Vector3.Lerp(startposition.position, focusposition.position, step);
     }
-    else if(paperName == "numberPaper")
+    else if (paperName == "numberPaper")
     {
       numberPaper.transform.localPosition = Vector3.Lerp(endposition.position, focusposition.position, step);
     }
   }
 
-  public void moveFocusPaper(float step, string paperName)
+  public void MoveFocusPaper(float step, string paperName)
   {
     if (paperName == "currentPaper")
     {
-      currentPaper.transform.localPosition = Vector3.Lerp(focusposition.position, endposition.position, step);
+      currentPaper.transform.localPosition = Vector3.Lerp(currentPaper.transform.position, endPoint, step);
     }
     else if (paperName == "numberPaper")
     {
@@ -185,12 +187,43 @@ public class PaperController : MonoBehaviour
     }
   }
 
-  public GameObject getCurrentNumberPaper
+  public void SetBeginPoint(Transform obj)
+  {
+    beginPoint = new Vector3(obj.position.x, obj.position.y, obj.position.z);
+  }
+
+  public void SetEndPointPaper(Transform obj)
+  {
+    float x = 0f;
+    float y = 0f;
+    Debug.Log("begin point y: " + obj.position.y);
+    if (obj.position.y < beginPoint.y)
+    {
+      y -= 600f;
+    }
+    else
+    {
+      y += 600f;
+    }
+    Debug.Log("begin point x: " + x);
+    if (obj.position.x < beginPoint.x)
+    {
+      x -= 600f;
+    }
+    else
+    {
+      x += 600f;
+    }
+    Debug.Log("x = " + x + "y = " + y);
+    endPoint = new Vector3(x, y, currentPaper.transform.localPosition.z);
+  }
+
+  public GameObject GetCurrentNumberPaper
   {
     get { return numberPaper; }
   }
 
-  public GameObject getCurrentPaper
+  public GameObject GetCurrentPaper
   {
     get { return currentPaper; }
   }
