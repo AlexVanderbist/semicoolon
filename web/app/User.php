@@ -34,13 +34,13 @@ class User extends Authenticatable
     // Custom attributes also added to the array
     protected $appends = ['full_name', 'num_opinions'];
 
-    public function opinions()
+    public function proposalOpinions()
     {
-        return $this->hasMany(Opinion::class);
+        return $this->hasMany(ProposalOpinion::class);
     }
 
 	public function getNumOpinionsAttribute() {
-		return $this->opinions->count();
+		return $this->proposalOpinions->count();
 	}
 
     public function setPasswordAttribute($value) {

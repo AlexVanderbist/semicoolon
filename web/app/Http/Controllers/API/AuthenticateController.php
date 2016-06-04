@@ -48,6 +48,11 @@ class AuthenticateController extends Controller
         return response()->json(compact('token'));
     }
 
+	public function logout () {
+		Auth::logout();
+		return response()->json(['status' => 'success']);
+	}
+
     public function getAuthenticatedUser()
     {
         try {

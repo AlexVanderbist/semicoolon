@@ -3,15 +3,15 @@
 @section('title', 'Projecten')
 
 @section('content')
-    <a href="{{ route('backend.projects.create') }}" class="marginbtn btn btn-primary">Nieuw project maken</a>
-    
-    
+    <a href="{{ route('backend.projects.create') }}" class="marginbtn btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Nieuw project maken</a>
+
+
     @foreach($projects->chunk(3) as $projectChunk)
         <div class="row">
             @foreach($projectChunk as $project)
                 <div class="col-md-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading projectheading"> 
+                        <div class="panel-heading projectheading">
                             <a class="pull-right projectlink" data-toggle="tooltip" title="Verwijderen" href="{{ route('backend.projects.confirm', $project->id) }}">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </a>
@@ -34,21 +34,18 @@
                         </ul>
                         <div class="panel-footer">
                             <div class="row">
+			                    <a class="col-md-3 text-center" data-toggle="tooltip" title="Aanpassen" href="{{ route('backend.projects.edit', $project->id) }}">
+			                        <i class="fa fa-pencil" aria-hidden="true"></i>
+			                    </a>
                                 <a class="col-md-3 text-center" data-toggle="tooltip" title="Fases" href="{{ route('backend.projects.{project}.stages.index', $project->id) }}">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </a>
-
                                 <a class="col-md-3 text-center" data-toggle="tooltip" title="Stellingen" href="{{ route('backend.projects.{project}.proposals.index', $project->id) }}">
-                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    <i class="fa fa-bar-chart" aria-hidden="true"></i>
                                 </a>
-
                                 <a class="col-md-3 text-center" data-toggle="tooltip" title="Foto's" href="{{ route('backend.projects.{project}.images.index', $project->id) }}">
                                     <span class="glyphicon glyphicon-picture"></span>
                                 </a>
-
-                                <a class="col-md-3 text-center" data-toggle="tooltip" title="Aanpassen" href="{{ route('backend.projects.edit', $project->id) }}">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </a>  
                             </div>
                         </div>
                     </div>

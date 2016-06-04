@@ -45,6 +45,8 @@
 
         userService.logout = function() {
             return $q(function(resolve) {
+				$http.get(apiUrl + 'authenticate/logout');
+
                 $auth.logout().then(function() {
                     localStorage.removeItem('user');
                     $rootScope.authenticated = false;

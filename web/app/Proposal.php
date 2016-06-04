@@ -35,10 +35,10 @@ class Proposal extends Model
             'no'  => $this->opinions()->ofType(1)->withValue(2)->count(),
             'avg' => $this->opinions()->ofType(2)->avg('value'),
             '1'  => $this->opinions()->ofType(2)->withValue(1)->count(),
-            '2'  => $this->opinions()->ofType(2)->withValue(1)->count(),
-            '3'  => $this->opinions()->ofType(2)->withValue(1)->count(),
-            '4'  => $this->opinions()->ofType(2)->withValue(1)->count(),
-            '5'  => $this->opinions()->ofType(2)->withValue(1)->count()
+            '2'  => $this->opinions()->ofType(2)->withValue(2)->count(),
+            '3'  => $this->opinions()->ofType(2)->withValue(3)->count(),
+            '4'  => $this->opinions()->ofType(2)->withValue(4)->count(),
+            '5'  => $this->opinions()->ofType(2)->withValue(5)->count()
         ];
     }
     public function statistics() {

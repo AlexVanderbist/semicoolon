@@ -3,7 +3,7 @@
 @section('title', 'Gebruikers')
 
 @section('content')
-    <a href="{{ route('backend.users.create') }}" class="btn btn-primary">Nieuwe gebruiker maken</a>
+    <a href="{{ route('backend.users.create') }}" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Nieuwe gebruiker maken</a>
 
     <h4>Beheerders</h4>
     <table class="table table-hover">
@@ -29,7 +29,7 @@
                     <td>
                         @if ($admin->sex === 0)
                             Vrouw
-                        @elseif ($admin->sex === 1) 
+                        @elseif ($admin->sex === 1)
                             Man
                         @endif
                     </td>
@@ -72,7 +72,7 @@
                     <td>
                         @if ($user->sex === 0)
                             Vrouw
-                        @elseif ($user->sex === 1) 
+                        @elseif ($user->sex === 1)
                             Man
                         @endif
                     </td>

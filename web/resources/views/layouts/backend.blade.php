@@ -59,15 +59,17 @@
                 <a href="{{ url('/backend') }}" class="pull-left"><img src="{!! asset('images/logo.svg') !!}" alt="logo" class="grid-height"></a>
                 <a class="navbar-brand" href="{{ url('/backend') }}">
                   {!! config('cms.sitename') !!}
+				  <span>Back-end</span>
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ route('backend.projects.index') }}">Projecten</a></li>
-                    <li><a href="{{ route('backend.themes.index') }}">Thema's</a></li>
-                    <li><a href="{{ route('backend.users.index') }}">Gebruikers</a></li>
+                    <li><a href="{{ route('backend.dashboard') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a></li>
+	                    <li><a href="{{ route('backend.projects.index') }}"><span class="icon-StampIcon"></span> Projecten</a></li>
+                    <li><a href="{{ route('backend.themes.index') }}"><i class="fa fa-paint-brush" aria-hidden="true"></i> Thema's</a></li>
+                    <li><a href="{{ route('backend.users.index') }}"><i class="fa fa-users" aria-hidden="true"></i> Gebruikers</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -78,15 +80,15 @@
                         <li><a href="{{ url('/register') }}">Registreer</a></li>
                     @else-->
 
-                        <li><a href="{{ url('/') }}">Frontend</a></li>
-                        
+                        <li><a href="{{ url('/') }}" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> Frontend</a></li>
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ $user->firstname }} <span class="caret"></span>
+                                <i class="fa fa-user" aria-hidden="true"></i> {{ $user->firstname }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Log uit</a></li>
+                                <li><a href="{{ url('/#/logout') }}"><i class="fa fa-btn fa-sign-out"></i> Uitloggen</a></li>
                             </ul>
                         </li>
                     <!--@endif-->
@@ -168,13 +170,13 @@
             },
 
             createForm: function(link) {
-              var form = 
+              var form =
               $('<form>', {
                 'method': 'POST',
                 'action': link.attr('href')
               });
 
-              var token = 
+              var token =
               $('<input>', {
                 'type': 'hidden',
                 'name': '_token',

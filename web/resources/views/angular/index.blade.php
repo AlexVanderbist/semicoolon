@@ -79,7 +79,7 @@
 						</li>
 
 						<li>
-							<a ui-sref="user.logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Log uit</a>
+							<a ui-sref="user.logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Uitloggen</a>
 						</li>
 					</ul>
 				</li>

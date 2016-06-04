@@ -254,12 +254,15 @@ h1, h2, h3, h4 {
 .btn.btn-antwerp-font {
     font-family: 'AntwerpenSmallCaps', 'Georgia', serif;
     font-size: 1.3em;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 }
 .btn-primary {
     color: #FFFFFF;
     background-color: #1964B2;
     border-color: #4E4A61;
+}
+.btn-default {
+	border: 1px #ccc solid;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
     color: #FFFFFF;
@@ -582,9 +585,9 @@ table.opinions-table {
     font-family: 'Antwerpen', 'Georgia', serif;
     padding: 15px;
 }
-.panel-default {
+/*.panel-default {
     border: none;
-}
+}*/
 .marginbtn {
     margin-bottom: 10px;
 }

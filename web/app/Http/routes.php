@@ -18,6 +18,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 	// Authenticate
 	Route::post('authenticate', 'API\AuthenticateController@authenticate');
 	Route::post('authenticate/register', 'API\AuthenticateController@registerUser');
+	Route::get('authenticate/logout', 'API\AuthenticateController@logout');
 
     // GET Projects
 	Route::get('projects', 'API\ProjectsController@index');
@@ -55,7 +56,7 @@ Route::group(['middleware' => 'web'], function () {
 	// Authentication Routes...
 	$this->get('login', 'Auth\AuthController@showLoginForm');
 	$this->post('login', 'Auth\AuthController@login');
-	$this->get('logout', 'Auth\AuthController@logout');
+	//$this->get('logout', 'Auth\AuthController@logout');
 
 	// Registration Routes...
 	// $this->get('register', 'Auth\AuthController@showRegistrationForm');
