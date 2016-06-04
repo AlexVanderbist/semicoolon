@@ -102,7 +102,7 @@ public class ProjectLoader : MonoBehaviour
   // LOADS MAINSCENE AND UPDATES GI PROJECTNUMBER SO THE RIGHT QUESTIONS WILL BE ASKED
   private void LoadLevel(string sceneName, int projectNumber) {
     GI.CurrentProjectNumber = projectNumber;
-    loadScenePanel.SetActive(true);
+    //loadScenePanel.SetActive(true);
     SceneManager.LoadScene(sceneName);
   }
 
