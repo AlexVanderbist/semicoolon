@@ -35,7 +35,7 @@
 
     <div class="form-group">
         {!! Form::label('Geboortejaar') !!}
-        {!! Form::number('birthyear', null, ['class' => 'form-control', 'min' => '1900', 'max' => '2020']) !!}
+        {!! Form::number('birthyear', null, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
@@ -46,6 +46,7 @@
 
     <div class="form-group">
         {!! Form::label('Wachtwoord') !!}
+        <small>Of leeglaten om huidig wachtwoord te behouden.</small>
         {!! Form::password('password', ['class' => 'form-control']) !!}
     </div>
 

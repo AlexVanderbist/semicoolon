@@ -225,16 +225,21 @@ h1, h2, h3, h4 {
     background-color: rgba(184, 0, 49, 1);
 }
 #antwerp-menu.navbar-default .navbar-toggle {
-    border-color: #b80031;
+    border:none;
+    padding: 13px 10px;
 }
 #antwerp-menu.navbar-default .navbar-toggle:hover, #antwerp-menu.navbar-default .navbar-toggle:focus {
-    background-color: #b80031;
+    background-color: #fff;
 }
 #antwerp-menu.navbar-default .navbar-toggle .icon-bar {
-    background-color: #b80031;
+    background-color: #fff;
+    width: 40px;
+}
+.navbar-toggle .icon-bar + .icon-bar {
+    margin-top: 6px;
 }
 #antwerp-menu.navbar-default .navbar-toggle:hover .icon-bar, #antwerp-menu.navbar-default .navbar-toggle:focus .icon-bar {
-    background-color: #cf0039;
+    background-color: #b80031;
 }
 #antwerp-menu .navbar-collapse {
     border: none;
@@ -247,6 +252,21 @@ h1, h2, h3, h4 {
 	██      ██    ██      ██    ██    ██    ██ ██  ██  ██     ██   ██ ██    ██    ██       ██    ██    ██ ██  ██ ██      ██
 	 ██████  ██████  ███████    ██     ██████  ██      ██     ██████   ██████     ██       ██     ██████  ██   ████ ███████
 */
+
+.glyphicon.spinning {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
 
 .btn {
     border-radius: 0;
@@ -381,7 +401,7 @@ h1, h2, h3, h4 {
     /* TRIANGLE */
     content: "";
     position: absolute;
-    left: 7px;
+    left: 6px;
     margin-top: 4px;
     height: 0;
     width: 0;
@@ -405,8 +425,8 @@ h1, h2, h3, h4 {
 }
 @media screen and (max-width: 700px) {
     .timeline:before {
-        left: 35.5%;
-        top: 40px;
+/*        left: 35.5%;
+        top: 40px;*/
     }
 }
 

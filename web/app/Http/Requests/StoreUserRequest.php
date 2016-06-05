@@ -24,10 +24,11 @@ class StoreUserRequest extends Request
     public function rules()
     {
         return [
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'confirmed'],
             'firstname' => ['required'],
             'lastname' => ['required'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'confirmed']
+            'admin' => ['required']
         ];
     }
 }

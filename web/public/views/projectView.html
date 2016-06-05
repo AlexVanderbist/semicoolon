@@ -32,13 +32,13 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="row">
+			<div class="">
 				<div ng-show="project.youtube_id" class="embed-responsive embed-responsive-16by9 ytvideo">
 					<youtube-video class="embed-responsive-item" video-id="project.youtube_id"></youtube-video>
 				</div>
 			</div>
 
-			<div class="row imagecontainer">
+			<div class="imagecontainer">
 	            <div class="imagediv-container" ng-repeat="image in project.images">
 		            <div class="imagediv">
 		                <a href="/{{image.filename}}" data-lightbox="{{project.name}}" data-title="{{project.name}}">
@@ -48,13 +48,16 @@
 				</div>
 	        </div>
 
-	        <div class="row opinions">
+	        <div class="opinions">
 	        	<h2>Reacties</h2>
 
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Uw reactie" ng-model="newOpinion.opinion" ng-keypress="($event.which === 13) && postOpinion()" />
+						<input type="text" required class="form-control" ng-disabled="postingOpinion" placeholder="Uw reactie" ng-model="newOpinion.opinion" ng-keypress="($event.which === 13) && postOpinion()" />
 						<span class="input-group-btn">
-							<button class="btn btn-primary" type="button" ng-click="postOpinion()">Toevoegen</button>
+							<button class="btn btn-primary" type="button" ng-click="postOpinion()">
+								<span class="glyphicon glyphicon-refresh spinning" ng-show="postingOpinion" aria-hidden="true"></span>
+								Toevoegen
+							</button>
 						</span>
 					</div><!-- /input-group -->
 					<small>of duw op enter om te versturen.</small>

@@ -45,28 +45,28 @@ class ProjectsController extends Controller
         return response()->json(compact('project'));
     }
 
-    public function opinions($project_id)
+    public function opinions(Project $project)
     {
-        $opinions = $this->opinions->find($project_id)->with('posted_by')->get();
+        $opinions = $project->opinions();
         if(! $opinions) {
-            return response()->json([
-                'error' => 'Project not found',
-            ], 404);
+            $opinions = [];
+        } else {
+            $opinions = $opinions->with('posted_by')->get();
         }
 
         return response()->json(compact('opinions'));
     }
 
-    public function postOpinion(Requests\StoreOpinionRequest $request, $id)
+    public function postOpinion(Requests\StoreOpinionRequest $request, Project $project)
     {
         $opinion = $this->opinions->create([
 			'user_id' =>  auth()->user()->id,
-			'project_id' => $id
+			'project_id' => $project->id
 			] + $request->only('opinion')
         );
 
-		// we need poster by as well
-		$opinions = $this->opinions->find($id)->with('posted_by')->get();
+		// return comments
+		$opinions = $project->opinions()->with('posted_by')->get();
 		return response()->json(compact('opinions'));
     }
 

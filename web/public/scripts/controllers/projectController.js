@@ -27,6 +27,7 @@
             $scope.project.opinions = [];
             $scope.opinionsInitLoading = true;
             $scope.newOpinion = {};
+            $scope.postingOpinion = false;
             $scope.map = {
                 center: {
                     latitude: $scope.project.lat,
@@ -51,11 +52,20 @@
 			$interval(loadOpinions, 5000);
 
 			$scope.postOpinion = function () {
+                if(! $scope.newOpinion.opinion.length) return;
+                
+                $scope.postingOpinion = true;
 				projectService.postOpinion($stateParams.id, $scope.newOpinion).then(function(response) {
 					// posted, now add to object and reload to get new comments as well
 					$scope.project.opinions = response.data.opinions;
 					$scope.newOpinion = {};
-				});
+                    $scope.postingOpinion = false;
+				}, function(response) {
+                    // error
+                    if(response.status == 422) {
+                        $scope.postingOpinion = false;
+                    }
+                });
 			};
         });
 
