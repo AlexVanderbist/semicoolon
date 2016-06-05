@@ -27,7 +27,7 @@ class DashboardController extends Controller
 	}
 
     public function index() {
-    	$users = $this->users->all();
+    	$users = $this->users;
     	$projects = $this->projects->count();
     	$proposalopinions = $this->proposalopinions->count();
     	$opinions = $this->opinions->count();

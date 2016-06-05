@@ -77,8 +77,8 @@
                     datasets: [
                     {
                     data: [
-                        {{$users->where('sex', 1)->count()}},
-                        {{$users->where('sex', 0)->count()}}
+                        {{$users->where('sex', 1)->get()->count()}},
+                        {{$users->where('sex', 0)->get()->count()}}
                     ],
                     backgroundColor: [
                         "#1964B2",
