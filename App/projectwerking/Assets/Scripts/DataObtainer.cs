@@ -21,6 +21,7 @@ public class DataObtainer : MonoBehaviour {
   JsonData textData;
   GameInfo GI;
 
+  List<string> projectBannerList = new List<string>();
   List<string> projectNamesList = new List<string>();
   List<string> placeNamesList = new List<string>();
   List<string> projectDescriptionsList = new List<string>();
@@ -56,13 +57,23 @@ public class DataObtainer : MonoBehaviour {
         placeNamesList.Add(textData["projects"][i][placeNameString].ToString());
         projectIDsList.Add(int.Parse(textData["projects"][i]["id"].ToString()));
 
+        if (textData["projects"][i]["header_image"] != null)
+        {
+          projectBannerList.Add(textData["projects"][i]["header_image"]["filename"].ToString());
+        }
+        else
+        {
+          projectBannerList.Add("");
+        }
         string tempString = StripTagsRegex(textData["projects"][i]["description"].ToString());
+        tempString = StripLinkRegex(tempString);
         projectDescriptionsList.Add(tempString);
       }
       GI.ProjectNameList = projectNamesList;
       GI.PlaceNameList = placeNamesList;
       GI.ProjectIds = projectIDsList;
       GI.ProjectDescriptions = projectDescriptionsList;
+      GI.ProjectBannerList = projectBannerList;
       StartCoroutine(GetProposals());
     }
     else
@@ -132,7 +143,6 @@ public class DataObtainer : MonoBehaviour {
       GI.LastNamePerson = textData["user"]["lastname"].ToString();
       GI.Email = textData["user"]["email"].ToString();
       GI.NumberOfTimesStamped = int.Parse(textData["user"]["num_opinions"].ToString());
-      Debug.Log("number of stamps : " + textData["user"]["num_opinions"].ToString());
       gameObject.SendMessage("LoadProfileData"); //ProfileLoader
     }
     else
@@ -163,5 +173,10 @@ public class DataObtainer : MonoBehaviour {
   public static string StripTagsRegex(string source)
   {
     return Regex.Replace(source, "<.*?>", string.Empty);
+  }
+
+  public static string StripLinkRegex(string source)
+  {
+    return Regex.Replace(source, "&nbsp;", " ");
   }
 }

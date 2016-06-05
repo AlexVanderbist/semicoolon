@@ -8,8 +8,6 @@ public class TokenReceiver : MonoBehaviour {
 
   public string loginUrl = "http://semicolon.multimediatechnology.be/api/v1/authenticate";
 
-  //private string email = "";
-  private string password = "";
   private string invalidString = "invalid_credentials";
 
   JsonData textData;

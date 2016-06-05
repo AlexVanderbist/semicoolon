@@ -19,7 +19,6 @@ public class StampController : MonoBehaviour {
 
   int previousQuestionType = 0; //NEED TO KNOW BECAUSE OTHERWISE THE HIDING OF STAMPS STARTS FOR NOTHING
   float rotationZ = 0;
-  RaycastHit hitInfo;
   GameInfo GI;
 
   private string selectedStamp = ""; // SOME CLASSES NEED TO KNOW ABOUT THIS SO A PROPERTY IS DECLARED
@@ -100,6 +99,7 @@ public class StampController : MonoBehaviour {
   {
     if (GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber] != previousQuestionType)
     {
+      Debug.Log("question type: " + GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber]);
       if (GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber] == 1 )
       {
         numberStamp.transform.localPosition = Vector3.Lerp(numberStamp.transform.position, numberPosHide, step);
@@ -113,7 +113,22 @@ public class StampController : MonoBehaviour {
         numberStamp.transform.localPosition = Vector3.Lerp(numberStamp.transform.position, restPosNumberStamp, step);
       }
     }
-    
+  }
+
+  public void hideAllStamps(float step)
+  {
+    if (previousQuestionType == 2)
+    {
+      numberStamp.transform.localPosition = Vector3.Lerp(numberStamp.transform.position, numberPosHide, step);
+      greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, restPosGreenStamp, step);
+      redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, restPosRedStamp, step);
+    }
+    else
+    {
+      greenStamp.transform.localPosition = Vector3.Lerp(greenStamp.transform.position, greenPosHide, step);
+      redStamp.transform.localPosition = Vector3.Lerp(redStamp.transform.position, redPosHide, step);
+      numberStamp.transform.localPosition = Vector3.Lerp(numberStamp.transform.position, restPosNumberStamp, step);
+    }
   }
 
   // STAMPS ARE DEACTIVATED IN THE BEGINNING AND NOT IN THEIR HIDING POS IF NEEDED, THIS METHOD FIXES THAT
@@ -176,7 +191,6 @@ public class StampController : MonoBehaviour {
 
   // SETS THE POINT WHERE THE STAMP NEEDS TO MOVE TO
   public bool setRaycastHit(RaycastHit hit) {
-    hitInfo = hit;
     positionToStamp = new Vector3(hit.point.x, hit.point.y, hit.point.z - 20f);
     if (selectedStamp == "number")
     {

@@ -71,17 +71,17 @@ public class SetStamp : MonoBehaviour {
           break;
       }
       checkmarkStamp = (GameObject)Instantiate(checkmarkPrefab, hit.point, transform.rotation);
-      checkmarkStamp.transform.SetParent(paper.getCurrentNumberPaper.transform, true);
+      checkmarkStamp.transform.SetParent(paper.GetCurrentNumberPaper.transform, true);
       checkmarkStamp.transform.rotation = Quaternion.AngleAxis(10, Vector3.right);   
     }
-    printedStamp.transform.SetParent(paper.getCurrentPaper.transform, true);
+    printedStamp.transform.SetParent(paper.GetCurrentPaper.transform, true);
     printedStamp.transform.rotation = Quaternion.AngleAxis(10, Vector3.right);
   }
 
   //RECEIVES A MESSAGE FROM GAME CONTROLLER, CHECKS IF THERE IS A SPRITE CHILD AND DELETES IT
   public void PrintStamp(RaycastHit hit)
     {
-      foreach (Transform child in paper.getCurrentPaper.transform)
+      foreach (Transform child in paper.GetCurrentPaper.transform)
       {
         if (child.name == (badStampPrefabs[(int)randomStampPrint].name + "(Clone)") || child.name == (goodStampPrefabs[(int)randomStampPrint].name + "(Clone)"))
         {

@@ -20,6 +20,7 @@ public class GameInfo : MonoBehaviour {
   private static int numberOfTimesStamped;
 
   private static List<int> projectIds = new List<int>();
+  private static List<string> projectBannerList = new List<string>();
   private static List<string> projectNameList = new List<string>();
   private static List<string> placeNameList = new List<string>();
   private static List<string> projectDescriptions = new List<string>();
@@ -114,6 +115,12 @@ public class GameInfo : MonoBehaviour {
   {
     get { return projectNameList; }
     set { projectNameList = value; }
+  }
+
+  public List<string> ProjectBannerList
+  {
+    get { return projectBannerList; }
+    set { projectBannerList = value; }
   }
 
   public List<string> PlaceNameList
