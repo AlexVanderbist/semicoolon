@@ -70,9 +70,9 @@
                     <td>{{$user->email}}</td>
                     <td>{{$user->birthyear}}</td>
                     <td>
-                        @if ($user->sex === 0)
+                        @if ($user->sex == 0)
                             Vrouw
-                        @elseif ($user->sex === 1)
+                        @elseif ($user->sex == 1)
                             Man
                         @endif
                     </td>
