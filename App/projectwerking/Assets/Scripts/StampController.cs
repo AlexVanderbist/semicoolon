@@ -99,7 +99,6 @@ public class StampController : MonoBehaviour {
   {
     if (GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber] != previousQuestionType)
     {
-      Debug.Log("question type: " + GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber]);
       if (GI.QuestionTypes[GI.CurrentProjectNumber][GI.CurrentQuestionNumber] == 1 )
       {
         numberStamp.transform.localPosition = Vector3.Lerp(numberStamp.transform.position, numberPosHide, step);

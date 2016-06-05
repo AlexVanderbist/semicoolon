@@ -201,7 +201,6 @@ public class PaperController : MonoBehaviour
   {
     float x = 0f;
     float y = 0f;
-    Debug.Log("begin point y: " + obj.position.y);
     if (obj.position.y < beginPoint.y)
     {
       y -= 600f;
@@ -210,7 +209,6 @@ public class PaperController : MonoBehaviour
     {
       y += 600f;
     }
-    Debug.Log("begin point x: " + x);
     if (obj.position.x < beginPoint.x)
     {
       x -= 600f;

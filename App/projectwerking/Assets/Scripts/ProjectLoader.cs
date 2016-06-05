@@ -120,8 +120,7 @@ public class ProjectLoader : MonoBehaviour
       var image = bannersToChange[i].transform.FindChild("Banner").GetComponent<Image>();
       var texture = www.texture;
       image.sprite = Sprite.Create(texture,new Rect(0,0,texture.width,texture.height), new Vector2(0.5f,0.5f));
-      
-      Debug.Log("loaded image");
+
       i++;
     }
   }

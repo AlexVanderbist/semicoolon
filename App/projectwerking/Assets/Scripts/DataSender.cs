@@ -42,7 +42,6 @@ public class DataSender : MonoBehaviour {
         break;
       case "number":
         value = sController.StampNumber;
-        Debug.Log(value);
         break;
       default:
         break;
@@ -50,8 +49,6 @@ public class DataSender : MonoBehaviour {
     Form.AddField("value", value);
     int projectNumber = GI.CurrentProjectNumber;
     int questionNumber = GI.CurrentQuestionNumber -1;
-    Debug.Log("ProjectNumber: " + projectNumber + ", QUESTION ID: " + GI.QuestionIds[projectNumber][questionNumber]);
-    Debug.Log("Projectvraag: " + GI.Questions[projectNumber][questionNumber]);
     url += answerURL + GI.QuestionIds[projectNumber][questionNumber] + answerURLTokenPart + GI.Token;
    
     WWW antwoordWWW = new WWW(url, Form);
@@ -70,7 +67,7 @@ public class DataSender : MonoBehaviour {
     {
       if (textData["status"].ToString() == "success")
       {
-        Debug.Log("In orde");
+        //
       }
     }
   }

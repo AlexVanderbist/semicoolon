@@ -32,7 +32,6 @@ public class SetStamp : MonoBehaviour {
   IEnumerator WaitSecondsForStamp(int seconds, RaycastHit hit)
   {
     yield return new WaitForSeconds(seconds);
-    PlaySound();
     string selectedStamp = stamps.SelectedStamp;
     GameObject printedStamp = null;
     GameObject checkmarkStamp = null;
@@ -95,7 +94,14 @@ public class SetStamp : MonoBehaviour {
         }
       }
     }
+    StartCoroutine(DelaySound(0.5f));
     StartCoroutine(WaitSecondsForStamp(1, hit));
+  }
+
+  IEnumerator DelaySound(float seconds)
+  {
+    yield return new WaitForSeconds(seconds);
+    PlaySound();
   }
 
   void PlaySound()
