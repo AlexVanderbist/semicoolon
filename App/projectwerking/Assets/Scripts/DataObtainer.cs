@@ -74,7 +74,6 @@ public class DataObtainer : MonoBehaviour {
       GI.ProjectIds = projectIDsList;
       GI.ProjectDescriptions = projectDescriptionsList;
       GI.ProjectBannerList = projectBannerList;
-      StartCoroutine(GetProposals());
     }
     else
     {
@@ -83,6 +82,7 @@ public class DataObtainer : MonoBehaviour {
         gameObject.SendMessage("StartReceivingNewToken", "ReObtainData");
       }
     }
+    StartCoroutine(GetProposals());
   }
 
   IEnumerator GetProposals()
@@ -115,6 +115,12 @@ public class DataObtainer : MonoBehaviour {
       }
       else
       {
+        Debug.Log(www.error.ToString());
+        foreach (var data in textData)
+        {
+          Debug.Log(data);
+        }
+
         if (textData["error"].ToString() == "token_expired")
         {
           gameObject.SendMessage("StartReceivingNewToken", "ReObtainProposals");

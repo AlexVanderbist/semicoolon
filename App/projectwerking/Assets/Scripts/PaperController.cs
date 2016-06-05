@@ -14,7 +14,7 @@ public class PaperController : MonoBehaviour
   public GameObject tMeshNormalText, tMeshTitleText, tMeshPrefab;
   public GameObject[] maskPlanes;
   public Sprite goodNotGoodSprite, numberSprite;
-  public Transform startposition, focusposition, endposition;
+  public Transform startPosition, focusPosition, endPosition;
   public bool ListIsReady = false; //PUBLIC BECAUSE GAMECONTROLLER NEEDS TO KNOW IF IT IS READY
   public Text testTextBox;
   public GameObject donePaperPrefab, numberPaperPrefab;
@@ -121,7 +121,7 @@ public class PaperController : MonoBehaviour
     if (currentQuestionNr <= numberOfQuestions)
     {
       SetText();
-      newPaper = (GameObject)Instantiate(tMeshPrefab, startposition.position, transform.rotation);
+      newPaper = (GameObject)Instantiate(tMeshPrefab, startPosition.position, transform.rotation);
       int type = GI.QuestionTypes[GI.CurrentProjectNumber][currentQuestionNr - 1];
       if (type == 1)
       {
@@ -145,7 +145,7 @@ public class PaperController : MonoBehaviour
     }
     else
     {
-      newPaper = (GameObject)Instantiate(donePaperPrefab, startposition.position, transform.rotation);
+      newPaper = (GameObject)Instantiate(donePaperPrefab, startPosition.position, transform.rotation);
       questionPaperCreated = false;
     }
     for (int i = 0; i < numberPaperPrefab.transform.childCount; i++)
@@ -161,18 +161,23 @@ public class PaperController : MonoBehaviour
 
   public void CreateNumbersPaper()
   {
-    numberPaper = (GameObject)Instantiate(numberPaperPrefab, startposition.position, transform.rotation);
+    numberPaper = (GameObject)Instantiate(numberPaperPrefab, startPosition.position, transform.rotation);
   }
 
   public void MoveNewPaper(float step, string paperName) {
     if (paperName == "normalPaper")
     {
-      newPaper.transform.localPosition = Vector3.Lerp(startposition.position, focusposition.position, step);
+      newPaper.transform.localPosition = Vector3.Lerp(startPosition.position, focusPosition.position, step);
     }
     else if (paperName == "numberPaper")
     {
-      numberPaper.transform.localPosition = Vector3.Lerp(endposition.position, focusposition.position, step);
+      numberPaper.transform.localPosition = Vector3.Lerp(endPosition.position, focusPosition.position, step);
     }
+  }
+
+  public void ReFocusPaper(float step)
+  {
+    currentPaper.transform.localPosition = Vector3.Lerp(currentPaper.transform.position, focusPosition.position, step);
   }
 
   public void MoveFocusPaper(float step, string paperName)
@@ -183,7 +188,7 @@ public class PaperController : MonoBehaviour
     }
     else if (paperName == "numberPaper")
     {
-      numberPaper.transform.localPosition = Vector3.Lerp(focusposition.position, endposition.position, step);
+      numberPaper.transform.localPosition = Vector3.Lerp(focusPosition.position, endPosition.position, step);
     }
   }
 

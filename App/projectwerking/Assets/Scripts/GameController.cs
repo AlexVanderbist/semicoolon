@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour {
   private bool isFirstPaper = false;
   private bool firstPaperCreated = false;
   private bool readyToSwipePaper = false;
-  private bool readyToCheckStamps = false;
+  private bool readyToCheckStampsAndPaper = false;
   private bool readyToMoveStampToPaperAndBack = false;
   private bool readyWithStampToPaper = false;
   private bool islastQuestionReached = false;
@@ -39,12 +39,14 @@ public class GameController : MonoBehaviour {
   private bool readyToRemoveNumberPaper = false;
   private bool isNumberStampSelected = false;
   private bool isPaperException = false;
+  private bool needToResetPaper = false;
 
   // MAIN VARIABLE TO MOVE THINGS, GETS RESET EVERYTIME IT REACHES 1
   // USED FOR LERPS 
   private float step = 0f;
   private float dragStep = 0f; // EXTRA SIDE STEPS BECAUSE OF CONFLICTS WITH MAIN STEP
   private float numberPaperStep = 0f;
+  private float resetStep = 0f;
 
   //DRAGING OBJECTS
   private float dist;
@@ -84,7 +86,7 @@ public class GameController : MonoBehaviour {
         {
           isFirstPaper = false;
           step = 0f;
-          readyToCheckStamps = true;
+          readyToCheckStampsAndPaper = true;
         }
       }
 
@@ -109,7 +111,7 @@ public class GameController : MonoBehaviour {
           {
             sController.DeActivateStamps();
           }
-          readyToCheckStamps = true;
+          readyToCheckStampsAndPaper = true;
         }
       }
 
@@ -134,7 +136,7 @@ public class GameController : MonoBehaviour {
           {
             step = 0;
             readyToSwipePaper = true;
-            readyToCheckStamps = true;
+            readyToCheckStampsAndPaper = true;
             readyToMoveStampToPaperAndBack = false;
             readyWithStampToPaper = false;
             if (isNumberStampSelected)
@@ -214,7 +216,7 @@ public class GameController : MonoBehaviour {
       }
 
       //DRAG STAMPS
-      if (readyToCheckStamps)
+      if (readyToCheckStampsAndPaper)
       {
         if (Input.touchCount != 1)
         {
@@ -314,7 +316,7 @@ public class GameController : MonoBehaviour {
             {
               needToResetStamps = true;
             }
-            readyToCheckStamps = false;
+            readyToCheckStampsAndPaper = false;
             dragging = false;
             isStampScaled = false;
           }
@@ -332,18 +334,24 @@ public class GameController : MonoBehaviour {
               {
                 if (pController.CreateNewPaper())
                 {
-                  readyToCheckStamps = false;
+                  readyToCheckStampsAndPaper = false;
                   readyToSwipePaper = false;
                 }
                 else
                 {
                   islastQuestionReached = true;
                   readyToSwipePaper = false;
-                  readyToCheckStamps = false;
+                  readyToCheckStampsAndPaper = false;
                 }
                 gameObject.SendMessage("StartSendingAnswer"); // SENDS TO DATASENDER
                 readyToMovePaper = true;
-              }
+              }       
+            }
+            else
+            {
+              Debug.Log("reset paper");
+              readyToCheckStampsAndPaper = false;
+              needToResetPaper = true;
             }
           }  
         }
@@ -362,6 +370,18 @@ public class GameController : MonoBehaviour {
       }
     }
 
+    if (needToResetPaper)
+    {
+      resetStep += stampSpeed * Time.deltaTime * speedMultiplier;
+      pController.ReFocusPaper(resetStep);
+      if (resetStep >= 1)
+      {
+        resetStep = 0;
+        needToResetPaper = false;
+        readyToCheckStampsAndPaper = true;
+      }
+    }
+
     // IF THE PAPER HAS NOT BEEN HIT, THE STAMPS NEED TO GO BACK TO THEIR DEFAULT POSITION AND SCALE
     if (needToResetStamps)
     {
@@ -371,7 +391,7 @@ public class GameController : MonoBehaviour {
       {
         step = 0;
         needToResetStamps = false;
-        readyToCheckStamps = true;
+        readyToCheckStampsAndPaper = true;
       }
     }
 
