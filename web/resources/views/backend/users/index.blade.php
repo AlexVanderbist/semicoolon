@@ -27,9 +27,9 @@
                     <td>{{$admin->email}}</td>
                     <td>{{$admin->birthyear}}</td>
                     <td>
-                        @if ($admin->sex === 0)
+                        @if ($admin->sex == 0)
                             Vrouw
-                        @elseif ($admin->sex === 1)
+                        @elseif ($admin->sex == 1)
                             Man
                         @endif
                     </td>
