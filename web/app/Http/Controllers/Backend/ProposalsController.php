@@ -26,14 +26,6 @@ class ProposalsController extends Controller
      */
     public function index(Project $project, Proposal $proposal)
     {
-		//$proposals = Proposal::where('project_id', 1)
-		//						->get(['description', 'id']);
-
-		//dd($proposals->all()[0]);
-
-
-
-
         $proposals = $project->proposals;
         $typeNames = [
             1 => 'Ja/nee vraag',
@@ -82,25 +74,17 @@ class ProposalsController extends Controller
         return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('status', 'De stelling is verwijderd.');
     }
 
-    public function export(Project $project)
+    public function export(Project $project, Proposal $proposal)
     {
-        $dataArray = DB::table('proposals')
-                        // ->join('proposal_opinions', 'proposals.id', '=', 'proposal_opinions.proposal_id')
-                        // ->where('proposals.project_id', $project->id)
-                        ->join('proposal_opinions', function ($join) {
-                            $join->on('proposals.id', '=', 'proposal_opinions.proposal_id')
-                                ->where('proposals.project_id', $project->id);
-                        })
-                        ->select('proposals.description', 'proposal_opinions.updated_at', 'proposal_opinions.value')
-                        ->get();
-        dd($dataArray);
-        Excel::create('Statistieken ' . $project->name, function($excel) use ($project) {
-            $excel->sheet($project->name, function($sheet) use ($project) {
-                $sheet->setWidth(array(
-                    'B'     =>  30,
+        $proposals = Proposal::where('project_id', $project->id)
+                              ->get(['description']);
+        Excel::create('Statistieken ' . $project->name, function($excel) use ($proposals) {
+            $excel->sheet('Sheet1', function($sheet) use ($proposals) {
+                $sheet->fromArray($proposals, null, 'A2', true, false);
+                $sheet->setAutoSize(true);
+                $sheet->row(1, array(
+                     'Stelling', 'Antwoorden', 'Aantal Antwoorden'
                 ));
-
-                $sheet->fromArray($project->proposals);
             });
 
         })->download('csv');
