@@ -57,6 +57,10 @@
             });
         };
 
+        userService.sessionInfo = function () {
+            return $http.get(apiUrl + 'authenticate/user');
+        };
+
         return userService;
     });
 })();

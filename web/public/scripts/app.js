@@ -100,6 +100,7 @@
                     // Need to use $injector.get to bring in $state or else we get
                     // a circular dependency error
                     var $state = $injector.get('$state');
+                    var userService = $injector.get('userService');
 
                     // Instead of checking for a status code of 400 which might be used
                     // for other reasons in Laravel, we check for the specific rejection
@@ -117,6 +118,7 @@
                             // in our array, we know we need to authenticate the user so
                             // we can remove the current user from local storage
                             localStorage.removeItem('user');
+                            userService.logout();
 
                             // Send the user to the auth state so they can login
                             $state.go('user.login');
@@ -141,9 +143,11 @@
         });
     })
 
-    .run(function($rootScope, $state) {
+    .run(function($rootScope, $state, userService) {
 
         $rootScope.$on('$stateChangeStart', function(event, toState) {
+
+            console.log('stateChangeStart');
 
             // Grab the user from local storage and parse it to an object
             var user = JSON.parse(localStorage.getItem('user'));
@@ -151,14 +155,18 @@
             // If there is a user he might be authenticated, if not he will be redirected via the above authredirect
             if (user) {
 
-
-                $rootScope.authenticated = true;
+                // set rootscope to pretend we've already loaded the user
                 $rootScope.currentUser = user;
+                $rootScope.authenticated = true;
+
+                // request user info to trigger loggedout thingy
+                userService.sessionInfo().then(function(response){
+                    // succes; set actual data
+                    $rootScope.currentUser = response.data.user;
+                });
 
                 // If the user tried going to auth.login, redirect him somewhere else lol
-                if (toState.name === "login") {
-
-
+                if (toState.name === "user.login") {
                     event.preventDefault();
                     $state.go('projects');
                 }
