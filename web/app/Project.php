@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon;
 
 class Project extends Model
 {
@@ -73,5 +74,12 @@ class Project extends Model
         $image = $this->images()->where('is_header', 1)->first();
         if(!$image) $image = $this->images()->first();
         return $image;
+    }
+
+    public function getDeadlineAttribute()
+    {
+        if (!empty($this->attributes['comment_deadline'])) {
+            return Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['comment_deadline'])->format('Y-m-d');
+        }
     }
 }

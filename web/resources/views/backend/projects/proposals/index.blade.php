@@ -54,7 +54,6 @@
 					</a>
 	                <h1>{{$proposal->description}}</h1>
 	                <p>Aantal antwoorden: {{$proposal->num_opinions}}</p>
-					<p>{{$proposal->stats_string}}</p>
 	                @if($proposal->type == 1 && $proposal->opinions()->count() > 0)
 	                    <canvas id="Chart{{$proposal->id}}" width="200" height="200"></canvas>
 	                    <script>

@@ -12,8 +12,8 @@
 	<button ui-sref="projects.map" class="btn btn-default">
 		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Terug naar projecten
 	</button>
-	<button ng-click="toggleNotifications()" class="btn btn-default pull-right">
-		<span class="glyphicon" ng-class="{'spinning' : busyNotificationRequest, 'glyphicon-star-empty' : !userNotificationStatus, 'glyphicon-star' : userNotificationStatus}" aria-hidden="true"></span>
+	<button ng-click="toggleNotifications()" class="btn btn-primary pull-right">
+		<span class="glyphicon" ng-class="{'spinning' : busyNotificationRequest, 'glyphicon-star-empty' : !userNotificationStatus, 'glyphicon-star' : userNotificationStatus}" aria-hidden="true"></span> 
 		{{userNotificationStatus ? 'Je volgt dit project' : 'Dit project volgen'}}
 	</button>
 	<div class="row">

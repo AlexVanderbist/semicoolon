@@ -61,7 +61,7 @@
     
     <div class="form-group">
         {!! Form::label('comment_deadline','Reacties toelaten tot') !!}
-        {!! Form::date('comment_deadline', null, ['class' => 'form-control']) !!}
+        {!! Form::date('comment_deadline', $project->deadline, ['class' => 'form-control']) !!}
     </div>
 
     <div class="form-group">
