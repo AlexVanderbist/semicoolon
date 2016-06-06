@@ -13,7 +13,7 @@
 		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Terug naar projecten
 	</button>
 	<button ng-click="toggleNotifications()" class="btn btn-default pull-right">
-		<span class="glyphicon" ng-class="{'spinning' : busyNotificationRequest, 'glyphicon-star-empty' : !userNotificationStatus, 'glyphicon-star' : userNotificationStatus}" aria-hidden="true"></span> 
+		<span class="glyphicon" ng-class="{'spinning' : busyNotificationRequest, 'glyphicon-star-empty' : !userNotificationStatus, 'glyphicon-star' : userNotificationStatus}" aria-hidden="true"></span>
 		{{userNotificationStatus ? 'Je volgt dit project' : 'Dit project volgen'}}
 	</button>
 	<div class="row">
@@ -58,7 +58,7 @@
 					<div class="input-group">
 						<input type="text" required class="form-control" ng-disabled="postingOpinion" placeholder="Uw reactie" ng-model="newOpinion.opinion" ng-keypress="($event.which === 13) && postOpinion()" />
 						<span class="input-group-btn">
-							<button class="btn btn-primary" type="button" ng-click="postOpinion()">
+							<button class="btn btn-default" type="button" ng-click="postOpinion()">
 								<span class="glyphicon glyphicon-refresh spinning" ng-show="postingOpinion" aria-hidden="true"></span>
 								Toevoegen
 							</button>
@@ -70,6 +70,7 @@
 					    <tbody>
 					        <tr ng-repeat="opinion in project.opinions | orderBy: '-'">
 					            <td>
+									<span class="glyphicon glyphicon-remove pull-right" ng-click="" ng-show="opinion.posted_by.id==currentUser.id || currentUser.admin" aria-hidden="true"></span>
 					        		<strong><small>{{opinion.posted_by.full_name}}</small></strong>
 					        		<div>{{opinion.opinion}}</div>
 						        	<small>Op {{opinion.created_at | dateToISO | date : 'medium'}}</small>

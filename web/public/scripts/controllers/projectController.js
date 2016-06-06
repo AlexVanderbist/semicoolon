@@ -4,7 +4,7 @@
 
     angular
         .module('antwerpApp')
-        .controller('projectController', function ($scope, $rootScope, $stateParams, project, projectService, userService, $interval, mapOptions) {
+        .controller('projectController', function ($scope, $rootScope, $state, $stateParams, project, projectService, userService, $interval, mapOptions) {
 
             // returns google maps icon object with symbol in given color
             var iconSymbol = function (color) {
@@ -40,18 +40,23 @@
             // Notifications
             $scope.busyNotificationRequest = false;
             $scope.userNotificationStatus = false;
-            userService.getNotificationStatus($scope.project.id).then(function(response) {
-                $scope.userNotificationStatus = response.data.notificationStatus;
-            });
-            $scope.toggleNotifications = function () {
-                $scope.busyNotificationRequest = true;
-                userService.setNotificationStatus($scope.project.id, ! $scope.userNotificationStatus).then(function(response){
-                    $scope.userNotificationStatus = response.data.notificationStatus;
-                    $scope.busyNotificationRequest = false;
-                });
-            }
+			if($rootScope.authenticated) {
+	            userService.getNotificationStatus($scope.project.id).then(function(response) {
+	                $scope.userNotificationStatus = response.data.notificationStatus;
+	            });
+			}
 
-            console.log($scope.project);
+			$scope.toggleNotifications = function () {
+				if($rootScope.authenticated) {
+					$scope.busyNotificationRequest = true;
+					userService.setNotificationStatus($scope.project.id, ! $scope.userNotificationStatus).then(function(response){
+						$scope.userNotificationStatus = response.data.notificationStatus;
+						$scope.busyNotificationRequest = false;
+					});
+				} else {
+					$state.go('user.login', {status:'Je moet ingelogd zijn om projecten te volgen.'});
+				}
+			};
 
 			function loadOpinions () {
 	            projectService.opinions($stateParams.id).then(function(response){
@@ -68,7 +73,7 @@
 
 			$scope.postOpinion = function () {
                 if(! $scope.newOpinion.opinion.length) return;
-                
+
                 $scope.postingOpinion = true;
 				projectService.postOpinion($stateParams.id, $scope.newOpinion).then(function(response) {
 					// posted, now add to object and reload to get new comments as well
