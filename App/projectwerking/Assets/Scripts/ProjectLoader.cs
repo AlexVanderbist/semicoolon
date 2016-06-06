@@ -10,6 +10,8 @@ public class ProjectLoader : MonoBehaviour
   //LOADS ALL PROJECT PANELS BASED ON GAMEINFO DATA
   public GameObject projectPanelPrefab, projectPaperDonePrefab, projectPaperToDoPrefab;
   public GameObject containerToDo, containerDone, loadScenePanel;
+  public Text loadPercentage;
+  public Canvas canvasWithMask;
   public RectTransform containerRecToDo, containerRecDone , projectButtonRec;
   public string readMoreUrl = "http://semicolon.multimediatechnology.be/projecten/";
   public string basicUrl = "http://semicolon.multimediatechnology.be/";
@@ -107,12 +109,14 @@ public class ProjectLoader : MonoBehaviour
   }
   IEnumerator LevelCoroutine()
   {
+      canvasWithMask.overrideSorting = false;
       loadScenePanel.SetActive(true);
       AsyncOperation async = Application.LoadLevelAsync(2);
 
       while (!async.isDone)
       {
           loadingBar.fillAmount = async.progress / 0.9f;
+          loadPercentage.text = (async.progress /0.9f * 100).ToString() + " %";
           yield return null;
       }
   }
