@@ -113,9 +113,6 @@ h1, h2, h3, h4 {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
-.sidebar {
-    padding-top: 90px;
-}
 .project-list {
     padding-top: 90px;
 }
@@ -165,6 +162,38 @@ h1, h2, h3, h4 {
     padding-top: 4%;
 }
 
+.sidebar {
+    padding-top: 90px;
+}
+.stampLink {
+    color:#cf0039;
+    font-size:500%;
+    float:left;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.appLink {
+    position: absolute;
+    height: 150px;
+    right: 0;
+    bottom: 0;
+    width: 30%;
+    padding: 2%;
+}
+.appLink a:hover {
+    text-decoration: none;
+}
+.appLink:hover .stampLink{
+    color:#1964B2;
+}
+.appLink a p{
+    margin-left: 4%;
+    float: left;
+}
+.appLink a img {
+    width: 30%;
+    margin-left: 4%;
+}
 /* Angular fix */
 
 .nav, .pagination, .carousel, .panel-title a {
@@ -677,6 +706,14 @@ table.opinions-table {
 	    column-count: 1;
 		padding: 0 20px;
 	}
+    .appLink{
+        position: relative;
+        width: auto;
+        height: 110px;
+    }
+    .appLink a p {
+        float: none;
+    }
 }
 
 /* Extra Small Devices, Phones */
