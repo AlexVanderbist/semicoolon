@@ -31,22 +31,17 @@ class Proposal extends Model
 
 	public function getStatsStringAttribute() {
 		$votes = $this->vote();
-        if ($this->getNumOpinionsAttribute() > 0) {
-    		switch ($this->attributes['type']) {
-    			case 1:
-    				# Yes no=...
-    				return "Ja: " + $votes['yes'] + " | Nee: " + $votes['no'];
-    				break;
+		switch ($this->attributes['type']) {
+			case 1:
+				# Yes no=...
+				return "Ja: " . $votes['yes'] . " | Nee: " . $votes['no'];
+				break;
 
-    			case 2:
-    				# 1-5...
-    				return "1: " + $votes['1'] + " | 2: " + $votes['2'] + " | 3: " + $votes['3'] + " | 4: " + $votes['4'] + " | 5: " + $votes['5'];
-    				break;
-    		}
-        }
-        else {
-            return "Geen antwoorden gegeven";
-        }
+			case 2:
+				# 1-5...
+				return "1: " . $votes['1'] . " | 2: " . $votes['2'] . " | 3: " . $votes['3'] . " | 4: " . $votes['4'] . " | 5: " . $votes['5'];
+				break;
+		}
 	}
 
 	public function getNumOpinionsAttribute() {
