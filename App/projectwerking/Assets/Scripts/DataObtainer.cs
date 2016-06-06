@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using LitJson;
+using UnityEngine.UI;
 
 public class DataObtainer : MonoBehaviour {
 
@@ -13,13 +14,22 @@ public class DataObtainer : MonoBehaviour {
   public string urlProposalsPartOne = "http://semicolon.multimediatechnology.be/api/v1/projects/";
   public string urlProposalsPartTwo = "/proposals/user?token=";
   public string urlAuthenticateUser = "http://semicolon.multimediatechnology.be/api/v1/authenticate/user?token=";
+  public Text loadPercentage;
+  public Canvas canvasWithMask;
+  public GameObject loadScenePanel;
+  public Image loadingBar;
+
 
   static int numberOfProjects = 0;
   static int numberOfProposals = 0;
 
+  int progress = 0, total = 1;
+
+  
   static WWW www;
   JsonData textData;
   GameInfo GI;
+  bool isSynced = false;
 
   List<string> projectBannerList = new List<string>();
   List<string> projectNamesList = new List<string>();
@@ -36,11 +46,13 @@ public class DataObtainer : MonoBehaviour {
 
   IEnumerator Start()
   {
+    StartCoroutine(LoadingCoroutine());
     string tempUrl = urlProjects;
     GI = GameObject.Find("GameData").GetComponent<GameInfo>();
 
     tempUrl += GI.Token;
     www = new WWW(tempUrl);
+   
     yield return www;
 
 
@@ -48,6 +60,7 @@ public class DataObtainer : MonoBehaviour {
     {
       textData = JsonMapper.ToObject(www.text);
       numberOfProjects = textData["projects"].Count;
+      total += numberOfProjects;
       questionsArray = new string[numberOfProjects][];
       questionsIDArray = new int[numberOfProjects][];
       questionsTypeArray = new int[numberOfProjects][];
@@ -68,6 +81,7 @@ public class DataObtainer : MonoBehaviour {
         string tempString = StripTagsRegex(textData["projects"][i]["description"].ToString());
         tempString = StripLinkRegex(tempString);
         projectDescriptionsList.Add(tempString);
+        progress++;
       }
       GI.ProjectNameList = projectNamesList;
       GI.PlaceNameList = placeNamesList;
@@ -86,7 +100,8 @@ public class DataObtainer : MonoBehaviour {
   }
 
   IEnumerator GetProposals()
-  { 
+  {
+    total--;
     for (int i = 0; i < numberOfProjects; i++)
     {
       string urlProposals = urlProposalsPartOne + projectIDsList[i] + urlProposalsPartTwo + GI.Token;
@@ -97,6 +112,7 @@ public class DataObtainer : MonoBehaviour {
       {
         textData = JsonMapper.ToObject(www.text);
         numberOfProposals = textData["proposals"].Count;
+        total += numberOfProposals;
         string[] tempProposals = new string[numberOfProposals];
         int[] tempProposalsIds = new int[numberOfProposals];
         int[] tempProposalTypes = new int[numberOfProposals];
@@ -107,6 +123,7 @@ public class DataObtainer : MonoBehaviour {
             tempProposals[j] = textData["proposals"][j]["description"].ToString();
             tempProposalsIds[j] = int.Parse(textData["proposals"][j]["id"].ToString());
             tempProposalTypes[j] = int.Parse(textData["proposals"][j]["type"].ToString());
+            progress++;
           }
           questionsArray[i] = tempProposals;
           questionsIDArray[i] = tempProposalsIds;
@@ -130,6 +147,7 @@ public class DataObtainer : MonoBehaviour {
     GI.Questions = questionsArray;
     GI.QuestionIds = questionsIDArray;
     GI.QuestionTypes = questionsTypeArray;
+    isSynced = true;
     gameObject.SendMessage("SpawnButtons");
     StartCoroutine(GetUserData());
   }
@@ -158,6 +176,20 @@ public class DataObtainer : MonoBehaviour {
         gameObject.SendMessage("StartReceivingNewToken", "ReObtainUserInfo");
       }
     }
+  }
+
+  IEnumerator LoadingCoroutine()
+  {
+    canvasWithMask.overrideSorting = false;
+    loadScenePanel.SetActive(true);
+
+
+    while (!isSynced)
+    {
+      yield return null;
+    }
+    loadScenePanel.SetActive(false);
+    canvasWithMask.overrideSorting = true;
   }
 
   public void ReObtainUserInfo()

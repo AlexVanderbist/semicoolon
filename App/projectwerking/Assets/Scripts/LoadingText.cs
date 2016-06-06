@@ -29,7 +29,7 @@ public class LoadingText : MonoBehaviour {
                 loadingText.text = "Laden..";
                 break;
             case 3:
-                loadingText.text = "Loading...";
+                loadingText.text = "Laden...";
                 break;
             case 4:
                 counter = 0;

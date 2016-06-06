@@ -47,10 +47,11 @@
             return $q(function(resolve) {
 				$http.get(apiUrl + 'authenticate/logout');
 
+				localStorage.removeItem('user');
+				$rootScope.authenticated = false;
+				$rootScope.currentUser = null;
+
                 $auth.logout().then(function() {
-                    localStorage.removeItem('user');
-                    $rootScope.authenticated = false;
-                    $rootScope.currentUser = null;
                     console.log("Logged out");
                     resolve();
                 });
@@ -63,11 +64,11 @@
 
         userService.getNotificationStatus = function(projectId) {
             return $http.get(apiUrl + 'user/notifications/' + projectId);
-        } 
+        } ;
 
         userService.setNotificationStatus = function(projectId, notifications) {
             return $http.post(apiUrl + 'user/notifications/' + projectId, {notifications: notifications});
-        } 
+        } ;
 
         return userService;
     });

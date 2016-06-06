@@ -87,6 +87,15 @@
                     }
                 });
 			};
+
+			$scope.removeOpinion = function (id, index) {
+				var index = $scope.project.opinions.length - 1 - index;
+				projectService.removeOpinion(id).then(function(response) {
+					// posted, now add to object and reload to get new comments as well
+					console.log(index);
+					$scope.project.opinions.splice(index, 1);
+				});
+			};
         });
 
 })();

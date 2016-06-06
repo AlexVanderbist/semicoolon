@@ -70,6 +70,13 @@ class ProjectsController extends Controller
 		return response()->json(compact('opinions'));
     }
 
+    public function removeOpinion(Request $request, Opinion $opinion)
+    {
+        $opinion->delete();
+
+		return response()->json(['status' => 'Opinion removed']);
+    }
+
     public function destroyOpinion(Requests\DeleteOpinionRequest $request, Project $project, Opinion $opinion)
     {
         $opinion->delete();
