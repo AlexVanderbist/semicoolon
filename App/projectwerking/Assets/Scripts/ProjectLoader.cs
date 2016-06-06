@@ -13,11 +13,12 @@ public class ProjectLoader : MonoBehaviour
   public RectTransform containerRecToDo, containerRecDone , projectButtonRec;
   public string readMoreUrl = "http://semicolon.multimediatechnology.be/projecten/";
   public string basicUrl = "http://semicolon.multimediatechnology.be/";
-  public string sceneToLoad = "MainScene";
+  //public string sceneToLoad = "MainScene";
   public float marge = 250;
-  
+
   //TEST IMAGES
   public Sprite[] tempStockImages;
+  public Image loadingBar;
 
   GameInfo GI;
   List<GameObject> bannersToChange = new List<GameObject>();
@@ -70,7 +71,7 @@ public class ProjectLoader : MonoBehaviour
       }
       else
       {
-        panel.transform.FindChild("BeginMetStempelen").GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneToLoad, tempInt));
+        panel.transform.FindChild("BeginMetStempelen").GetComponent<Button>().onClick.AddListener(() => LoadLevel(tempInt));
         panel.transform.SetParent(containerToDo.transform, false);
         if (containerToDo.transform.childCount > 1)
         {
@@ -100,10 +101,20 @@ public class ProjectLoader : MonoBehaviour
   }
 
   // LOADS MAINSCENE AND UPDATES GI PROJECTNUMBER SO THE RIGHT QUESTIONS WILL BE ASKED
-  private void LoadLevel(string sceneName, int projectNumber) {
+  private void LoadLevel(int projectNumber) {
     GI.CurrentProjectNumber = projectNumber;
-    //loadScenePanel.SetActive(true);
-    SceneManager.LoadScene(sceneName);
+    StartCoroutine(LevelCoroutine());
+  }
+  IEnumerator LevelCoroutine()
+  {
+      loadScenePanel.SetActive(true);
+      AsyncOperation async = Application.LoadLevelAsync(2);
+
+      while (!async.isDone)
+      {
+          loadingBar.fillAmount = async.progress / 0.9f;
+          yield return null;
+      }
   }
 
   IEnumerator LoadImages()
