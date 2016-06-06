@@ -20,13 +20,13 @@ public class LoadingText : MonoBehaviour {
         switch ((int)counter)
         {
             case 0:
-                loadingText.text = "Loading";
+                loadingText.text = "Laden";
                 break;
             case 1:
-                loadingText.text = "Loading.";
+                loadingText.text = "Laden.";
                 break;
             case 2:
-                loadingText.text = "Loading..";
+                loadingText.text = "Laden..";
                 break;
             case 3:
                 loadingText.text = "Loading...";
