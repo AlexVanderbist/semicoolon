@@ -4,11 +4,11 @@
 
     angular
         .module('antwerpApp')
-        .controller('logoutController', function(userService, $state) {
+        .controller('logoutController', function(userService, $state, $scope) {
 
             userService.logout().then(function(){
                 // Logout succesfull
-                $state.go('user.login');
+                $state.go('home.intro');
             });
         });
 

@@ -49,6 +49,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 
 		// POST Project opinion (comment) by user
 		Route::post('projects/{project}/opinions', 'API\ProjectsController@postOpinion');
+		Route::delete('projects/opinions/{opinion}', 'API\ProjectsController@removeOpinion');
 
 	});
 });

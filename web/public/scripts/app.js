@@ -121,7 +121,7 @@
                             userService.logout();
 
                             // Send the user to the auth state so they can login
-                            $state.go('user.login');
+                            $state.go('user.login', {status: 'Je moet ingelogd zijn om dit te doen.'});
                         }
                     });
 

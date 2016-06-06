@@ -29,6 +29,10 @@
                 return $http.post(apiUrl + 'projects/' + id + '/opinions', opinionObject);
             };
 
+            projectService.removeOpinion = function (id) {
+				return $http.delete(apiUrl + 'projects/opinions/' + id);
+            };
+
             return projectService;
         });
 })();
