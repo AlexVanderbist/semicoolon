@@ -17,10 +17,11 @@ public class ProjectLoader : MonoBehaviour
   public string basicUrl = "http://semicolon.multimediatechnology.be/";
   //public string sceneToLoad = "MainScene";
   public float marge = 250;
+  public Image loadingBar;
 
   //TEST IMAGES
   public Sprite[] tempStockImages;
-  public Image loadingBar;
+  
 
   GameInfo GI;
   List<GameObject> bannersToChange = new List<GameObject>();
@@ -111,12 +112,12 @@ public class ProjectLoader : MonoBehaviour
   {
       canvasWithMask.overrideSorting = false;
       loadScenePanel.SetActive(true);
-      AsyncOperation async = Application.LoadLevelAsync(2);
+      AsyncOperation async = SceneManager.LoadSceneAsync(2);
 
       while (!async.isDone)
       {
           loadingBar.fillAmount = async.progress / 0.9f;
-          loadPercentage.text = (async.progress /0.9f * 100).ToString() + " %";
+          loadPercentage.text = (int)(async.progress / 0.9f * 100) + " %";
           yield return null;
       }
   }
