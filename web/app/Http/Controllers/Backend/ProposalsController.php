@@ -83,7 +83,7 @@ class ProposalsController extends Controller
 
 		$csv = '';
 
-		$csv .= "description,number of opinions,statistics\r";
+		$csv .= "Stelling,Aantal antwoorden,statistieken\r";
 		foreach ($proposals as $key => $proposal) {
 			$csv .= $proposal->description . ',' . $proposal->num_opinions . ',' . $proposal->stats_string . "\r";
 		}
