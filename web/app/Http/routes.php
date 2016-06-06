@@ -139,6 +139,10 @@ Route::group(['middleware' => 'web'], function () {
 			'uses' => 'Backend\ProposalsController@destroyOpinions',
 			'as' => 'backend.projects.{project}.proposals.opinions.destroy'
 		]);
+		Route::get('projects/{project}/proposals/export', [
+			'as' => 'backend.projects.{project}.proposals.export',
+			'uses' => 'Backend\ProposalsController@export'
+		]);
 
 		// Images
 		Route::resource('projects/{project}/images', 'Backend\ProjectImagesController', ['except' => ['show', 'edit', 'create']]);

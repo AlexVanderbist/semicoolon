@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Proposal;
 use App\Http\Requests;
+use Excel;
+use DB;
 
 class ProposalsController extends Controller
 {
@@ -70,5 +72,30 @@ class ProposalsController extends Controller
         $proposal->delete();
 
         return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('status', 'De stelling is verwijderd.');
+    }
+
+    public function export(Project $project)
+    {
+        $dataArray = DB::table('proposals')
+                        // ->join('proposal_opinions', 'proposals.id', '=', 'proposal_opinions.proposal_id')
+                        // ->where('proposals.project_id', $project->id)
+                        ->join('proposal_opinions', function ($join) {
+                            $join->on('proposals.id', '=', 'proposal_opinions.proposal_id')
+                                ->where('proposals.project_id', $project->id);
+                        })
+                        ->select('proposals.description', 'proposal_opinions.updated_at', 'proposal_opinions.value')
+                        ->get();
+        dd($dataArray);
+        Excel::create('Statistieken ' . $project->name, function($excel) use ($project) {
+            $excel->sheet($project->name, function($sheet) use ($project) {
+                $sheet->setWidth(array(
+                    'B'     =>  30,
+                ));
+
+                $sheet->fromArray($project->proposals);
+            });
+
+        })->download('csv');
+        return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('status', 'De statistieken zijn opgeslaan.');
     }
 }

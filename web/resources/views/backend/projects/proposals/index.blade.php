@@ -166,4 +166,5 @@
             </div>
         @endforeach
     </div>
+    <a href="{{ route('backend.projects.{project}.proposals.export', $project->id) }}" class="marginbtn btn btn-primary"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exporteren</a>
 @endsection
