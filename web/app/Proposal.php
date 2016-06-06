@@ -18,6 +18,8 @@ class Proposal extends Model
         'project_id'
     ];
 
+	protected $appends = ['stats_string', 'num_opinions'];
+
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -26,6 +28,25 @@ class Proposal extends Model
     public function opinions() {
         return $this->hasMany(ProposalOpinion::class);
     }
+
+	public function getStatsStringAttribute() {
+		$votes = $this->votes();
+		switch ($attributes['type']) {
+			case 1:
+				# Yes no=...
+				return "Ja: " + $votes['yes'] + " | Nee: " + $votes['no'];
+				break;
+
+			case 2:
+				# 1-5...
+				return "1: " + $votes['1'] + " | 2: " + $votes['2'] + " | 3: " + $votes['3'] + " | 4: " + $votes['4'] + " | 5: " + $votes['5'];
+				break;
+		}
+	}
+
+	public function getNumOpinionsAttribute() {
+		return $this->opinions()->count();
+	}
 
     public function vote() {
         //dd($this->opinions()->ofType(1)->get());

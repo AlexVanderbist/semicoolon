@@ -25,7 +25,15 @@ class ProposalsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Project $project, Proposal $proposal)
-    { 
+    {
+		//$proposals = Proposal::where('project_id', 1)
+		//						->get(['description', 'id']);
+
+		//dd($proposals->all()[0]);
+
+
+
+
         $proposals = $project->proposals;
         $typeNames = [
             1 => 'Ja/nee vraag',
