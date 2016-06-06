@@ -8,6 +8,8 @@ use App\Proposal;
 use App\Http\Requests;
 use Excel;
 use DB;
+use File;
+use Response;
 
 class ProposalsController extends Controller
 {
@@ -74,23 +76,21 @@ class ProposalsController extends Controller
         return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('status', 'De stelling is verwijderd.');
     }
 
-    public function export(Project $project, Proposal $proposal)
+    public function export(Project $project)
     {
-        $proposals = Proposal::where('project_id', $project->id)
-                              ->get(['description']);
-        Excel::create('Statistieken ' . $project->name, function($excel) use ($proposals) {
-            $excel->sheet('Sheet1', function($sheet) use ($proposals) {
-                $sheet->fromArray($proposals, null, 'A2', true, false);
-                $sheet->setAutoSize(true);
-                $sheet->row(1, array(
-                     'Stelling', 'Antwoorden', 'Aantal Antwoorden'
-                ));
-                $sheet->row(1, function($row) {
-                    $row->setFontWeight('bold');
-                });
-            });
+        $proposals = Proposal::where('project_id', $project->id)->get();
+		//$proposals = $proposals->only(['description', 'num_opinions', 'stats_string']);
 
-        })->download('csv');
-        return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('status', 'De statistieken zijn opgeslaan.');
+		$csv = '';
+
+		$csv .= "description,number of opinions,statistics\r";
+		foreach ($proposals as $key => $proposal) {
+			$csv .= $proposal->description . ',' . $proposal->num_opinions . ',' . $proposal->stats_string . "\r";
+		}
+
+		File::put(storage_path() . "/tempcsv.csv", $csv);
+
+	    return Response::download(storage_path() . "/tempcsv.csv", $project->name.'.csv', ['content-type' => 'text/cvs']);
+        //return redirect(route('backend.projects.{project}.proposals.index', $project->id))->with('status', 'De statistieken zijn opgeslaan.');
     }
 }
