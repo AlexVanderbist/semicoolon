@@ -85,6 +85,9 @@ class ProposalsController extends Controller
                 $sheet->row(1, array(
                      'Stelling', 'Antwoorden', 'Aantal Antwoorden'
                 ));
+                $sheet->row(1, function($row) {
+                    $row->setFontWeight('bold');
+                });
             });
 
         })->download('csv');
