@@ -61,6 +61,14 @@
             return $http.get(apiUrl + 'authenticate/user');
         };
 
+        userService.getNotificationStatus = function(projectId) {
+            return $http.get(apiUrl + 'user/notifications/' + projectId);
+        } 
+
+        userService.setNotificationStatus = function(projectId, notifications) {
+            return $http.post(apiUrl + 'user/notifications/' + projectId, {notifications: notifications});
+        } 
+
         return userService;
     });
 })();

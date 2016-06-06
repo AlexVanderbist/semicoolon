@@ -9,9 +9,13 @@
 	</ui-gmap-google-map>
 </div>
 <div class="container projectcontainer">
-	<a ui-sref="projects.map" href="#/projects/map" class="btn btn-default">
+	<button ui-sref="projects.map" class="btn btn-default">
 		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Terug naar projecten
-	</a>
+	</button>
+	<button ng-click="toggleNotifications()" class="btn btn-default pull-right">
+		<span class="glyphicon" ng-class="{'spinning' : busyNotificationRequest, 'glyphicon-star-empty' : !userNotificationStatus, 'glyphicon-star' : userNotificationStatus}" aria-hidden="true"></span> 
+		{{userNotificationStatus ? 'Je volgt dit project' : 'Dit project volgen'}}
+	</button>
 	<div class="row">
 		<div class="col-md-8">
 			<h1>{{project.name}}</h1>

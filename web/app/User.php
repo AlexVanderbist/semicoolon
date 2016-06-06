@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->hasMany(ProposalOpinion::class);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
 	public function getNumOpinionsAttribute() {
 		return $this->proposalOpinions->count();
 	}

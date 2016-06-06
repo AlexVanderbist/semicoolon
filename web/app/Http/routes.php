@@ -34,6 +34,10 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'api'], function()
 		// GET user
 	    Route::get('authenticate/user', 'API\AuthenticateController@getAuthenticatedUser');
 
+	    // User notifications for project
+	    Route::post('user/notifications/{project}', 'API\UserController@postNotification');
+	    Route::get('user/notifications/{project}', 'API\UserController@getNotification');
+
 	    // GET Project proposals
 	    Route::get('projects/{project}/proposals', 'API\ProposalsController@getProposals');
 

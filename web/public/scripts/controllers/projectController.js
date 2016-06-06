@@ -4,7 +4,7 @@
 
     angular
         .module('antwerpApp')
-        .controller('projectController', function ($scope, $rootScope, $stateParams, project, projectService, $interval, mapOptions) {
+        .controller('projectController', function ($scope, $rootScope, $stateParams, project, projectService, userService, $interval, mapOptions) {
 
             // returns google maps icon object with symbol in given color
             var iconSymbol = function (color) {
@@ -37,6 +37,20 @@
                 options: {styles: mapOptions.styleArray}
             };
 
+            // Notifications
+            $scope.busyNotificationRequest = false;
+            $scope.userNotificationStatus = false;
+            userService.getNotificationStatus($scope.project.id).then(function(response) {
+                $scope.userNotificationStatus = response.data.notificationStatus;
+            });
+            $scope.toggleNotifications = function () {
+                $scope.busyNotificationRequest = true;
+                userService.setNotificationStatus($scope.project.id, ! $scope.userNotificationStatus).then(function(response){
+                    $scope.userNotificationStatus = response.data.notificationStatus;
+                    $scope.busyNotificationRequest = false;
+                });
+            }
+
             console.log($scope.project);
 
 			function loadOpinions () {
@@ -48,6 +62,7 @@
 					}
 	            });
 			}
+
 			loadOpinions();
 			$interval(loadOpinions, 5000);
 
