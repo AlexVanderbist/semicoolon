@@ -40,8 +40,9 @@
 
     </div>
 
+	@foreach($proposals->chunk(3) as $proposalsChunk)
     <div class="row proposals">
-        @foreach($proposals as $proposal)
+        @foreach($proposalsChunk as $proposal)
             <div class="col-md-4">
                 <div class="well">
 					<a class="pull-right"
@@ -166,5 +167,6 @@
             </div>
         @endforeach
     </div>
+    @endforeach
     <a href="{{ route('backend.projects.{project}.proposals.export', $project->id) }}" class="marginbtn btn btn-primary"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exporteren</a>
 @endsection
