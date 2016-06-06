@@ -25,7 +25,7 @@ class Project extends Model
         'comment_deadline'
     ];
 
-    protected $appends = ['header_image', 'youtube_id'];
+    protected $appends = ['header_image', 'youtube_id', 'check_deadline'];
 
     public function creator()
     {
@@ -81,5 +81,17 @@ class Project extends Model
         if (!empty($this->attributes['comment_deadline'])) {
             return Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['comment_deadline'])->format('Y-m-d');
         }
+    }
+
+    public function getCheckDeadlineAttribute()
+    {
+        if(Carbon\Carbon::parse($this->attributes['comment_deadline'])->diffInDays(Carbon\Carbon::now(), false) > 0) //When its past the comment_deadline
+            {
+                return false;
+            }
+        else 
+            {
+                return true;
+            }
     }
 }

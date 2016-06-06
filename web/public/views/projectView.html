@@ -54,17 +54,21 @@
 
 	        <div class="opinions">
 	        	<h2>Reacties</h2>
-
-					<div class="input-group">
-						<input type="text" required class="form-control" ng-disabled="postingOpinion" placeholder="Uw reactie" ng-model="newOpinion.opinion" ng-keypress="($event.which === 13) && postOpinion()" />
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" ng-click="postOpinion()">
-								<span class="glyphicon glyphicon-refresh spinning" ng-show="postingOpinion" aria-hidden="true"></span>
-								Toevoegen
-							</button>
-						</span>
-					</div><!-- /input-group -->
-					<small>of duw op enter om te versturen.</small>
+					<div ng-show="project.check_deadline">
+						<div class="input-group">
+							<input type="text" required class="form-control" ng-disabled="postingOpinion" placeholder="Uw reactie" ng-model="newOpinion.opinion" ng-keypress="($event.which === 13) && postOpinion()" />
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" ng-click="postOpinion()">
+									<span class="glyphicon glyphicon-refresh spinning" ng-show="postingOpinion" aria-hidden="true"></span>
+									Toevoegen
+								</button>
+							</span>
+						</div><!-- /input-group -->
+						<small>of duw op enter om te versturen.</small>
+					</div>
+					<div ng-hide="project.check_deadline">
+						<p>Reacties waren toegelaten tot {{project.comment_deadline | dateToISO | date : 'longDate'}}</p>
+					</div>
 
 					<table class="opinions-table table table-condensed table-striped">
 					    <tbody>
