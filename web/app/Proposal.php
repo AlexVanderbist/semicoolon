@@ -32,7 +32,7 @@ class Proposal extends Model
 	public function getStatsStringAttribute() {
 		$votes = $this->vote();
         if ($this->getNumOpinionsAttribute() > 0) {
-    		switch ($attributes['type']) {
+    		switch ($attribute['type']) {
     			case 1:
     				# Yes no=...
     				return "Ja: " + $votes['yes'] + " | Nee: " + $votes['no'];
