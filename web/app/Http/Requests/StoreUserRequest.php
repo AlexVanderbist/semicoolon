@@ -27,8 +27,7 @@ class StoreUserRequest extends Request
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed'],
             'firstname' => ['required'],
-            'lastname' => ['required'],
-            'admin' => ['required']
+            'lastname' => ['required']
         ];
     }
 }
