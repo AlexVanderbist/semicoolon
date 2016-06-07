@@ -34,12 +34,12 @@ class Proposal extends Model
 		switch ($this->type) {
 			case 1:
 				# Yes no=...
-				return "Ja: " . $votes['yes'] . " , Nee: " . $votes['no'];
+				return $votes['yes'] . " ," . $votes['no'];
 				break;
 
 			case 2:
 				# 1-5...
-				return "Een: " . $votes['1'] . " , Twee: " . $votes['2'] . " , Drie: " . $votes['3'] . " , Vier: " . $votes['4'] . " , Vijf: " . $votes['5'];
+				return ",," . $votes['1'] . "," . $votes['2'] . "," . $votes['3'] . "," . $votes['4'] . "," . $votes['5'];
 				break;
 		}
 	}
