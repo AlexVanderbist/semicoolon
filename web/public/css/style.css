@@ -173,7 +173,7 @@ h1, h2, h3, h4 {
     transition: all 0.5s;
 }
 .appLink {
-    position: absolute;
+    position: fixed;
     height: 150px;
     right: 0;
     bottom: 0;
@@ -707,12 +707,7 @@ table.opinions-table {
 		padding: 0 20px;
 	}
     .appLink{
-        position: relative;
-        width: auto;
-        height: 110px;
-    }
-    .appLink a p {
-        float: none;
+        display: none;
     }
 }
 
