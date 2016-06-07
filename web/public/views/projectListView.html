@@ -7,6 +7,8 @@
 			<div class="project-content">
 	            <h2>{{project.name}}</h2>
 				<div class="project-description" ng-bind-html="project.description | htmlToPlaintext | truncate:200"></div>
+				<p><span class="glyphicon glyphicon-map-marker"></span> {{project.locationText}}</p>
+				<p><span class="glyphicon glyphicon-calendar"></span> Reageren tot {{project.comment_deadline | dateToISO | date : 'longDate'}}</p>
 			</div>
 			<button class="btn btn-primary btn-lg btn-block" ui-sref="project({id:project.id})"><h3>Bekijk project</h3></button>
 		</div>
